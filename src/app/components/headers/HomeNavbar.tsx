@@ -30,63 +30,39 @@ export default function HomeNavbar(props: HomeNavbarProps) {
         <Stack className="menu">
           <Box>
             <NavLink to="/">
-              <img className="brand-logo" src="/icons/burak.svg" alt="burak logo" />
+              <span className="brand-wordmark">AUCTION.UZ</span>
             </NavLink>
           </Box>
           <Stack className="links">
-            <Box className={"hover-line"}>
-              <NavLink to="/" activeClassName={"underline"}>
-                Home
-              </NavLink>
+            <Box className="hover-line">
+              <NavLink to="/" activeClassName="underline" exact>Home</NavLink>
             </Box>
-            <Box className={"hover-line"}>
-              <NavLink to="/products" activeClassName={"underline"}>
-                Products
-              </NavLink>
+            <Box className="hover-line">
+              <NavLink to="/products" activeClassName="underline">Cars</NavLink>
             </Box>
-            {authMember ? (
-              <Box className={"hover-line"}>
-                <NavLink to="/orders" activeClassName={"underline"}>
-                  Orders
-                </NavLink>
+            {authMember && (
+              <Box className="hover-line">
+                <NavLink to="/member-page" activeClassName="underline">My Account</NavLink>
               </Box>
-            ) : null}
-            {authMember ? (
-              <Box className={"hover-line"}>
-                <NavLink to="/member-page" activeClassName={"underline"}>
-                  My Page
-                </NavLink>
-              </Box>
-            ) : null}
-            <Box className={"hover-line"}>
-              <NavLink to="/help" activeClassName={"underline"}>
-                Help
-              </NavLink>
+            )}
+            <Box className="hover-line">
+              <NavLink to="/news" activeClassName="underline">News</NavLink>
+            </Box>
+            <Box className="hover-line">
+              <NavLink to="/help" activeClassName="underline">Help</NavLink>
             </Box>
 
             {!authMember ? (
               <Box>
-                <Button
-                  variant="contained"
-                  className="login-button"
-                  onClick={() => setLoginOpen(true)}
-                >
+                <Button variant="contained" className="login-button" onClick={() => setLoginOpen(true)}>
                   LOGIN
                 </Button>
               </Box>
             ) : (
-              <div
-                aria-haspopup="true"
-                onClick={handleLogoutClick}
-                style={{ cursor: "pointer" }}
-              >
+              <div aria-haspopup="true" onClick={handleLogoutClick} style={{ cursor: "pointer" }}>
                 <img
                   className="user-avatar"
-                  src={
-                    authMember?.memberImage
-                      ? `${serverApi}/${authMember?.memberImage}`
-                      : "/icons/default-user.svg"
-                  }
+                  src={authMember?.memberImage ? `${serverApi}/${authMember?.memberImage}` : "/icons/default-user.svg"}
                   alt="user avatar"
                 />
               </div>
@@ -98,65 +74,26 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               open={Boolean(anchorEl)}
               onClose={handleCloseLogout}
               disablePortal
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
-              }}
+              PaperProps={{ elevation: 0, sx: { mt: 1.5 } }}
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               <MenuItem onClick={handleLogoutRequest}>
                 <ListItemIcon>
-                  <Logout fontSize="small" style={{ color: "blue" }} />
+                  <Logout fontSize="small" />
                 </ListItemIcon>
                 Logout
               </MenuItem>
             </Menu>
           </Stack>
         </Stack>
-        <Stack className={"header-frame"}>
-          <Stack className={"detail"}>
-            <Box className={"head-main-txt"}>World's Most Delicous Cousine</Box>
-            <Box className={"wel-txt"}>The choice, not just a choice</Box>
-            <Box className={"service-txt"}>24 hours service</Box>
-            <Box className={"signup"}>
-              {!authMember ? (
-                <Button
-                  variant={"contained"}
-                  className={"signup-button"}
-                  onClick={() => setSignupOpen(true)}
-                >
-                  SIGN UP
-                </Button>
-              ) : null}
-            </Box>
-          </Stack>
-          <Box className={"logo-frame"}>
-            <div className="logo-image"></div>
+        {!authMember && (
+          <Box sx={{ display: "none" }}>
+            <Button variant="contained" className="signup-button" onClick={() => setSignupOpen(true)}>
+              SIGN UP
+            </Button>
           </Box>
-        </Stack>
+        )}
       </Container>
     </div>
   );

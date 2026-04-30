@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
-import HomePage from "./screens/homePage";
-import OrdersPage from "./screens/ordersPage";
-import ProductsPage from "./screens/productsPage/index";
+import LandingPage from "./screens/landingPage";
 import UserPage from "./screens/userPage";
+import CarListPage from "./screens/carListPage";
+import CarDetailPage from "./screens/carDetailPage";
 import OtherNavbar from "./components/headers/OtherNavbar";
 import Footer from "./components/footer";
 import HelpPage from "./screens/helpPage";
+import NewsPage from "./screens/newsPage";
+import NewsDetailPage from "./screens/newsDetailPage";
 import HomeNavbar  from "./components/headers/HomeNavbar";
 import AuthenticationModal from "./components/auth";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../lib/sweetAlert";
@@ -68,20 +70,26 @@ function App() {
           handleLogoutRequest = {handleLogoutRequest}
           />}
       <Switch>
-        <Route path="/member-page">
-          <UserPage />
+        <Route path="/products/:id">
+          <CarDetailPage />
         </Route>
         <Route path="/products">
-          <ProductsPage/>
+          <CarListPage />
         </Route>
-        <Route path="/orders">
-          <OrdersPage />
+        <Route path="/member-page">
+          <UserPage />
         </Route>
         <Route path="/help">
           <HelpPage />
         </Route>
+        <Route path="/news/:id">
+          <NewsDetailPage />
+        </Route>
+        <Route path="/news">
+          <NewsPage />
+        </Route>
         <Route path="/">
-          <HomePage />
+          <LandingPage />
         </Route>
       </Switch>
       <Footer />

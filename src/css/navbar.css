@@ -1,14 +1,14 @@
 .home-navbar {
   width: 100%;
-  height: 773px;
+  height: auto;
   display: flex;
-  background: url("/public/img/banner.webp");
   background-size: cover;
 }
 
 .home-navbar .navbar-container {
-  margin-top: 55px;
-  height: 642px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  height: auto;
 }
 
 .home-navbar .navbar-container .menu {
@@ -47,8 +47,16 @@
 }
 
 .home-navbar .hover-line a {
-  color: #f8f8ff;
+  color: #0b0c0e;
   z-index: 100;
+}
+
+.home-navbar .brand-wordmark {
+  font-family: "Roboto Serif", Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0b0c0e;
 }
 
 .home-navbar .underline {
@@ -151,7 +159,6 @@
 .home-navbar .navbar-container .header-frame .logo-frame .logo-img {
   width: 100%;
   height: 100%;
-  background: url("/public/img/logo.webp");
   background-size: contain;
   background-repeat: no-repeat;
   filter: invert(25%);
@@ -161,14 +168,14 @@
 
 .other-navbar {
   width: 100%;
-  height: 400px;
+  height: auto;
   display: flex;
-  background: url("/public/img/banner.webp");
   background-size: cover;
 }
 
 .other-navbar .navbar-container {
-  margin-top: 55px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .other-navbar .navbar-container .menu {
@@ -207,8 +214,21 @@
 }
 
 .other-navbar .hover-line a {
-  color: #f8f8ff;
+  color: #0b0c0e;
   z-index: 100;
+}
+
+.other-navbar .brand-wordmark {
+  font-family: "Roboto Serif", Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0b0c0e;
+}
+
+.other-navbar {
+  border-bottom: 1px solid #e3e0d8;
+  background: #f4f2ec;
 }
 
 .other-navbar .underline {

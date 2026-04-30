@@ -1,164 +1,78 @@
-import { Box } from "@mui/material";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import Button from "@mui/material/Button";
-import { useGlobals } from "../../hooks/useGlobals";
-import { MemberUpdateInput } from "../../../lib/types/member";
-import { useState } from "react";
-import { T } from "../../../lib/types/common";
-import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
-import { Messages, serverApi } from "../../../lib/config";
-import { CardMembershipOutlined } from "@mui/icons-material";
-import MemberService from "../../services/MemberService";
+import React, { useState } from "react";
 
-export function Settings() {
-  const {authMember, setAuthMember} = useGlobals();
-  const [memberUpdateInput, setMemberUpdateInput] = 
-  useState<MemberUpdateInput>({ 
-    memberNick: authMember?.memberNick,
-    memberPhone: authMember?.memberPhone,
-    memberAddress: authMember?.memberAddress,
-    memberImage: authMember?.memberImage,
-    memberDesc: authMember?.memberDesc
-  });
-
-  const [memberImage, setMemberImage] = useState<string>(
-    authMember?.memberImage 
-        ? `${serverApi}/${authMember.memberImage}` 
-        : "/icons/default-user.svg"
-      )
- 
-  //**HANDLERS**/
-  const memberNickHandler = (e: T) => {
-    memberUpdateInput.memberNick = e.target.value;
-    setMemberUpdateInput({...memberUpdateInput});
-  }
-
-   const memberPhoneHandler = (e: T) => {
-    memberUpdateInput.memberPhone = e.target.value;
-    setMemberUpdateInput({...memberUpdateInput});
-  }
-
-   const memberAddressHandler = (e: T) => {
-    memberUpdateInput.memberAddress = e.target.value;
-    setMemberUpdateInput({...memberUpdateInput});
-  }
-
-   const memberDescriptionHandler = (e: T) => {
-    memberUpdateInput.memberDesc = e.target.value;
-     setMemberUpdateInput({...memberUpdateInput});
-  }
-
-  const handleSubmitButton = async (e: T) => {
-    try{
-      if(!authMember) throw new Error(Messages.error2);
-      if(memberUpdateInput.memberNick === " " || 
-        memberUpdateInput.memberPhone === " " || 
-        memberUpdateInput.memberAddress === " " ||
-        memberUpdateInput.memberDesc === " "
-      ) {
-          throw new Error(Messages.error3);
-        }
-        const member = new MemberService();
-        const result = await member.updateMember(memberUpdateInput);
-        setAuthMember(result);
-
-        await sweetTopSmallSuccessAlert("Modified successfully:", 700);
-    }catch(err){
-      console.log(err);
-      sweetErrorHandling(err).then();
-    }
-  }
-
-  const handleImageViewer = (e: T) => {
-    const file = e.target.files[0];
-    console.log("files", file);
-    const fileType = file.type,
-      validateImageTypes = ["image/jpg", "image/png", "image/jpeg"];
-    
-      if(!validateImageTypes.includes(fileType)){
-    sweetErrorHandling(Messages.error5).then();
-    }else{
-      if(file) {
-        memberUpdateInput.memberImage = file ;
-        setMemberUpdateInput({ ...memberUpdateInput });
-        setMemberImage(URL.createObjectURL(file));
-      }
-    }
-  } 
-
+export function SettingsCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <Box className={"settings"}>
-      <Box className={"member-media-frame"}>
-        <img src={memberImage} className={"mb-image"} />
-        <div className={"media-change-box"}>
-          <span>Upload image</span>
-          <p>JPG, JPEG, PNG formats only!</p>
-          <div className={"up-del-box"}>
-            <Button component="label" onChange={handleImageViewer}>
-              <CloudDownloadIcon />
-              <input type="file" hidden />
-            </Button>
-          </div>
-        </div>
-      </Box>
-      <Box className={"input-frame"}>
-        <div className={"long-input"}>
-          <label className={"spec-label"}>Username</label>
-          <input
-            className={"spec-input mb-nick"}
-            type="text"
-            placeholder={authMember?.memberNick}
-            value={memberUpdateInput.memberNick}
-            name="memberNick"
-            onChange={memberNickHandler}
-          />
-        </div>
-      </Box>
-      <Box className={"input-frame"}>
-        <div className={"short-input"}>
-          <label className={"spec-label"}>Phone</label>
-          <input
-            className={"spec-input mb-phone"}
-            type="text"
-            placeholder={authMember?.memberPhone 
-              ? authMember?.memberPhone 
-              : 'no phone'}
-            value={memberUpdateInput.memberPhone}
-            name="memberPhone"
-            onChange={memberPhoneHandler}
-          />
-        </div>
-        <div className={"short-input"}>
-          <label className={"spec-label"}>Address</label>
-          <input
-            className={"spec-input  mb-address"}
-            type="text"
-            placeholder={authMember?.memberAddress 
-              ? authMember?.memberAddress 
-              : "no address"}
-            value={memberUpdateInput.memberAddress}
-            name="memberAddress"
-            onChange={memberAddressHandler}
-          />
-        </div>
-      </Box>
-      <Box className={"input-frame"}>
-        <div className={"long-input"}>
-          <label className={"spec-label"}>Description</label>
-          <textarea
-            className={"spec-textarea mb-description"}
-            placeholder={authMember?.memberDesc 
-              ? authMember.memberDesc 
-              : "no description"}
-            value={memberUpdateInput.memberDesc}
-            name="memberDesc"
-            onChange={memberDescriptionHandler}
-          />
-        </div>
-      </Box>
-      <Box className={"save-box"}>
-        <Button variant={"contained"} onClick={handleSubmitButton}>Save</Button>
-      </Box>
-    </Box>
+    <div className="mp-card">
+      <div className="mp-card__head">{title}</div>
+      <div className="mp-card__body">{children}</div>
+    </div>
+  );
+}
+
+export function SettingsRow({
+  label,
+  value,
+  status,
+}: {
+  label: string;
+  value: string;
+  status?: "ok" | "warn";
+}) {
+  const cls =
+    status === "ok" ? "mp-row__value mp-row__value--ok"
+    : status === "warn" ? "mp-row__value mp-row__value--warn"
+    : "mp-row__value";
+  return (
+    <div className="mp-row">
+      <span className="mp-row__label">{label}</span>
+      <span className={cls}>{value}</span>
+    </div>
+  );
+}
+
+export function ToggleRow({ label, on }: { label: string; on?: boolean }) {
+  const [v, setV] = useState(!!on);
+  return (
+    <div className="mp-toggle-row">
+      <span>{label}</span>
+      <button className={`mp-toggle${v ? " mp-toggle--on" : ""}`} onClick={() => setV(!v)}>
+        <span className="mp-toggle__thumb" />
+      </button>
+    </div>
+  );
+}
+
+export default function SettingsTab() {
+  return (
+    <div className="mp-settings-grid">
+      <SettingsCard title="Account">
+        {[
+          ["Full name", "Aziz Karimov"],
+          ["Email", "aziz@example.uz"],
+          ["Phone", "+998 90 ••• 4781"],
+          ["Country", "Uzbekistan"],
+        ].map(([k, v]) => (
+          <SettingsRow key={k} label={k} value={v} />
+        ))}
+      </SettingsCard>
+      <SettingsCard title="Verification">
+        <SettingsRow label="ID document" value="Verified" status="ok" />
+        <SettingsRow label="Address proof" value="Verified" status="ok" />
+        <SettingsRow label="Bank account" value="Pending review" status="warn" />
+        <SettingsRow label="2FA" value="Enabled" status="ok" />
+      </SettingsCard>
+      <SettingsCard title="Notifications">
+        <ToggleRow label="Email — price drop alerts" on />
+        <ToggleRow label="SMS — shipment milestones" on />
+        <ToggleRow label="Email — newsletter" />
+        <ToggleRow label="Push — shipment updates" on />
+      </SettingsCard>
+      <SettingsCard title="Payments">
+        <SettingsRow label="Card on file" value="•••• 4218 (Mastercard)" />
+        <SettingsRow label="Bank wire" value="Hamkorbank, Tashkent" />
+        <SettingsRow label="Default currency" value="USD" />
+        <SettingsRow label="Deposit balance" value="$24,800.00" />
+      </SettingsCard>
+    </div>
   );
 }

@@ -5,83 +5,60 @@ import styled from "styled-components";
 
 const Footers = styled.div`
   width: 100%;
-  height: 590px;
-  display: flex;
-  background: #343434;
-  background-size: cover;
+  background: #0b0c0e;
+  color: #d8d6cf;
+  padding: 64px 0 32px;
 `;
 
 export default function Footer() {
-  const authMember = null;
-
   return (
     <Footers>
       <Container>
-        <Stack flexDirection={"row"} sx={{ mt: "94px" }}>
-          <Stack flexDirection={"column"} style={{ width: "340px" }}>
-            <Box>
-              <img width={"100px"} src={"/icons/burak.svg"} />
+        <Stack flexDirection="row" flexWrap="wrap" gap="64px">
+          <Stack flexDirection="column" style={{ width: "340px" }}>
+            <Box className="brand-wordmark" style={{ fontSize: 22, fontWeight: 700, letterSpacing: "0.05em", color: "#fff" }}>
+              AUCTION.UZ
             </Box>
-            <Box className={"foot-desc-txt"}>
-              Focusing on the gourmet Turkish breakfast as well as the youth
-              society, CZN Burak Gurme aims to bring Turkish cuisine back. CZN
-              Burak Gurme creates an illusion with its cuisine.
+            <Box className="foot-desc-txt" style={{ marginTop: 16, lineHeight: 1.6, opacity: 0.7 }}>
+              Korean cars at fixed prices, shipped door-to-door across Central Asia and the Caucasus.
+              Inspected, insured, and customs-cleared by us.
             </Box>
-            <Box className="sns-context">
-              <img src={"/icons/facebook.svg"} />
-              <img src={"/icons/twitter.svg"} />
-              <img src={"/icons/instagram.svg"} />
-              <img src={"/icons/youtube.svg"} />
+            <Box className="sns-context" style={{ marginTop: 20, display: "flex", gap: 12 }}>
+              <img src="/icons/facebook.svg" alt="facebook" />
+              <img src="/icons/twitter.svg" alt="twitter" />
+              <img src="/icons/instagram.svg" alt="instagram" />
+              <img src="/icons/youtube.svg" alt="youtube" />
             </Box>
           </Stack>
-          <Stack sx={{ ml: "288px" }} flexDirection={"row"}>
+          <Stack flexDirection="row" gap="100px">
             <Stack>
-              <Box>
-                <Box className={"foot-category-title"}>Bo'limlar</Box>
-                <Box className={"foot-category-link"}>
-                  <Link to="/">Home</Link>
-                  <Link to="/products">Products</Link>
-                  {authMember && <Link to="/orders">Orders</Link>}
-                  <Link to="/help">Help</Link>
-                </Box>
+              <Box className="foot-category-title" style={{ color: "#fff", fontWeight: 600, marginBottom: 16 }}>
+                Marketplace
+              </Box>
+              <Box className="foot-category-link" style={{ display: "flex", flexDirection: "column", gap: 10, opacity: 0.75 }}>
+                <Link to="/" style={{ color: "inherit" }}>Home</Link>
+                <Link to="/products" style={{ color: "inherit" }}>Browse cars</Link>
+                <Link to="/member-page" style={{ color: "inherit" }}>My account</Link>
+                <Link to="/help" style={{ color: "inherit" }}>Help & FAQ</Link>
               </Box>
             </Stack>
-            <Stack sx={{ ml: "100px" }}>
-              <Box>
-                <Box className={"foot-category-title"}>Find us</Box>
-                <Box
-                  flexDirection={"column"}
-                  sx={{ mt: "20px" }}
-                  className={"foot-category-link"}
-                  justifyContent={"space-between"}
-                >
-                  <Box flexDirection={"row"} className={"find-us"}>
-                    <span>L.</span>
-                    <div>Downtown, Dubai</div>
-                  </Box>
-                  <Box className={"find-us"}>
-                    <span>P.</span>
-                    <div>+971 4 554 7777</div>
-                  </Box>
-                  <Box className={"find-us"}>
-                    <span>E.</span>
-                    <div>devexuz@gmail.com</div>
-                  </Box>
-                  <Box className={"find-us"}>
-                    <span>H.</span>
-                    <div>Visit 24 hours</div>
-                  </Box>
-                </Box>
+            <Stack>
+              <Box className="foot-category-title" style={{ color: "#fff", fontWeight: 600, marginBottom: 16 }}>
+                Find us
+              </Box>
+              <Box className="foot-category-link" style={{ display: "flex", flexDirection: "column", gap: 10, opacity: 0.75 }}>
+                <div>Tashkent · Seoul</div>
+                <div>+998 71 ••• 4781</div>
+                <div>hello@auction.uz</div>
+                <div>Mon–Sat · 09:00–19:00</div>
               </Box>
             </Stack>
           </Stack>
         </Stack>
-        <Stack
-          style={{ border: "1px solid #C5C8C9", width: "100%", opacity: "0.2" }}
-          sx={{ mt: "80px" }}
-        ></Stack>
-        <Stack className={"copyright-txt"}>
-          © Copyright Devex Global, All rights reserved.
+        <Stack style={{ borderTop: "1px solid rgba(255,255,255,0.1)", marginTop: 60, paddingTop: 20 }}>
+          <Stack className="copyright-txt" style={{ opacity: 0.5, fontSize: 12 }}>
+            © {new Date().getFullYear()} Auction.uz. Korean cars, fixed-price, door delivered.
+          </Stack>
         </Stack>
       </Container>
     </Footers>

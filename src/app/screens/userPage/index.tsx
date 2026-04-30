@@ -1,77 +1,84 @@
-import { Box, Container, Stack } from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import { Settings } from "./Settings";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useGlobals } from "../../hooks/useGlobals";
-import { serverApi } from "../../../lib/config";
-import { MemberType } from "../../../lib/enums/member.enum";
+import Overview from "./Overview";
+import Saved from "./Saved";
+import Tracking from "./Tracking";
+import Orders from "./Orders";
+import SettingsTab from "./Settings";
+import { retrieveCars, retrieveSavedIds } from "../landingPage/selector";
+import { toggleSaved } from "../landingPage/slice";
+import { AuctionCar } from "../../../lib/types/landing";
 import "../../../css/userPage.css";
 
+type TabKey = "overview" | "saved" | "tracking" | "orders" | "settings";
+
 export default function UserPage() {
-  const {orderBuilder, authMember} = useGlobals();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const cars = useSelector(retrieveCars);
+  const savedIds = useSelector(retrieveSavedIds);
+  const saved = cars.filter((c) => savedIds.includes(c.id));
+  const [tab, setTab] = useState<TabKey>("overview");
 
-  if(!authMember) history.push("/")
+  const onSave = (id: string) => dispatch(toggleSaved(id));
+  const openCar = (_c: AuctionCar) => history.push("/products");
+  const goCars = () => history.push("/products");
+
+  const tabs: [TabKey, string][] = [
+    ["overview", "Overview"],
+    ["saved", `Saved · ${saved.length}`],
+    ["tracking", "Tracking · 2"],
+    ["orders", "Orders"],
+    ["settings", "Settings"],
+  ];
+
   return (
-    <div className={"user-page"}>
-      <Container>
-        <Stack className={"my-page-frame"}>
-          <Stack className={"my-page-left"}>
-            <Box display={"flex"} flexDirection={"column"}>
-              <Box className={"menu-name"}>Modify Member Details</Box>
-              <Box className={"menu-content"}>
-                <Settings />
-              </Box>
-            </Box>
-          </Stack>
+    <div className="mypage">
+      <div className="mypage__head">
+        <div className="mypage__crumb">ACCOUNT / OVERVIEW</div>
+        <div className="mypage__head-row">
+          <div className="mypage__id">
+            <div className="mypage__avatar">AK</div>
+            <div>
+              <h1 className="mypage__name">Aziz Karimov</h1>
+              <div className="mypage__meta">
+                <span>BUYER · LVL 3</span>
+                <span className="mypage__meta-sep">|</span>
+                <span>TASHKENT, UZ</span>
+                <span className="mypage__meta-sep">|</span>
+                <span>JOINED OCT 2024</span>
+                <span className="mypage__meta-sep">|</span>
+                <span className="mypage__meta-ok">● ID VERIFIED</span>
+              </div>
+            </div>
+          </div>
+          <div className="mypage__head-cta">
+            <button className="mp-btn mp-btn--secondary mp-btn--md">Edit profile</button>
+            <button className="mp-btn mp-btn--primary mp-btn--md">Add deposit</button>
+          </div>
+        </div>
 
-          <Stack className={"my-page-right"}>
-            <Box className={"order-info-box"}>
-              <Box
-                display={"flex"}
-                flexDirection={"column"}
-                alignItems={"center"}
-              >
-                <div className={"order-user-img"}>
-                  <img
-                    src={authMember?.memberImage 
-                      ? `${serverApi}/${authMember.memberImage}` 
-                      : "/icons/default-user.svg"}
-                    className={"order-user-avatar"}
-                  />
-                  <div className={"order-user-icon-box"}>
-                    <img src={authMember?.memberType === MemberType.RESTAURANT 
-                    ?"/icons/restaurant.svg" 
-                    : "/icons/user-badge.svg"} 
-                    />
-                  </div>
-                </div>
-                <span className={"order-user-name"}>{authMember?.memberNick}</span>
-                <span className={"order-user-prof"}>{authMember?.memberType}</span>
-                <span className={"order-user-prof"}>
-                  {authMember?.memberAddress 
-                  ? authMember.memberAddress 
-                  : "no address"
-                  }
-                  </span>
-              </Box>
-              <Box className={"user-media-box"}>
-                <FacebookIcon />
-                <InstagramIcon />
-                <TelegramIcon />
-                <YouTubeIcon />
-              </Box>
-              <p className={"user-desc"}>{authMember?.memberDesc 
-              ? authMember.memberDesc 
-              : "no description"
-              }</p>
-            </Box>
-          </Stack>
-        </Stack>
-      </Container>
+        <div className="mypage__tabs">
+          {tabs.map(([k, l]) => (
+            <button
+              key={k}
+              onClick={() => setTab(k)}
+              className={`mypage__tab${tab === k ? " mypage__tab--active" : ""}`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mypage__body">
+        {tab === "overview" && <Overview />}
+        {tab === "saved" && <Saved saved={saved} onSave={onSave} onOpen={openCar} onBrowse={goCars} />}
+        {tab === "tracking" && <Tracking />}
+        {tab === "orders" && <Orders />}
+        {tab === "settings" && <SettingsTab />}
+      </div>
     </div>
   );
 }
