@@ -20,7 +20,6 @@ export interface AuctionCar {
   fuel?: string;
   trans?: string;
   km?: number;
-  location?: string;
   color?: string;
   damageDesc?: string;
 }

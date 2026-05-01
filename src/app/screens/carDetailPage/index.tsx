@@ -89,13 +89,13 @@ export default function CarDetailPage() {
             <div className="cd-title-row">
               <div>
                 <div className="cd-title-meta">
-                  #{car.id} · {car.year} · {(car.location || "").toUpperCase()}
+                  #{car.id} · {car.year}
                 </div>
                 <h1 className="cd-title">{car.make} {car.model}</h1>
                 <p className="cd-desc">
                   {isCrashed
                     ? car.damageDesc || "Damaged vehicle, sold as-is. All required replacement parts ship with the car."
-                    : `Single owner. Full service history at authorized ${car.make} dealer in ${car.location}. Korean inspection grade 4.5/5 — paint thickness within standard tolerance across all panels.`}
+                    : `Single owner. Full service history at authorized ${car.make} dealer. Korean inspection grade 4.5/5 — paint thickness within standard tolerance across all panels.`}
                 </p>
               </div>
               <button className={`cd-save${saved ? " cd-save--on" : ""}`} onClick={() => onSave(car.id)}>

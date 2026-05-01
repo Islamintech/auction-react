@@ -52,7 +52,7 @@ export default function CarCard({ car, saved, onSave, onOpen, density = "spaciou
         <div className="car-card__head">
           <div className="car-card__head-main">
             <div className="car-card__meta">
-              {(car.make ?? "—")} · {car.year} · {(car.location ?? "").toUpperCase()}
+              {(car.make ?? "—")} · {car.year}
             </div>
             <div className="car-card__name">{car.model}</div>
           </div>

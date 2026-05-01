@@ -218,7 +218,7 @@ export default function CarListPage() {
                   <CarPlaceholder label={c.id} tone={c.image || "sedan-a"} height={70} />
                   <div>
                     <div className="cl-list__model">{c.make} {c.model}</div>
-                    <div className="cl-list__id">#{c.id} · {(c.location || "").toUpperCase()}</div>
+                    <div className="cl-list__id">#{c.id}</div>
                   </div>
                   <span className="cl-list__num">{c.year}</span>
                   <span className="cl-list__num cl-list__num--mute">{c.km?.toLocaleString() ?? "—"}</span>
