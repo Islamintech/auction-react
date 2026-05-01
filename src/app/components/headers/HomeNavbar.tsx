@@ -91,7 +91,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
           </Stack>
         </Stack>
         {!authMember && (
-          <Box sx={{ display: "none" }}>
+          <Box>
             <Button variant="contained" className="signup-button" onClick={() => setSignupOpen(true)}>
               SIGN UP
             </Button>
