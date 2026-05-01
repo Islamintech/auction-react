@@ -2,7 +2,8 @@
   width: 100%;
   height: auto;
   display: flex;
-  background: #f8f8ff;
+  background: var(--bg, #f8f8ff);
+  color: var(--text, #0b0c0e);
 }
 
 .help-page .help-container {
@@ -50,8 +51,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #f8f8ff;
-  border: 1px solid #ededed;
+  background: var(--surface, #f8f8ff);
+  border: 1px solid var(--line, #ededed);
   box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
   border-radius: 8px;
 }
@@ -64,8 +65,8 @@
 }
 
 .rules-box .rules-frame p {
-  border-bottom: 1px solid #dddddd;
-  color: #000000;
+  border-bottom: 1px solid var(--line-soft, #dddddd);
+  color: var(--text, #000000);
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 400;
   font-size: 1rem;
@@ -87,8 +88,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #f8f8ff;
-  border: 1px solid #ededed;
+  background: var(--surface, #f8f8ff);
+  border: 1px solid var(--line, #ededed);
   box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
   border-radius: 8px;
 }
@@ -112,7 +113,7 @@
   font-weight: 400;
   font-size: 24px;
   line-height: 28px;
-  color: #140342;
+  color: var(--text, #140342);
 }
 
 .help-page .admin-letter-frame p {
@@ -122,7 +123,7 @@
   font-weight: 400;
   font-size: 15px;
   line-height: 26px;
-  color: #4f547b;
+  color: var(--text-mute, #4f547b);
 }
 
 .help-page .admin-letter-container .admin-letter-frame {
@@ -144,7 +145,7 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  color: #140342;
+  color: var(--text, #140342);
 }
 
 .help-page .admin-letter-frame .admin-input-box input {
@@ -153,15 +154,15 @@
   width: 100%;
   height: 60px;
   display: flex;
-  background: #f8f8ff;
-  border: 1px solid #dddddd;
+  background: var(--surface, #f8f8ff);
+  border: 1px solid var(--line, #dddddd);
   border-radius: 8px;
   font-family: "Verdana";
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
   line-height: 26px;
-  color: #4f547b;
+  color: var(--text-mute, #4f547b);
 }
 
 .help-page .admin-letter-frame .admin-input-box textarea {
@@ -170,13 +171,37 @@
   width: 100%;
   height: 150px;
   display: flex;
-  background: #f8f8ff;
-  border: 1px solid #dddddd;
+  background: var(--surface, #f8f8ff);
+  border: 1px solid var(--line, #dddddd);
   border-radius: 8px;
   font-family: "Verdana";
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
   line-height: 26px;
-  color: #4f547b;
+  color: var(--text-mute, #4f547b);
 }
+
+/* MUI Accordion / Tabs theming */
+.help-page .MuiAccordion-root {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: none !important;
+}
+.help-page .MuiAccordion-root::before { display: none !important; }
+.help-page .MuiAccordionSummary-root,
+.help-page .MuiAccordionDetails-root {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+.help-page .MuiAccordionSummary-root .MuiTypography-root,
+.help-page .MuiAccordionDetails-root .MuiTypography-root {
+  color: var(--text) !important;
+}
+.help-page .MuiAccordionSummary-expandIconWrapper {
+  color: var(--text-mute) !important;
+}
+.help-page .MuiTab-root { color: var(--text-mute) !important; }
+.help-page .MuiTab-root.Mui-selected { color: var(--accent) !important; }
+.help-page .MuiTabs-indicator { background-color: var(--accent) !important; }

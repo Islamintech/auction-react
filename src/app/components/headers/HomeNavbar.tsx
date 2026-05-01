@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
 import { Logout } from "@mui/icons-material";
+import ThemeToggle from "../themeToggle";
 
 interface HomeNavbarProps {
   setSignupOpen: (isOpen: boolean) => void;
@@ -51,6 +52,8 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             <Box className="hover-line">
               <NavLink to="/help" activeClassName="underline">Help</NavLink>
             </Box>
+
+            <ThemeToggle />
 
             {!authMember ? (
               <Box>

@@ -39,7 +39,7 @@ const light = {
 		MuiCssBaseline: {
 			styleOverrides: {
 				html: { height: '100%' },
-				body: { background: '#f4f6f8', height: '100%', minHeight: '100%' },
+				body: { background: 'var(--bg)', color: 'var(--text)', height: '100%', minHeight: '100%' },
 			},
 		},
 	},

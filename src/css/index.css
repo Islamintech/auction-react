@@ -5,9 +5,117 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* ────────────────────────────────────────────────────────────
+   Theme tokens — light (default) and dark
+   ──────────────────────────────────────────────────────────── */
+:root,
+:root[data-theme="light"] {
+  --bg: #f4f2ec;
+  --surface: #ffffff;
+  --surface2: #ecebe5;
+  --text: #0b0c0e;
+  --text-mute: #5a5d63;
+  --text-dim: #8a8d93;
+  --line: #e3e0d8;
+  --line-soft: #ecebe5;
+  --accent: #d7b586;
+  --warn: #ffb547;
+  --ok: #3ee07c;
+  --danger: #e85a5a;
+  --on-accent: #0b0c0e;
+  --footer-bg: #0b0c0e;
+  --footer-text: #d8d6cf;
+  --footer-heading: #ffffff;
+  --footer-rule: rgba(255, 255, 255, 0.1);
+  --nav-bg: transparent;
+  --nav-text: #0b0c0e;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0e0f12;
+  --surface: #16181c;
+  --surface2: #1d2026;
+  --text: #f1ece1;
+  --text-mute: #a8acb3;
+  --text-dim: #70747c;
+  --line: #2a2d33;
+  --line-soft: #22252b;
+  --accent: #d7b586;
+  --warn: #ffb547;
+  --ok: #3ee07c;
+  --danger: #e85a5a;
+  --on-accent: #0b0c0e;
+  --footer-bg: #07080a;
+  --footer-text: #a8acb3;
+  --footer-heading: #f1ece1;
+  --footer-rule: rgba(255, 255, 255, 0.08);
+  --nav-bg: transparent;
+  --nav-text: #f1ece1;
+}
+
+/* Override per-page scoped tokens in dark mode (existing CSS scopes
+   --bg, --text, etc. on .landing/.mypage/.carlist/.cardetail/.news).
+   Re-declare them here so the page-scoped vars pick up dark values. */
+:root[data-theme="dark"] .landing,
+:root[data-theme="dark"] .mypage,
+:root[data-theme="dark"] .carlist,
+:root[data-theme="dark"] .cardetail,
+:root[data-theme="dark"] .news,
+:root[data-theme="dark"] .news-detail {
+  --bg: #0e0f12;
+  --surface: #16181c;
+  --surface2: #1d2026;
+  --text: #f1ece1;
+  --text-mute: #a8acb3;
+  --text-dim: #70747c;
+  --line: #2a2d33;
+  --line-soft: #22252b;
+}
+
+/* Hero overlay gradient flips for dark */
+:root[data-theme="dark"] .landing__hero-overlay {
+  background: linear-gradient(180deg, rgba(14, 15, 18, 0.5) 0%, rgba(14, 15, 18, 0.85) 60%, rgba(14, 15, 18, 1) 100%);
+}
+
+/* Big CTA: in light mode bg is --text (dark); in dark mode flip so it stays distinct */
+:root[data-theme="dark"] .landing-cta {
+  background: var(--surface2);
+  color: var(--text);
+}
+:root[data-theme="dark"] .landing-cta__btn { color: #0b0c0e; }
+
+/* Buttons that use bg as foreground need contrast */
+:root[data-theme="dark"] .landing-btn--primary,
+:root[data-theme="dark"] .mp-btn--primary,
+:root[data-theme="dark"] .cd-btn--primary {
+  background: var(--accent);
+  color: #0b0c0e;
+}
+:root[data-theme="dark"] .cl-density__btn--active {
+  background: var(--accent);
+  color: #0b0c0e;
+  border-color: var(--accent);
+}
+
+/* Car tag solid uses --text bg with #0b0c0e text — keep readable */
+:root[data-theme="dark"] .car-tag,
+:root[data-theme="dark"] .cl-tag--solid,
+:root[data-theme="dark"] .cd-tag--solid,
+:root[data-theme="dark"] .mp-tag--solid {
+  color: #0b0c0e;
+}
+
+/* Save badges over images */
+:root[data-theme="dark"] .car-card__save {
+  background: rgba(241, 236, 225, 0.15);
 }

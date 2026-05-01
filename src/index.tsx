@@ -9,6 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from './app/MaterialTheme';
 import {BrowserRouter as Router} from "react-router-dom";
 import ContextProvider from "./app/context/ContextProvider";
+import { ThemeContextProvider } from "./app/context/ThemeContext";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -17,12 +18,14 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
      <ContextProvider>
-      <ThemeProvider theme={theme}>
-       <CssBaseline />
-       <Router>
-        <App />
-       </Router>
-     </ThemeProvider>
+      <ThemeContextProvider>
+       <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+         <App />
+        </Router>
+       </ThemeProvider>
+      </ThemeContextProvider>
     </ContextProvider>
     </Provider>
   </React.StrictMode>,
