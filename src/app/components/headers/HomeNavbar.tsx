@@ -47,7 +47,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               <NavLink to="/products" activeClassName="underline">Cars</NavLink>
             </Box>
             <Box className="hover-line">
-              <NavLink to="/news" activeClassName="underline">News</NavLink>
+              <NavLink to="/news" activeClassName="underline">Community</NavLink>
             </Box>
             <Box className="hover-line">
               <NavLink to="/help" activeClassName="underline">Help</NavLink>

@@ -10,7 +10,7 @@ export const t = {
   sections: {
     crashed: "CRASHED · WITH PARTS",
     featured: "Featured this week",
-    leaderboard: "Top buyers",
+    leaderboard: "Active users",
     community: "From the community",
   },
   nav: { signup: "Create account" },
