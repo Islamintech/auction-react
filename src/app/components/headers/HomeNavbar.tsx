@@ -29,6 +29,10 @@ export default function HomeNavbar(props: HomeNavbarProps) {
     handleCloseLogout();
     history.push("/member-page");
   };
+  const logout = () => {
+    handleCloseLogout();
+    handleLogoutRequest();
+  };
 
   return (
     <div className="home-navbar">
@@ -67,13 +71,20 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 </Button>
               </Box>
             ) : (
-              <div aria-haspopup="true" onClick={handleLogoutClick} style={{ cursor: "pointer" }}>
+              <button
+                type="button"
+                className="account-trigger"
+                aria-haspopup="menu"
+                aria-controls={anchorEl ? "account-menu" : undefined}
+                aria-expanded={anchorEl ? "true" : undefined}
+                onClick={handleLogoutClick}
+              >
                 <img
                   className="user-avatar"
                   src={authMember?.memberImage ? `${serverApi}/${authMember?.memberImage}` : "/icons/default-user.svg"}
                   alt="user avatar"
                 />
-              </div>
+              </button>
             )}
 
             <Menu
@@ -81,8 +92,12 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               id="account-menu"
               open={Boolean(anchorEl)}
               onClose={handleCloseLogout}
-              disablePortal
-              PaperProps={{ elevation: 0, sx: { mt: 1.5 } }}
+              slotProps={{
+                paper: {
+                  elevation: 0,
+                  className: "account-menu-paper",
+                },
+              }}
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
@@ -92,7 +107,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 </ListItemIcon>
                 My Page
               </MenuItem>
-              <MenuItem onClick={handleLogoutRequest}>
+              <MenuItem onClick={logout}>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>

@@ -45,6 +45,26 @@
   color: #f8f8ff;
 }
 
+.home-navbar .navbar-container .menu .account-trigger,
+.other-navbar .navbar-container .menu .account-trigger {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.home-navbar .navbar-container .menu .account-trigger:focus-visible,
+.other-navbar .navbar-container .menu .account-trigger:focus-visible {
+  outline: 2px solid var(--accent, #d7b586);
+  outline-offset: 3px;
+}
+
 .home-navbar .navbar-container .menu .user-avatar {
   width: 38px;
   height: 38px;
@@ -59,6 +79,52 @@
   transform: scale(1.06);
   border-color: var(--accent, #d4a248);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+}
+
+.account-menu-paper {
+  min-width: 210px;
+  margin-top: 10px;
+  overflow: visible;
+  border: 1px solid var(--line, #e3e0d8);
+  border-radius: 8px !important;
+  background: var(--surface, #ffffff) !important;
+  color: var(--text, #0b0c0e) !important;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.16) !important;
+}
+
+.account-menu-paper:before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 18px;
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+  border-left: 1px solid var(--line, #e3e0d8);
+  border-top: 1px solid var(--line, #e3e0d8);
+  background: var(--surface, #ffffff);
+}
+
+.account-menu-paper .MuiMenu-list {
+  padding: 6px;
+}
+
+.account-menu-paper .MuiMenuItem-root {
+  min-height: 40px;
+  gap: 8px;
+  border-radius: 6px;
+  font-family: Poppins, Arial, sans-serif;
+  font-size: 14px;
+  color: var(--text, #0b0c0e);
+}
+
+.account-menu-paper .MuiMenuItem-root:hover {
+  background: var(--hover, rgba(215, 181, 134, 0.16));
+}
+
+.account-menu-paper .MuiListItemIcon-root {
+  min-width: 28px;
+  color: var(--muted, #6f6b63);
 }
 
 .home-navbar a {
