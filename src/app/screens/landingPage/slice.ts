@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuctionCar, LandingPageState } from "../../../lib/types/landing";
-import { MOCK_CARS } from "../../../lib/data/cars";
 
 const initialState: LandingPageState = {
-  cars: MOCK_CARS,
+  cars: [],
   savedIds: [],
 };
 

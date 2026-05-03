@@ -1,6 +1,7 @@
 import React from "react";
 import CarPlaceholder from "./CarPlaceholder";
 import { AuctionCar } from "../../../lib/types/landing";
+import { imageUrl } from "../../../lib/api";
 
 interface Props {
   car: AuctionCar;
@@ -13,28 +14,23 @@ interface Props {
 export default function CarCard({ car, saved, onSave, onOpen, density = "spacious" }: Props) {
   const compact = density === "compact";
   const isCrashed = car.category === "crashed";
-  const partsTotal = isCrashed && car.parts ? car.parts.reduce((s, p) => s + p.price, 0) : 0;
-  const modelHead = car.model.split(" ")[0];
+  const partsCount = car.damagedParts?.length ?? 0;
+  const img = imageUrl(car.image);
+  const mediaHeight = compact ? 150 : 190;
 
   return (
     <div className={`car-card${compact ? " car-card--compact" : ""}`} onClick={() => onOpen(car)}>
       <div className="car-card__media">
-        <CarPlaceholder
-          label={`${car.make ?? ""} ${modelHead}`.trim()}
-          tone={car.image || "sedan-a"}
-          height={compact ? 150 : 190}
-          compact={compact}
-        />
+        {img ? (
+          <div style={{ backgroundImage: `url(${img})`, backgroundSize: "cover", backgroundPosition: "center", height: mediaHeight, borderRadius: 8 }} />
+        ) : (
+          <CarPlaceholder label={car.brand} tone={car.brand} height={mediaHeight} compact={compact} />
+        )}
         <div className="car-card__tags">
           {isCrashed ? (
             <span className="car-tag car-tag--warn">● CRASHED</span>
           ) : (
             <span className="car-tag car-tag--outline">READY</span>
-          )}
-          {isCrashed ? (
-            <span className="car-tag car-tag--outline car-tag--warn-o">PARTS INCL.</span>
-          ) : (
-            <span className="car-tag car-tag--outline car-tag--ok-o">CLEAN</span>
           )}
         </div>
         <button
@@ -51,33 +47,22 @@ export default function CarCard({ car, saved, onSave, onOpen, density = "spaciou
       <div className="car-card__body">
         <div className="car-card__head">
           <div className="car-card__head-main">
-            <div className="car-card__meta">
-              {(car.make ?? "—")} · {car.year}
-            </div>
-            <div className="car-card__name">{car.model}</div>
+            <div className="car-card__meta">{car.brand} · {car.year}</div>
+            <div className="car-card__name">{car.title}</div>
           </div>
-          <div className="car-card__id">#{car.id}</div>
         </div>
 
         <div className="car-card__specs">
           <span>{(car.km ?? 0).toLocaleString()} KM</span>
-          <span className="car-card__sep">|</span>
-          <span>{(car.fuel ?? "").toUpperCase()}</span>
-          <span className="car-card__sep">|</span>
-          <span>{(car.trans ?? "").toUpperCase()}</span>
+          {car.color && <><span className="car-card__sep">|</span><span>{car.color.toUpperCase()}</span></>}
         </div>
 
         <div className="car-card__rule" />
 
         <div className="car-card__foot">
           <div>
-            <div className="car-card__price-label">
-              {isCrashed ? `Car + ${car.parts?.length ?? 0} parts` : "Price"}
-            </div>
+            <div className="car-card__price-label">{isCrashed ? `Car${partsCount ? ` + ${partsCount} parts` : ""}` : "Price"}</div>
             <div className="car-card__price">${car.price.toLocaleString()}</div>
-            {isCrashed && (
-              <div className="car-card__price-extra">+ ${partsTotal.toLocaleString()} parts</div>
-            )}
           </div>
           <div className="car-card__ship">
             <div className="car-card__ship-row">

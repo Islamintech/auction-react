@@ -2,13 +2,14 @@ import React from "react";
 import Tag from "./Tag";
 import { AuctionCar } from "../../../lib/types/landing";
 
-export default function BuyPanel({ car, partsTotal }: { car: AuctionCar; partsTotal: number }) {
+export default function BuyPanel({ car }: { car: AuctionCar }) {
   const isCrashed = car.category === "crashed";
+  const partsCount = car.damagedParts?.length ?? 0;
   const fee = Math.round(car.price * 0.045);
   const total = car.price + fee + 480 + 760 + 2150;
 
   const breakdown: [string, number][] = [
-    [`Vehicle${isCrashed ? " + parts" : ""}`, car.price],
+    [`Vehicle${isCrashed && partsCount ? " + parts" : ""}`, car.price],
     ["Buyer fee (4.5%)", fee],
     ["KR export", 480],
     ["Marine + insurance", 760],
@@ -22,20 +23,19 @@ export default function BuyPanel({ car, partsTotal }: { car: AuctionCar; partsTo
           {isCrashed ? (
             <>
               <Tag color="var(--warn)">● CRASHED</Tag>
-              <Tag outline color="var(--warn)">PARTS INCLUDED</Tag>
+              {partsCount > 0 && <Tag outline color="var(--warn)">PARTS INCLUDED</Tag>}
             </>
           ) : (
             <Tag outline color="var(--text)">READY TO DRIVE</Tag>
           )}
         </div>
-        <div className="cd-buy__label">{isCrashed ? "CAR + PARTS · FIXED PRICE" : "FIXED PRICE"}</div>
+        <div className="cd-buy__label">{isCrashed && partsCount ? "CAR + PARTS · FIXED PRICE" : "FIXED PRICE"}</div>
         <div className="cd-buy__price">${car.price.toLocaleString()}</div>
 
-        {isCrashed && car.parts && (
+        {isCrashed && partsCount > 0 && (
           <div className="cd-buy__breakdown">
             Vehicle <b>${car.price.toLocaleString()}</b><br />
-            + <b>{car.parts.length} replacement parts</b> (${partsTotal.toLocaleString()} value){" "}
-            <em>included</em>
+            + <b>{partsCount} replacement parts</b> <em>included</em>
           </div>
         )}
 

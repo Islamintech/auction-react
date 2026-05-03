@@ -1,20 +1,16 @@
-export type PostCategory =
-  | "BUYER STORY"
-  | "GUIDE"
-  | "Q&A"
-  | "INSPECTION"
-  | "ANNOUNCEMENT"
-  | "MARKET";
+export type PostType = "NEWS" | "ARTICLE" | "FREE_BOARD";
 
 export interface Post {
-  id: string;
-  category: PostCategory;
-  title: string;
-  excerpt: string;
-  body: string;
-  author: string;
-  date: string;
-  replies: number;
-  image: string;
-  featured?: boolean;
+  _id: string;
+  memberId: string;
+  postTitle: string;
+  postImage: string;
+  postBody: string;
+  postType: PostType;
+  postStatus: string;
+  postViewCount: number;
+  postLikeCount: number;
+  postCommentCount: number;
+  createdAt: string;
+  updatedAt: string;
 }

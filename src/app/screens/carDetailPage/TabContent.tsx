@@ -4,30 +4,18 @@ import { AuctionCar } from "../../../lib/types/landing";
 
 export type TabKey = "specs" | "damage" | "parts" | "delivery" | "paperwork";
 
-function damageStatus(damage: string | undefined, side: "front" | "rear" | "left" | "right") {
-  const d = (damage || "").toLowerCase();
-  if (d.includes(side)) return "damaged";
-  if (side === "left" && d.includes("side")) return "minor";
-  if (side === "right" && d.includes("side")) return "minor";
-  return "clean";
-}
-
-export default function TabContent({ tab, car, partsTotal }: { tab: TabKey; car: AuctionCar; partsTotal: number }) {
+export default function TabContent({ tab, car }: { tab: TabKey; car: AuctionCar }) {
   const isCrashed = car.category === "crashed";
+  const damaged = car.damagedParts || [];
 
   if (tab === "specs") {
     const rows: [string, string | number][] = [
+      ["Brand", car.brand],
       ["Year", car.year],
       ["Mileage", `${(car.km ?? 0).toLocaleString()} km`],
-      ["Fuel", car.fuel ?? "—"],
-      ["Transmission", car.trans ?? "—"],
-      ["Color", car.color ?? "—"],
-      ["Body type", isCrashed ? "Damaged · runs" : "Sedan"],
-      ["Engine", "3.5L V6 Twin-Turbo"],
-      ["Power", "375 hp / 391 lb·ft"],
-      ["Drive", "AWD"],
-      ["Seats", "5"],
-      ["VIN", "KMHL34J••••••42718"],
+      ["Color", car.color || "—"],
+      ["Status", car.status],
+      ["Body type", isCrashed ? "Damaged · runs" : "—"],
       ["Inspection grade", isCrashed ? "Damaged · graded R3" : "4.5 / 5"],
     ];
     return (
@@ -43,67 +31,57 @@ export default function TabContent({ tab, car, partsTotal }: { tab: TabKey; car:
   }
 
   if (tab === "damage") {
-    const sides: ["front" | "rear" | "left" | "right", string][] = [
-      ["front", "Front"],
-      ["rear", "Rear"],
-      ["left", "Left side"],
-      ["right", "Right side"],
-    ];
     return (
       <div>
-        <div className="cd-damage-grid">
-          {sides.map(([s, label]) => {
-            const status = isCrashed ? damageStatus(car.damage, s) : s === "right" ? "minor" : "clean";
-            return (
-              <div key={s} className="cd-damage-cell">
-                <div className="cd-damage-cell__label">{label.toUpperCase()}</div>
-                <div className={`cd-damage-cell__status cd-status--${status}`}>
-                  ● {status === "clean" ? "Clean" : status === "damaged" ? "Damaged" : "Minor"}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <p className="cd-damage-note">
+        {damaged.length > 0 ? (
+          <ul className="cd-damage-list" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            {damaged.map((d, i) => (
+              <li key={i} style={{ padding: "10px 0", borderBottom: "1px solid var(--rule)", display: "flex", justifyContent: "space-between" }}>
+                <span>● {d.name}</span>
+                <span style={{ opacity: 0.7 }}>${d.price.toLocaleString()}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div style={{ opacity: 0.7 }}>No damage reported.</div>
+        )}
+        <p className="cd-damage-note" style={{ marginTop: 16 }}>
           {isCrashed
-            ? `${car.damageDesc || "Damaged vehicle, sold as-is."} All required replacement parts ship in the same container, sourced from licensed Korean breakers and OEM channels.`
-            : `Right rear quarter panel: 0.18mm above factory paint thickness — consistent with quality respray, no underlying repair. Frame measurements pass standard tolerance. CarHistory report (KR) shows zero accident records.`}
+            ? `Damaged vehicle, sold as-is. All required replacement parts ship in the same container.`
+            : `Frame measurements pass standard tolerance. CarHistory report (KR) shows zero accident records.`}
         </p>
       </div>
     );
   }
 
-  if (tab === "parts" && isCrashed && car.parts) {
+  if (tab === "parts" && isCrashed) {
     return (
       <div>
         <div className="cd-parts-head">
           <div>
             <div className="cd-parts-head__label">PARTS INCLUDED · SHIPS WITH CAR</div>
-            <div className="cd-parts-head__title">{car.parts.length} replacement parts</div>
-          </div>
-          <div>
-            <div className="cd-parts-head__label" style={{ textAlign: "right" }}>PARTS VALUE</div>
-            <div className="cd-parts-head__total">${partsTotal.toLocaleString()}</div>
+            <div className="cd-parts-head__title">{damaged.length} replacement parts</div>
           </div>
         </div>
-        <div className="cd-parts-table">
-          <div className="cd-parts-table__head">
-            <span>PART</span><span>OEM #</span><span>VALUE</span><span>STATUS</span>
-          </div>
-          {car.parts.map((p, i) => (
-            <div key={p.oem || p.name} className={`cd-parts-table__row${i === 0 ? " cd-parts-table__row--first" : ""}`}>
-              <span className="cd-parts-table__name">{p.name}</span>
-              <span className="cd-parts-table__oem">{p.oem || "—"}</span>
-              <span className="cd-parts-table__price">${p.price}</span>
-              <Tag outline color={p.ship ? "var(--ok)" : "var(--warn)"}>
-                {p.ship ? "✓ READY" : "PENDING"}
-              </Tag>
+        {damaged.length > 0 ? (
+          <div className="cd-parts-table">
+            <div className="cd-parts-table__head">
+              <span>PART</span><span>OEM #</span><span>VALUE</span><span>STATUS</span>
             </div>
-          ))}
-        </div>
-        <p className="cd-parts-note">
-          Parts are crated separately and loaded with the car in the same 40HC container. Customs declaration lists each part by OEM number.
-        </p>
+            {damaged.map((p, i) => (
+              <div key={i} className={`cd-parts-table__row${i === 0 ? " cd-parts-table__row--first" : ""}`}>
+                <span className="cd-parts-table__name">{p.name}</span>
+                <span className="cd-parts-table__oem">{p.oem || "—"}</span>
+                <span className="cd-parts-table__price">${p.price.toLocaleString()}</span>
+                <Tag outline color={p.ship === false ? "var(--warn)" : "var(--ok)"}>
+                  {p.ship === false ? "PENDING" : "✓ READY"}
+                </Tag>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ opacity: 0.7, padding: 20 }}>No parts listed.</div>
+        )}
       </div>
     );
   }

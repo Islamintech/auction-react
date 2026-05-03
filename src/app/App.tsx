@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import LandingPage from "./screens/landingPage";
 import UserPage from "./screens/userPage";
@@ -21,10 +21,14 @@ import "../css/footer.css";
 
 function App() {
   const location = useLocation();
-  const {setAuthMember} = useGlobals();
+  const {setAuthMember, setOpenSignup} = useGlobals();
   const [signupOpen, setSignupOpen] = useState<boolean>(false);
   const [loginOpen, setLoginOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setOpenSignup(() => setSignupOpen(true));
+  }, [setOpenSignup]);
 
   /**HANDLERS**/
   const handleSignupClose = () => setSignupOpen(false);

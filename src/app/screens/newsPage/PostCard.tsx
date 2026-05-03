@@ -1,6 +1,7 @@
 import React from "react";
 import CarPlaceholder from "../landingPage/CarPlaceholder";
 import { Post } from "../../../lib/types/post";
+import { serverApi } from "../../../lib/config";
 
 interface Props {
   post: Post;
@@ -8,20 +9,44 @@ interface Props {
   variant?: "card" | "row" | "feature";
 }
 
+function imgUrl(path: string) {
+  if (!path) return "";
+  if (path.startsWith("http")) return path;
+  return `${serverApi}/${path}`;
+}
+
+function formatDate(iso: string) {
+  return iso ? iso.slice(0, 10) : "";
+}
+
+function excerptOf(body: string, len = 160) {
+  if (!body) return "";
+  return body.length > len ? body.slice(0, len).trim() + "…" : body;
+}
+
 export default function PostCard({ post, onOpen, variant = "card" }: Props) {
+  const image = post.postImage ? imgUrl(post.postImage) : "";
+  const heroStyle = image
+    ? { backgroundImage: `url(${image})`, backgroundSize: "cover", backgroundPosition: "center" }
+    : undefined;
+
   if (variant === "row") {
     return (
       <div className="news-row" onClick={() => onOpen(post)}>
-        <CarPlaceholder label={post.category} tone={post.image} height={92} />
+        {image ? (
+          <div style={{ ...heroStyle, height: 92, borderRadius: 8 }} />
+        ) : (
+          <CarPlaceholder label={post.postType.replace("_", " ")} tone={post.postType.replace("_", " ")} height={92} />
+        )}
         <div className="news-row__body">
-          <div className="news-row__tag">{post.category}</div>
-          <div className="news-row__title">{post.title}</div>
+          <div className="news-row__tag">{post.postType.replace("_", " ")}</div>
+          <div className="news-row__title">{post.postTitle}</div>
           <div className="news-row__meta">
-            <span>{post.author.toUpperCase()}</span>
+            <span>{formatDate(post.createdAt)}</span>
             <span>·</span>
-            <span>{post.date}</span>
+            <span>{post.postCommentCount} replies</span>
             <span>·</span>
-            <span>{post.replies} replies</span>
+            <span>{post.postViewCount} views</span>
           </div>
         </div>
       </div>
@@ -31,17 +56,21 @@ export default function PostCard({ post, onOpen, variant = "card" }: Props) {
   if (variant === "feature") {
     return (
       <div className="news-feature" onClick={() => onOpen(post)}>
-        <CarPlaceholder label={post.category} tone={post.image} height={320} />
+        {image ? (
+          <div style={{ ...heroStyle, height: 320, borderRadius: 12 }} />
+        ) : (
+          <CarPlaceholder label={post.postType.replace("_", " ")} tone={post.postType.replace("_", " ")} height={320} />
+        )}
         <div className="news-feature__body">
-          <div className="news-feature__tag">FEATURED · {post.category}</div>
-          <div className="news-feature__title">{post.title}</div>
-          <div className="news-feature__excerpt">{post.excerpt}</div>
+          <div className="news-feature__tag">FEATURED · {post.postType.replace("_", " ")}</div>
+          <div className="news-feature__title">{post.postTitle}</div>
+          <div className="news-feature__excerpt">{excerptOf(post.postBody)}</div>
           <div className="news-feature__meta">
-            <span>{post.author.toUpperCase()}</span>
+            <span>{formatDate(post.createdAt)}</span>
             <span>·</span>
-            <span>{post.date}</span>
+            <span>{post.postCommentCount} replies</span>
             <span>·</span>
-            <span>{post.replies} replies</span>
+            <span>{post.postViewCount} views</span>
           </div>
         </div>
       </div>
@@ -50,14 +79,18 @@ export default function PostCard({ post, onOpen, variant = "card" }: Props) {
 
   return (
     <div className="news-card" onClick={() => onOpen(post)}>
-      <CarPlaceholder label={post.category} tone={post.image} height={150} />
+      {image ? (
+        <div style={{ ...heroStyle, height: 150, borderRadius: 10 }} />
+      ) : (
+        <CarPlaceholder label={post.postType.replace("_", " ")} tone={post.postType.replace("_", " ")} height={150} />
+      )}
       <div className="news-card__body">
-        <div className="news-card__tag">{post.category}</div>
-        <div className="news-card__title">{post.title}</div>
-        <div className="news-card__excerpt">{post.excerpt}</div>
+        <div className="news-card__tag">{post.postType.replace("_", " ")}</div>
+        <div className="news-card__title">{post.postTitle}</div>
+        <div className="news-card__excerpt">{excerptOf(post.postBody)}</div>
         <div className="news-card__meta">
-          <span>{post.author.toUpperCase()} · {post.date}</span>
-          <span>{post.replies} replies</span>
+          <span>{formatDate(post.createdAt)}</span>
+          <span>{post.postCommentCount} replies</span>
         </div>
       </div>
     </div>

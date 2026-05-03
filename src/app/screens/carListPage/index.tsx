@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import FilterGroup from "./FilterGroup";
@@ -8,8 +8,10 @@ import Tag from "./Tag";
 import CarCard from "../landingPage/CarCard";
 import CarPlaceholder from "../landingPage/CarPlaceholder";
 import { retrieveCars, retrieveSavedIds } from "../landingPage/selector";
-import { toggleSaved } from "../landingPage/slice";
+import { setCars, toggleSaved } from "../landingPage/slice";
 import { AuctionCar } from "../../../lib/types/landing";
+import CarService from "../../services/CarService";
+import { imageUrl } from "../../../lib/api";
 import "../../../css/carList.css";
 
 type View = "grid" | "list";
@@ -17,27 +19,12 @@ type Density = "spacious" | "compact";
 type Sort = "newest" | "price-l" | "price-h" | "km" | "year";
 
 interface Filters {
-  make: string;
-  fuel: string;
+  brand: string;
   category: string;
   priceMax: number;
   sort: Sort;
 }
 
-const MAKES: [string, string][] = [
-  ["all", "All"],
-  ["Genesis", "Genesis"],
-  ["Hyundai", "Hyundai"],
-  ["Kia", "Kia"],
-  ["KG Mobility", "KG Mobility"],
-];
-const FUELS: [string, string][] = [
-  ["all", "All"],
-  ["Gasoline", "Gasoline"],
-  ["Electric", "Electric"],
-  ["Diesel", "Diesel"],
-  ["Hybrid", "Hybrid"],
-];
 const CONDITIONS: [string, string][] = [
   ["all", "All cars"],
   ["ready", "Ready to drive"],
@@ -53,17 +40,28 @@ export default function CarListPage() {
   const [view, setView] = useState<View>("grid");
   const [density, setDensity] = useState<Density>("spacious");
   const [filters, setFilters] = useState<Filters>({
-    make: "all",
-    fuel: "all",
+    brand: "all",
     category: "all",
-    priceMax: 100000,
+    priceMax: 1000000,
     sort: "newest",
   });
 
+  useEffect(() => {
+    const service = new CarService();
+    service
+      .getAll({ page: 1, limit: 100, order: "createdAt" })
+      .then((data) => dispatch(setCars(data)))
+      .catch((err) => console.log(err));
+  }, [dispatch]);
+
+  const brands = useMemo(() => {
+    const set = new Set(cars.map((c) => c.brand).filter(Boolean));
+    return [["all", "All"] as [string, string], ...Array.from(set).map((b) => [b, b] as [string, string])];
+  }, [cars]);
+
   const filtered = useMemo(() => {
     const out = cars.filter((c) => {
-      if (filters.make !== "all" && c.make !== filters.make) return false;
-      if (filters.fuel !== "all" && c.fuel !== filters.fuel) return false;
+      if (filters.brand !== "all" && c.brand !== filters.brand) return false;
       if (filters.category !== "all" && c.category !== filters.category) return false;
       if (c.price > filters.priceMax) return false;
       return true;
@@ -81,7 +79,6 @@ export default function CarListPage() {
 
   const onSave = (id: string) => dispatch(toggleSaved(id));
   const openCar = (c: AuctionCar) => history.push(`/products/${c.id}`);
-
   const update = (patch: Partial<Filters>) => setFilters({ ...filters, ...patch });
 
   return (
@@ -126,15 +123,9 @@ export default function CarListPage() {
             ))}
           </FilterGroup>
 
-          <FilterGroup title="Make">
-            {MAKES.map(([v, l]) => (
-              <FilterRow key={v} label={l} active={filters.make === v} onClick={() => update({ make: v })} />
-            ))}
-          </FilterGroup>
-
-          <FilterGroup title="Fuel">
-            {FUELS.map(([v, l]) => (
-              <FilterRow key={v} label={l} active={filters.fuel === v} onClick={() => update({ fuel: v })} />
+          <FilterGroup title="Brand">
+            {brands.map(([v, l]) => (
+              <FilterRow key={v} label={l} active={filters.brand === v} onClick={() => update({ brand: v })} />
             ))}
           </FilterGroup>
 
@@ -143,8 +134,8 @@ export default function CarListPage() {
               <input
                 type="range"
                 min={10000}
-                max={100000}
-                step={1000}
+                max={1000000}
+                step={5000}
                 value={filters.priceMax}
                 onChange={(e) => update({ priceMax: +e.target.value })}
                 className="cl-range__input"
@@ -152,7 +143,7 @@ export default function CarListPage() {
               <div className="cl-range__labels">
                 <span>$10K</span>
                 <span className="cl-range__current">≤ ${(filters.priceMax / 1000).toFixed(0)}K</span>
-                <span>$100K</span>
+                <span>$1M</span>
               </div>
             </div>
           </FilterGroup>
@@ -174,11 +165,8 @@ export default function CarListPage() {
 
         <div className="carlist__results">
           <div className="cl-chips">
-            {filters.make !== "all" && (
-              <Chip label={`Make: ${filters.make}`} onClose={() => update({ make: "all" })} />
-            )}
-            {filters.fuel !== "all" && (
-              <Chip label={`Fuel: ${filters.fuel}`} onClose={() => update({ fuel: "all" })} />
+            {filters.brand !== "all" && (
+              <Chip label={`Brand: ${filters.brand}`} onClose={() => update({ brand: "all" })} />
             )}
             {filters.category !== "all" && (
               <Chip
@@ -199,6 +187,7 @@ export default function CarListPage() {
                   saved={savedIds.includes(c.id)}
                   onSave={onSave}
                   onOpen={openCar}
+                  density={density}
                 />
               ))}
             </div>
@@ -209,27 +198,37 @@ export default function CarListPage() {
                 <span>VEHICLE</span>
                 <span>YEAR</span>
                 <span>KM</span>
-                <span>FUEL / TRANS</span>
+                <span>COLOR</span>
                 <span>PRICE</span>
                 <span>STATUS</span>
               </div>
-              {filtered.map((c) => (
-                <div key={c.id} onClick={() => openCar(c)} className="cl-list__row">
-                  <CarPlaceholder label={c.id} tone={c.image || "sedan-a"} height={70} />
-                  <div>
-                    <div className="cl-list__model">{c.make} {c.model}</div>
-                    <div className="cl-list__id">#{c.id}</div>
+              {filtered.map((c) => {
+                const img = imageUrl(c.image);
+                return (
+                  <div key={c.id} onClick={() => openCar(c)} className="cl-list__row">
+                    {img ? (
+                      <div style={{ backgroundImage: `url(${img})`, backgroundSize: "cover", backgroundPosition: "center", height: 70, borderRadius: 6 }} />
+                    ) : (
+                      <CarPlaceholder label={c.brand} tone={c.brand} height={70} />
+                    )}
+                    <div>
+                      <div className="cl-list__model">{c.brand} {c.title}</div>
+                    </div>
+                    <span className="cl-list__num">{c.year}</span>
+                    <span className="cl-list__num cl-list__num--mute">{c.km?.toLocaleString() ?? "—"}</span>
+                    <span className="cl-list__num cl-list__num--mute">{c.color || "—"}</span>
+                    <span className="cl-list__price">${c.price.toLocaleString()}</span>
+                    <Tag color={c.category === "crashed" ? "var(--warn)" : "var(--text)"} outline={c.category !== "crashed"}>
+                      {c.category === "crashed" ? "CRASHED" : "READY"}
+                    </Tag>
                   </div>
-                  <span className="cl-list__num">{c.year}</span>
-                  <span className="cl-list__num cl-list__num--mute">{c.km?.toLocaleString() ?? "—"}</span>
-                  <span className="cl-list__num cl-list__num--mute">{c.fuel} · {c.trans}</span>
-                  <span className="cl-list__price">${c.price.toLocaleString()}</span>
-                  <Tag color={c.category === "crashed" ? "var(--warn)" : "var(--text)"} outline={c.category !== "crashed"}>
-                    {c.category === "crashed" ? "CRASHED" : "READY"}
-                  </Tag>
-                </div>
-              ))}
+                );
+              })}
             </div>
+          )}
+
+          {filtered.length === 0 && (
+            <div style={{ padding: 40, textAlign: "center", opacity: 0.6 }}>No cars match those filters.</div>
           )}
         </div>
       </div>

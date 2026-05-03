@@ -1,8 +1,8 @@
 import { Box, Button, Container, ListItemIcon, Menu, MenuItem, Stack } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
-import { Logout } from "@mui/icons-material";
+import { Logout, Person } from "@mui/icons-material";
 import ThemeToggle from "../themeToggle";
 
 interface OtherNavbarProps {
@@ -17,12 +17,18 @@ interface OtherNavbarProps {
 export default function OtherNavbar(props: OtherNavbarProps) {
   const {
     setLoginOpen,
+    setSignupOpen,
     handleCloseLogout,
     handleLogoutClick,
     handleLogoutRequest,
     anchorEl,
   } = props;
   const { authMember } = useGlobals();
+  const history = useHistory();
+  const goMyPage = () => {
+    handleCloseLogout();
+    history.push("/member-page");
+  };
 
   return (
     <div className="other-navbar">
@@ -40,17 +46,17 @@ export default function OtherNavbar(props: OtherNavbarProps) {
             <Box className="hover-line">
               <NavLink to="/products" activeClassName="underline">Cars</NavLink>
             </Box>
-            {authMember && (
-              <Box className="hover-line">
-                <NavLink to="/member-page" activeClassName="underline">My Account</NavLink>
-              </Box>
-            )}
             <Box className="hover-line">
               <NavLink to="/news" activeClassName="underline">News</NavLink>
             </Box>
             <Box className="hover-line">
               <NavLink to="/help" activeClassName="underline">Help</NavLink>
             </Box>
+            {authMember && (
+              <Box className="hover-line">
+                <NavLink to="/member-page" activeClassName="underline">My Account</NavLink>
+              </Box>
+            )}
 
             <ThemeToggle />
 
@@ -80,6 +86,12 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
+              <MenuItem onClick={goMyPage}>
+                <ListItemIcon>
+                  <Person fontSize="small" />
+                </ListItemIcon>
+                My Page
+              </MenuItem>
               <MenuItem onClick={handleLogoutRequest}>
                 <ListItemIcon>
                   <Logout fontSize="small" />

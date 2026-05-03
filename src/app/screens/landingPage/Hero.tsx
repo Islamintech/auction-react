@@ -3,6 +3,7 @@ import LiveDot from "./LiveDot";
 import CarPlaceholder from "./CarPlaceholder";
 import { AuctionCar } from "../../../lib/types/landing";
 import { t } from "./strings";
+import { useGlobals } from "../../hooks/useGlobals";
 
 interface Props {
   crashed: AuctionCar[];
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
+  const { authMember, openSignup } = useGlobals();
   return (
     <section className="landing__hero">
       <div className="landing__hero-bg">
@@ -26,12 +28,15 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
           <h1 className="landing__headline">{t.hero.headline}</h1>
           <p className="landing__subtitle">{t.hero.subtitle}</p>
           <div className="landing__cta-row">
-            <button className="landing-btn landing-btn--primary landing-btn--lg" onClick={onBrowseCars}>
-              {t.hero.cta1} →
-            </button>
-            <button className="landing-btn landing-btn--secondary landing-btn--lg" onClick={onBrowseCars}>
-              ▶ {t.hero.cta2}
-            </button>
+            {authMember ? (
+              <button className="landing-btn landing-btn--primary landing-btn--lg" onClick={onBrowseCars}>
+                Browse cars →
+              </button>
+            ) : (
+              <button className="landing-btn landing-btn--primary landing-btn--lg" onClick={openSignup}>
+                Sign up →
+              </button>
+            )}
           </div>
         </div>
 
@@ -45,7 +50,7 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
           </div>
 
           {crashed.slice(0, 3).map((c, i) => {
-            const partsTotal = c.parts ? c.parts.reduce((s, p) => s + p.price, 0) : 0;
+            const partsCount = c.damagedParts?.length ?? 0;
             return (
               <div
                 key={c.id}
@@ -54,18 +59,16 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
               >
                 <div style={{ minWidth: 0 }}>
                   <div className="landing__crashed-meta">
-                    #{c.id} · {(c.damage || "").toUpperCase()}
+                    {c.brand.toUpperCase()} · {c.year}
                   </div>
-                  <div className="landing__crashed-name">
-                    {c.year} {c.model}
-                  </div>
+                  <div className="landing__crashed-name">{c.title}</div>
                   <div className="landing__crashed-parts">
-                    {c.parts?.length ?? 0} parts incl. · +${partsTotal.toLocaleString()}
+                    {partsCount} parts incl.
                   </div>
                 </div>
                 <div>
                   <div className="landing__crashed-price">${c.price.toLocaleString()}</div>
-                  <div className="landing__crashed-tag">WITH PARTS</div>
+                  <div className="landing__crashed-tag">{partsCount > 0 ? "WITH PARTS" : "AS-IS"}</div>
                 </div>
               </div>
             );

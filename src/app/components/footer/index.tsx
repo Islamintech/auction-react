@@ -1,7 +1,15 @@
 import React from "react";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container, IconButton, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import XIcon from "@mui/icons-material/X";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 const Footers = styled.div`
   width: 100%;
@@ -24,11 +32,51 @@ export default function Footer() {
               Korean cars at fixed prices, shipped door-to-door across Central Asia and the Caucasus.
               Inspected, insured, and customs-cleared by us.
             </Box>
-            <Box className="sns-context" style={{ marginTop: 20, display: "flex", gap: 12 }}>
-              <img src="/icons/facebook.svg" alt="facebook" />
-              <img src="/icons/twitter.svg" alt="twitter" />
-              <img src="/icons/instagram.svg" alt="instagram" />
-              <img src="/icons/youtube.svg" alt="youtube" />
+            <Box className="sns-context" style={{ marginTop: 20, display: "flex", gap: 4 }}>
+              <IconButton
+                size="small"
+                component="a"
+                href="#https://t.me/hmauctionuz"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ color: "inherit", opacity: 0.8, "&:hover": { opacity: 1 } }}
+                aria-label="telegram"
+              >
+                <TelegramIcon />
+              </IconButton>
+              <IconButton
+                size="small"
+                component="a"
+                href="https://x.com/your_handle"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ color: "inherit", opacity: 0.8, "&:hover": { opacity: 1 } }}
+                aria-label="x"
+              >
+                <XIcon />
+              </IconButton>
+              <IconButton
+                size="small"
+                component="a"
+                href="https://instagram.com/auctionuz_kr"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ color: "inherit", opacity: 0.8, "&:hover": { opacity: 1 } }}
+                aria-label="instagram"
+              >
+                <InstagramIcon />
+              </IconButton>
+              <IconButton
+                size="small"
+                component="a"
+                href="https://youtube.com/@your_channel"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ color: "inherit", opacity: 0.8, "&:hover": { opacity: 1 } }}
+                aria-label="youtube"
+              >
+                <YouTubeIcon />
+              </IconButton>
             </Box>
           </Stack>
           <Stack flexDirection="row" gap="100px">
@@ -48,10 +96,15 @@ export default function Footer() {
                 Find us
               </Box>
               <Box className="foot-category-link" style={{ display: "flex", flexDirection: "column", gap: 10, opacity: 0.75 }}>
-                <div>Tashkent · Seoul</div>
-                <div>+998 71 ••• 4781</div>
-                <div>hello@auction.uz</div>
-                <div>Mon–Sat · 09:00–19:00</div>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <LocationOnIcon fontSize="small" /> Tashkent · Seoul
+                </Box>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <PhoneIcon fontSize="small" /> +998 71 ••• 4781
+                </Box>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <EmailIcon fontSize="small" /> auction@gmail.com
+                </Box>
               </Box>
             </Stack>
           </Stack>

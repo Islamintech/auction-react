@@ -1,40 +1,32 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-import { Fab, Stack, TextField } from "@mui/material";
-import styled from "styled-components";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import LoginIcon from "@mui/icons-material/Login";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import PhoneIcon from "@mui/icons-material/Phone";
+import PersonIcon from "@mui/icons-material/Person";
+import LockIcon from "@mui/icons-material/Lock";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import GavelIcon from "@mui/icons-material/Gavel";
 import { T } from "../../../lib/types/common";
 import { Messages } from "../../../lib/config";
 import { LoginInput, MemberInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 2, 2),
-  },
-}));
-
-const ModalImg = styled.img`
-  width: 62%;
-  height: 100%;
-  border-radius: 10px;
-  background: #000;
-  margin-top: 9px;
-  margin-left: 10px;
-`;
 
 interface AuthenticationModalProps {
   signupOpen: boolean;
@@ -43,196 +35,278 @@ interface AuthenticationModalProps {
   handleLoginClose: () => void;
 }
 
+const PERKS: [JSX.Element, string, string][] = [
+  [<GavelIcon fontSize="small" />, "Fixed-price auctions", "No bidding wars. Reserve at the listed price."],
+  [<VerifiedUserIcon fontSize="small" />, "Inspected in Korea", "Every car graded by independent inspectors."],
+  [<LocalShippingIcon fontSize="small" />, "Door-to-door shipping", "Customs cleared, marine-insured, ~21 days."],
+];
+
 export default function AuthenticationModal(props: AuthenticationModalProps) {
   const { signupOpen, loginOpen, handleSignupClose, handleLoginClose } = props;
-  const classes = useStyles();
   const [memberNick, setMemberNick] = useState<string>("");
   const [memberPhone, setMemberPhone] = useState<string>("");
   const [memberPassword, setMemberPassword] = useState<string>("");
-  const {setAuthMember} = useGlobals();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const { setAuthMember } = useGlobals();
 
-  /** HANDLERS **/
-  const handleUserName = (e: T) => {
-    setMemberNick(e.target.value)
-  }
-
-   const handlePhone = (e: T) => {
-    setMemberPhone(e.target.value)
-  }
-
-   const handlePassword = (e: T) => {
-    setMemberPassword(e.target.value)
+  const reset = () => {
+    setMemberNick("");
+    setMemberPhone("");
+    setMemberPassword("");
+    setShowPassword(false);
   };
 
-  const handlePasswordKeyDown = (e: T) => {
-    if(e.key === "Enter" && signupOpen){
-      handleSignupRequest().then();
-    }else if(e.key === "Enter" && loginOpen){
-      handleLoginRequest().then();
-    }
+  const closeSignup = () => {
+    handleSignupClose();
+    reset();
+  };
+  const closeLogin = () => {
+    handleLoginClose();
+    reset();
+  };
+
+  const handleNick = (e: T) => setMemberNick(e.target.value);
+  const handlePhone = (e: T) => setMemberPhone(e.target.value);
+  const handlePassword = (e: T) => setMemberPassword(e.target.value);
+
+  const handleKeyDown = (e: T) => {
+    if (e.key !== "Enter") return;
+    if (signupOpen) handleSignupRequest();
+    else if (loginOpen) handleLoginRequest();
   };
 
   const handleSignupRequest = async () => {
-    try{
-      console.log("inputs:", memberNick, memberPhone, memberPassword);
-      const isFullFill = memberNick !== "" && memberPhone !== "" && memberPassword !== "";
-      if(!isFullFill) throw new Error(Messages.error3);
-      const signupInput: MemberInput = {
-        memberNick: memberNick,
-        memberPhone: memberPhone,
-        memberPassword: memberPassword,
-      };
+    try {
+      const isFullFill = memberNick.trim() && memberPhone.trim() && memberPassword.trim();
+      if (!isFullFill) throw new Error(Messages.error3);
+      if (memberPassword.length < 4) throw new Error("Password must be at least 4 characters");
 
+      setSubmitting(true);
+      const signupInput: MemberInput = { memberNick, memberPhone, memberPassword };
       const member = new MemberService();
-      const result = await member.signup(signupInput)
+      const result = await member.signup(signupInput);
 
       setAuthMember(result);
-      handleSignupClose();
-    }catch(err){
+      closeSignup();
+    } catch (err) {
       console.log(err);
-      handleSignupClose();
       sweetErrorHandling(err).then();
+    } finally {
+      setSubmitting(false);
     }
   };
 
   const handleLoginRequest = async () => {
-    try{
-      const isFullFill = memberNick !== "" && memberPassword !== "";
-      if(!isFullFill) throw new Error(Messages.error3);
-      const loginInput: LoginInput = {
-        memberNick: memberNick,
-        memberPassword: memberPassword,
-      };
+    try {
+      const isFullFill = memberNick.trim() && memberPassword.trim();
+      if (!isFullFill) throw new Error(Messages.error3);
 
+      setSubmitting(true);
+      const loginInput: LoginInput = { memberNick, memberPassword };
       const member = new MemberService();
-      const result = await member.login(loginInput)
+      const result = await member.login(loginInput);
 
-      setAuthMember(result)
-      handleLoginClose();
-    }catch(err){
+      setAuthMember(result);
+      closeLogin();
+    } catch (err) {
       console.log(err);
-      handleLoginClose();
       sweetErrorHandling(err).then();
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  return (
-    <div>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={signupOpen}
-        onClose={handleSignupClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={signupOpen}>
-          <Stack
-            className={classes.paper}
-            direction={"row"}
-            sx={{ width: "800px" }}
-          >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
-            <Stack sx={{ marginLeft: "69px", alignItems: "center" }}>
-              <h2>Signup Form</h2>
-              <TextField
-                sx={{ marginTop: "7px" }}
-                id="outlined-basic"
-                label="username"
-                variant="outlined"
-                onChange={handleUserName}
-              />
-              <TextField
-                sx={{ my: "17px" }}
-                id="outlined-basic"
-                label="phone number"
-                variant="outlined"
-                onChange={handlePhone}
-              />
-              <TextField
-                id="outlined-basic"
-                label="password"
-                variant="outlined"
-                onChange={handlePassword}
-                onKeyDown={handlePasswordKeyDown}
-             />
-              <Fab
-                sx={{ marginTop: "30px", width: "120px" }}
-                variant="extended"
-                color="primary"
-                onClick={handleSignupRequest}
-              >
-                <LoginIcon sx={{ mr: 1 }} />
-                Signup
-              </Fab>
-            </Stack>
-          </Stack>
-        </Fade>
-      </Modal>
+  const switchToLogin = () => {
+    closeSignup();
+    setTimeout(() => {
+      // reuse signup-close to clear, then trigger login open via prop is not available;
+      // simplest: do nothing — user can click LOGIN in navbar.
+    }, 0);
+  };
 
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={loginOpen}
-        onClose={handleLoginClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={loginOpen}>
-          <Stack
-            className={classes.paper}
-            direction={"row"}
-            sx={{ width: "700px" }}
-          >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
-            <Stack
-              sx={{
-                marginLeft: "65px",
-                marginTop: "25px",
-                alignItems: "center",
-              }}
-            >
-              <h2>Login Form</h2>
-              <TextField
-                id="outlined-basic"
-                label="username"
-                variant="outlined"
-                sx={{ my: "10px" }}
-                onChange={handleUserName}
-              />
-              <TextField
-                id={"outlined-basic"}
-                label={"password"}
-                variant={"outlined"}
-                type={"password"}
-                onChange={handlePassword}
-                onKeyDown={handlePasswordKeyDown}
-              />
-              <Fab
-                sx={{ marginTop: "27px", width: "120px" }}
-                variant={"extended"}
-                color={"primary"}
-                onClick={handleLoginRequest}
-              >
-                <LoginIcon sx={{ mr: 1 }} />
-                Login
-              </Fab>
-            </Stack>
+  const renderBrandPanel = (heading: string, sub: string) => (
+    <Box
+      sx={{
+        flex: "0 0 320px",
+        background: "linear-gradient(160deg, #0b0c0e 0%, #1a1d24 100%)",
+        color: "#e9e6dd",
+        p: 4,
+        display: { xs: "none", md: "flex" },
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box>
+        <Typography sx={{ fontSize: 12, letterSpacing: "0.18em", opacity: 0.6 }}>AUCTION.UZ</Typography>
+        <Typography sx={{ fontSize: 26, fontWeight: 700, mt: 2, lineHeight: 1.2 }}>{heading}</Typography>
+        <Typography sx={{ fontSize: 13, opacity: 0.7, mt: 1.5, lineHeight: 1.6 }}>{sub}</Typography>
+      </Box>
+      <Stack spacing={2} sx={{ mt: 4 }}>
+        {PERKS.map(([icon, title, desc], i) => (
+          <Stack key={i} direction="row" spacing={1.5} alignItems="flex-start">
+            <Box sx={{ color: "#d8d6cf", mt: "2px" }}>{icon}</Box>
+            <Box>
+              <Typography sx={{ fontSize: 13, fontWeight: 600 }}>{title}</Typography>
+              <Typography sx={{ fontSize: 12, opacity: 0.65 }}>{desc}</Typography>
+            </Box>
           </Stack>
-        </Fade>
-      </Modal>
-    </div>
+        ))}
+      </Stack>
+      <Typography sx={{ fontSize: 11, opacity: 0.5, mt: 4 }}>
+        2,800+ inspected cars · Seoul → Central Asia
+      </Typography>
+    </Box>
+  );
+
+  const renderForm = (mode: "signup" | "login") => {
+    const isSignup = mode === "signup";
+    return (
+      <Box sx={{ flex: 1, p: { xs: 3, md: 4 }, position: "relative", minWidth: { xs: "100%", md: 380 } }}>
+        <IconButton
+          aria-label="close"
+          onClick={isSignup ? closeSignup : closeLogin}
+          sx={{ position: "absolute", right: 8, top: 8 }}
+        >
+          <CloseIcon />
+        </IconButton>
+
+        <Typography sx={{ fontSize: 12, letterSpacing: "0.18em", opacity: 0.6 }}>
+          {isSignup ? "GET STARTED" : "WELCOME BACK"}
+        </Typography>
+        <Typography sx={{ fontSize: 24, fontWeight: 700, mt: 0.5 }}>
+          {isSignup ? "Create your account" : "Sign in"}
+        </Typography>
+        <Typography sx={{ fontSize: 13, opacity: 0.7, mt: 0.5, mb: 3 }}>
+          {isSignup
+            ? "Reserve cars, track shipments, and message dealers."
+            : "Continue where you left off."}
+        </Typography>
+
+        <Stack spacing={2}>
+          <TextField
+            fullWidth
+            size="small"
+            label="Username"
+            value={memberNick}
+            onChange={handleNick}
+            onKeyDown={handleKeyDown}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PersonIcon fontSize="small" />
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          {isSignup && (
+            <TextField
+              fullWidth
+              size="small"
+              label="Phone"
+              placeholder="+998 ..."
+              value={memberPhone}
+              onChange={handlePhone}
+              onKeyDown={handleKeyDown}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PhoneIcon fontSize="small" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
+
+          <TextField
+            fullWidth
+            size="small"
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            value={memberPassword}
+            onChange={handlePassword}
+            onKeyDown={handleKeyDown}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockIcon fontSize="small" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton size="small" onClick={() => setShowPassword((s) => !s)} edge="end">
+                    {showPassword ? <VisibilityOffIcon fontSize="small" /> : <VisibilityIcon fontSize="small" />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          <Button
+            fullWidth
+            variant="contained"
+            disabled={submitting}
+            onClick={isSignup ? handleSignupRequest : handleLoginRequest}
+            startIcon={isSignup ? <PersonAddAltIcon /> : <LoginIcon />}
+            sx={{
+              mt: 1,
+              py: 1.2,
+              background: "#0b0c0e",
+              color: "#e9e6dd",
+              fontWeight: 600,
+              letterSpacing: "0.05em",
+              "&:hover": { background: "#1a1d24" },
+            }}
+          >
+            {submitting ? "Please wait…" : isSignup ? "Create account" : "Sign in"}
+          </Button>
+
+          <Typography sx={{ fontSize: 11, opacity: 0.55, textAlign: "center", mt: 1 }}>
+            {isSignup
+              ? "By creating an account you agree to our Terms and Privacy Policy."
+              : "Trouble signing in? Contact hello@auction.uz"}
+          </Typography>
+        </Stack>
+      </Box>
+    );
+  };
+
+  return (
+    <>
+      <Dialog
+        open={signupOpen}
+        onClose={closeSignup}
+        maxWidth="md"
+        PaperProps={{ sx: { borderRadius: 2, overflow: "hidden" } }}
+      >
+        <DialogContent sx={{ p: 0 }}>
+          <Stack direction="row" sx={{ minHeight: 480 }}>
+            {renderBrandPanel(
+              "Korean cars, fixed price.",
+              "Create an account to reserve cars, save favorites, and track shipments end-to-end."
+            )}
+            {renderForm("signup")}
+          </Stack>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={loginOpen}
+        onClose={closeLogin}
+        maxWidth="md"
+        PaperProps={{ sx: { borderRadius: 2, overflow: "hidden" } }}
+      >
+        <DialogContent sx={{ p: 0 }}>
+          <Stack direction="row" sx={{ minHeight: 440 }}>
+            {renderBrandPanel(
+              "Welcome back to AUCTION.UZ",
+              "Sign in to continue tracking your reservations and saved cars."
+            )}
+            {renderForm("login")}
+          </Stack>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
-function handleLoginClose() {
-  throw new Error("Function not implemented.");
-}
-

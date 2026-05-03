@@ -1,27 +1,32 @@
-export interface CarPart {
+export type CarCategory = "ready" | "crashed";
+
+export interface DamagedPart {
   name: string;
   price: number;
-  oem?: string;
   ship?: boolean;
+  oem?: string;
 }
-
-export type CarCategory = "ready" | "crashed";
 
 export interface AuctionCar {
   id: string;
-  year: number;
-  model: string;
-  make?: string;
-  price: number;
+  title: string;
+  brand: string;
   category: CarCategory;
-  damage?: string;
-  parts?: CarPart[];
-  image?: string;
-  fuel?: string;
-  trans?: string;
-  km?: number;
-  color?: string;
-  damageDesc?: string;
+  year: number;
+  km: number;
+  price: number;
+  color: string;
+  desc: string;
+  damagedParts: DamagedPart[];
+  image: string;
+  images: string[];
+  status: string;
+  viewCount: number;
+  likeCount: number;
+  commentCount: number;
+  consultationCount: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface LandingPageState {
