@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Tag from "./Tag";
 import { AuctionCar } from "../../../lib/types/landing";
+import ConsultationModal from "../../components/consultation/ConsultationModal";
 
 export default function BuyPanel({ car }: { car: AuctionCar }) {
+  const [consultOpen, setConsultOpen] = useState(false);
   const isCrashed = car.category === "crashed";
   const partsCount = car.damagedParts?.length ?? 0;
   const fee = Math.round(car.price * 0.045);
@@ -42,8 +44,12 @@ export default function BuyPanel({ car }: { car: AuctionCar }) {
         <button className="cd-btn cd-btn--primary cd-btn--lg" style={{ marginTop: 18 }}>
           Reserve with $2,500 deposit
         </button>
-        <button className="cd-btn cd-btn--secondary cd-btn--md" style={{ marginTop: 8 }}>
-          Make an offer
+        <button
+          className="cd-btn cd-btn--secondary cd-btn--md"
+          style={{ marginTop: 8 }}
+          onClick={() => setConsultOpen(true)}
+        >
+          Request consultation
         </button>
 
         <div className="cd-cost">
@@ -60,6 +66,13 @@ export default function BuyPanel({ car }: { car: AuctionCar }) {
           </div>
         </div>
       </div>
+
+      <ConsultationModal
+        open={consultOpen}
+        onClose={() => setConsultOpen(false)}
+        carId={car.id}
+        carTitle={`${car.brand} ${car.title}`}
+      />
 
       <div className="cd-trust">
         <div className="cd-trust__grid">

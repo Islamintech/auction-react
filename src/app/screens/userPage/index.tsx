@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Overview from "./Overview";
 import Saved from "./Saved";
 import SettingsTab from "./Settings";
+import Consultations from "./Consultations";
 import { retrieveCars, retrieveSavedIds } from "../landingPage/selector";
-import { toggleSaved } from "../landingPage/slice";
+import { setCars, toggleSaved } from "../landingPage/slice";
 import { AuctionCar } from "../../../lib/types/landing";
 import { useGlobals } from "../../hooks/useGlobals";
 import { imageUrl } from "../../../lib/api";
+import CarService from "../../services/CarService";
 import "../../../css/userPage.css";
 
-type TabKey = "overview" | "saved" | "settings";
+type TabKey = "overview" | "saved" | "consultations" | "settings";
 
 function initialsOf(name?: string) {
   if (!name) return "?";
@@ -34,6 +36,15 @@ export default function UserPage() {
   const saved = cars.filter((c) => savedIds.includes(c.id));
   const [tab, setTab] = useState<TabKey>("overview");
   const { authMember, openSignup } = useGlobals();
+
+  useEffect(() => {
+    if (cars.length > 0) return;
+    const service = new CarService();
+    service
+      .getAll({ page: 1, limit: 100, order: "createdAt" })
+      .then((data) => dispatch(setCars(data)))
+      .catch((err) => console.log(err));
+  }, [cars.length, dispatch]);
 
   const onSave = (id: string) => dispatch(toggleSaved(id));
   const openCar = (_c: AuctionCar) => history.push("/products");
@@ -67,6 +78,7 @@ export default function UserPage() {
   const tabs: [TabKey, string][] = [
     ["overview", "Overview"],
     ["saved", `Saved · ${saved.length}`],
+    ["consultations", "Consultations"],
     ["settings", "Settings"],
   ];
 
@@ -117,7 +129,8 @@ export default function UserPage() {
       <div className="mypage__body">
         {tab === "overview" && <Overview savedCount={saved.length} />}
         {tab === "saved" && <Saved saved={saved} onSave={onSave} onOpen={openCar} onBrowse={goCars} />}
-        {tab === "settings" && <SettingsTab />}
+        {tab === "consultations" && <Consultations />}
+        {tab === "settings" && <SettingsTab onSaved={() => setTab("overview")} />}
       </div>
     </div>
   );

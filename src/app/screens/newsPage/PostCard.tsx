@@ -26,18 +26,30 @@ function excerptOf(body: string, len = 160) {
 
 export default function PostCard({ post, onOpen, variant = "card" }: Props) {
   const image = post.postImage ? imgUrl(post.postImage) : "";
-  const heroStyle = image
-    ? { backgroundImage: `url(${image})`, backgroundSize: "cover", backgroundPosition: "center" }
-    : undefined;
+
+  const renderImage = (height: number, radius: number) =>
+    image ? (
+      <img
+        src={image}
+        alt={post.postTitle}
+        style={{
+          width: "100%",
+          height,
+          objectFit: "cover",
+          objectPosition: "center",
+          borderRadius: radius,
+          display: "block",
+          background: "var(--surface, #f1ece1)",
+        }}
+      />
+    ) : (
+      <CarPlaceholder label={post.postType.replace("_", " ")} tone={post.postType.replace("_", " ")} height={height} />
+    );
 
   if (variant === "row") {
     return (
       <div className="news-row" onClick={() => onOpen(post)}>
-        {image ? (
-          <div style={{ ...heroStyle, height: 92, borderRadius: 8 }} />
-        ) : (
-          <CarPlaceholder label={post.postType.replace("_", " ")} tone={post.postType.replace("_", " ")} height={92} />
-        )}
+        {renderImage(92, 8)}
         <div className="news-row__body">
           <div className="news-row__tag">{post.postType.replace("_", " ")}</div>
           <div className="news-row__title">{post.postTitle}</div>
@@ -56,11 +68,7 @@ export default function PostCard({ post, onOpen, variant = "card" }: Props) {
   if (variant === "feature") {
     return (
       <div className="news-feature" onClick={() => onOpen(post)}>
-        {image ? (
-          <div style={{ ...heroStyle, height: 320, borderRadius: 12 }} />
-        ) : (
-          <CarPlaceholder label={post.postType.replace("_", " ")} tone={post.postType.replace("_", " ")} height={320} />
-        )}
+        {renderImage(320, 12)}
         <div className="news-feature__body">
           <div className="news-feature__tag">FEATURED · {post.postType.replace("_", " ")}</div>
           <div className="news-feature__title">{post.postTitle}</div>
@@ -68,9 +76,11 @@ export default function PostCard({ post, onOpen, variant = "card" }: Props) {
           <div className="news-feature__meta">
             <span>{formatDate(post.createdAt)}</span>
             <span>·</span>
-            <span>{post.postCommentCount} replies</span>
+            <span>👁 {post.postViewCount} views</span>
             <span>·</span>
-            <span>{post.postViewCount} views</span>
+            <span>♥ {post.postLikeCount} likes</span>
+            <span>·</span>
+            <span>💬 {post.postCommentCount} replies</span>
           </div>
         </div>
       </div>
@@ -79,18 +89,14 @@ export default function PostCard({ post, onOpen, variant = "card" }: Props) {
 
   return (
     <div className="news-card" onClick={() => onOpen(post)}>
-      {image ? (
-        <div style={{ ...heroStyle, height: 150, borderRadius: 10 }} />
-      ) : (
-        <CarPlaceholder label={post.postType.replace("_", " ")} tone={post.postType.replace("_", " ")} height={150} />
-      )}
+      {renderImage(150, 10)}
       <div className="news-card__body">
         <div className="news-card__tag">{post.postType.replace("_", " ")}</div>
         <div className="news-card__title">{post.postTitle}</div>
         <div className="news-card__excerpt">{excerptOf(post.postBody)}</div>
         <div className="news-card__meta">
           <span>{formatDate(post.createdAt)}</span>
-          <span>{post.postCommentCount} replies</span>
+          <span>👁 {post.postViewCount} · ♥ {post.postLikeCount} · 💬 {post.postCommentCount}</span>
         </div>
       </div>
     </div>

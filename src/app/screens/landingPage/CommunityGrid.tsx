@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import SectionHeader from "./SectionHeader";
 import CarPlaceholder from "./CarPlaceholder";
 import { t } from "./strings";
-
-const POSTS = [
-  { tag: "BUYER STORY", title: "My GV80 arrived in 19 days. Here's the timeline.", author: "Aziz K.", date: "Apr 22", replies: 34, image: "suv-a" },
-  { tag: "GUIDE", title: "Decoding Korean auction grades: 3.5 vs 4 vs 4.5", author: "Editorial", date: "Apr 19", replies: 18, image: "sedan-c" },
-  { tag: "Q&A", title: "EV import duties dropped 6% — what changes for you", author: "Logistics desk", date: "Apr 17", replies: 52, image: "sedan-b" },
-  { tag: "INSPECTION", title: "How we caught a re-sprayed Palisade before sale", author: "Inspector Lee", date: "Apr 14", replies: 27, image: "suv-c" },
-];
+import PostService from "../../services/PostService";
+import { Post } from "../../../lib/types/post";
+import { imageUrl } from "../../../lib/api";
 
 export default function CommunityGrid({ onOpen }: { onOpen: () => void }) {
+  const history = useHistory();
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const service = new PostService();
+    service
+      .getAll({ page: 1, limit: 4 })
+      .then((data) => setPosts(data.slice(0, 4)))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const goPost = (p: Post) => history.push(`/news/${p._id}`);
+
   return (
     <div>
       <SectionHeader
@@ -21,21 +31,44 @@ export default function CommunityGrid({ onOpen }: { onOpen: () => void }) {
         onLink={onOpen}
       />
       <div className="landing-comm">
-        {POSTS.map((p) => (
-          <div key={p.title} className="landing-comm__card" onClick={onOpen}>
-            <CarPlaceholder label={p.tag} tone={p.image} height={120} />
-            <div className="landing-comm__body">
-              <div className="landing-comm__tag">{p.tag}</div>
-              <div className="landing-comm__title">{p.title}</div>
-              <div className="landing-comm__meta">
-                <span>
-                  {p.author.toUpperCase()} · {p.date.toUpperCase()}
-                </span>
-                <span>{p.replies} replies</span>
+        {posts.length === 0 && (
+          <div style={{ padding: 20, opacity: 0.6 }}>No posts yet.</div>
+        )}
+        {posts.map((p) => {
+          const img = imageUrl(p.postImage);
+          const date = p.createdAt
+            ? new Date(p.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" }).toUpperCase()
+            : "";
+          return (
+            <div key={p._id} className="landing-comm__card" onClick={() => goPost(p)}>
+              {img ? (
+                <img
+                  src={img}
+                  alt={p.postTitle}
+                  style={{
+                    width: "100%",
+                    height: 120,
+                    objectFit: "cover",
+                    objectPosition: "center",
+                    borderRadius: 8,
+                    display: "block",
+                    background: "var(--surface, #f1ece1)",
+                  }}
+                />
+              ) : (
+                <CarPlaceholder label={p.postType.replace("_", " ")} tone={p.postType} height={120} />
+              )}
+              <div className="landing-comm__body">
+                <div className="landing-comm__tag">{p.postType.replace("_", " ")}</div>
+                <div className="landing-comm__title">{p.postTitle}</div>
+                <div className="landing-comm__meta">
+                  <span>{date}</span>
+                  <span>{p.postCommentCount} replies</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

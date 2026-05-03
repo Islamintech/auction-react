@@ -22,7 +22,7 @@ class CarService {
     }
   }
 
-  public async like(id: string): Promise<any> {
+  public async like(id: string): Promise<AuctionCar> {
     try {
       const result = await api.post(`/car/${id}/like`);
       return result.data;
@@ -32,7 +32,7 @@ class CarService {
     }
   }
 
-  public async comment(id: string, commentContent: string): Promise<any> {
+  public async comment(id: string, commentContent: string): Promise<AuctionCar> {
     try {
       const result = await api.post(`/car/${id}/comment`, { commentContent });
       return result.data;

@@ -14,6 +14,7 @@ interface Props {
 export default function CarCard({ car, saved, onSave, onOpen, density = "spacious" }: Props) {
   const compact = density === "compact";
   const isCrashed = car.category === "crashed";
+  const isLiked = !!car.myFavorite || saved;
   const partsCount = car.damagedParts?.length ?? 0;
   const img = imageUrl(car.image);
   const mediaHeight = compact ? 150 : 190;
@@ -33,15 +34,6 @@ export default function CarCard({ car, saved, onSave, onOpen, density = "spaciou
             <span className="car-tag car-tag--outline">READY</span>
           )}
         </div>
-        <button
-          className={`car-card__save${saved ? " car-card__save--on" : ""}`}
-          onClick={(e) => { e.stopPropagation(); onSave(car.id); }}
-          aria-label="Save"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8">
-            <path d="M12 21s-7-4.5-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.5-9 9-9 9Z" />
-          </svg>
-        </button>
       </div>
 
       <div className="car-card__body">
@@ -55,6 +47,10 @@ export default function CarCard({ car, saved, onSave, onOpen, density = "spaciou
         <div className="car-card__specs">
           <span>{(car.km ?? 0).toLocaleString()} KM</span>
           {car.color && <><span className="car-card__sep">|</span><span>{car.color.toUpperCase()}</span></>}
+          <span className="car-card__sep">|</span>
+          <span>👁 {(car.viewCount ?? 0).toLocaleString()}</span>
+          <span className="car-card__sep">|</span>
+          <span>♥ {(car.likeCount ?? 0).toLocaleString()}</span>
         </div>
 
         <div className="car-card__rule" />

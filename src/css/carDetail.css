@@ -119,20 +119,35 @@
   line-height: 1.6;
 }
 .cd-save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 44px;
   height: 44px;
   background: transparent;
   border: 1px solid var(--line);
   color: var(--text);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
+  border-radius: 50%;
   flex-shrink: 0;
-  font-size: 18px;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
 }
-.cd-save--on { color: var(--accent); }
+.cd-save:hover { border-color: var(--text); color: #ff3040; }
+.cd-save:active { transform: scale(0.92); }
+.cd-save--on,
+.cd-save--on:hover {
+  color: #ff3040;
+  border-color: var(--line);
+  background: transparent;
+}
+.cd-save:disabled { opacity: 0.6; cursor: not-allowed; }
+@keyframes cd-heart-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); }
+  70%  { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+.cd-save--on .cd-save__icon { animation: cd-heart-pop 0.45s ease; }
 
 /* Tabs */
 .cd-tabs {

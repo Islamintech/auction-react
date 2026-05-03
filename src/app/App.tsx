@@ -28,7 +28,8 @@ function App() {
 
   useEffect(() => {
     setOpenSignup(() => setSignupOpen(true));
-  }, [setOpenSignup]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /**HANDLERS**/
   const handleSignupClose = () => setSignupOpen(false);

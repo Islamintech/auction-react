@@ -49,26 +49,31 @@ export default function Overview({ savedCount }: Props) {
           </div>
         </div>
 
-        <div>
-          <SectionHeader number="02" title="Account checklist" subtitle="Complete your profile for a smoother experience." />
-          <div className="mp-activity">
-            {[
-              ["NICKNAME", authMember?.memberNick, !!authMember?.memberNick],
-              ["PHONE", authMember?.memberPhone, !!authMember?.memberPhone],
-              ["EMAIL", authMember?.memberEmail, !!authMember?.memberEmail],
-              ["ADDRESS", authMember?.memberAddress, !!authMember?.memberAddress],
-              ["AVATAR", authMember?.memberImage ? "Uploaded" : null, !!authMember?.memberImage],
-              ["TELEGRAM", authMember?.memberTelegram, !!authMember?.memberTelegram],
-            ].map(([k, v, ok], i) => (
-              <div key={i} className={`mp-activity__row${i === 0 ? " mp-activity__row--first" : ""}`}>
-                <span className={`mp-activity__kind${ok ? " mp-activity__kind--delivered" : ""}`}>
-                  {ok ? "✓" : "—"} {k}
-                </span>
-                <span className="mp-activity__msg">{v || "Not set"}</span>
+        {(() => {
+          const items: [string, string | null | undefined, boolean][] = [
+            ["NICKNAME", authMember?.memberNick, !!authMember?.memberNick],
+            ["PHONE", authMember?.memberPhone, !!authMember?.memberPhone],
+            ["EMAIL", authMember?.memberEmail, !!authMember?.memberEmail],
+            ["ADDRESS", authMember?.memberAddress, !!authMember?.memberAddress],
+            ["AVATAR", authMember?.memberImage ? "Uploaded" : null, !!authMember?.memberImage],
+            ["TELEGRAM", authMember?.memberTelegram, !!authMember?.memberTelegram],
+          ];
+          const missing = items.filter(([, , ok]) => !ok);
+          if (missing.length === 0) return null;
+          return (
+            <div>
+              <SectionHeader number="02" title="Account checklist" subtitle="Complete your profile for a smoother experience." />
+              <div className="mp-activity">
+                {missing.map(([k, v], i) => (
+                  <div key={k} className={`mp-activity__row${i === 0 ? " mp-activity__row--first" : ""}`}>
+                    <span className="mp-activity__kind">— {k}</span>
+                    <span className="mp-activity__msg">{v || "Not set"}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          );
+        })()}
       </div>
     </>
   );

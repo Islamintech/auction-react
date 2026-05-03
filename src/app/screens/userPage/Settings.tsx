@@ -55,7 +55,7 @@ const labelStyle: React.CSSProperties = {
   marginTop: 12,
 };
 
-export default function SettingsTab() {
+export default function SettingsTab({ onSaved }: { onSaved?: () => void } = {}) {
   const { authMember, setAuthMember } = useGlobals();
   const [nick, setNick] = useState(authMember?.memberNick || "");
   const [phone, setPhone] = useState(authMember?.memberPhone || "");
@@ -94,6 +94,7 @@ export default function SettingsTab() {
       const updated = await service.updateMember(input);
       setAuthMember(updated);
       await sweetTopSmallSuccessAlert("Profile updated", 800);
+      if (onSaved) onSaved();
     } catch (err) {
       console.log(err);
       sweetErrorHandling(err).then();

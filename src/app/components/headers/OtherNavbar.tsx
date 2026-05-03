@@ -31,7 +31,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
   };
 
   return (
-    <div className="other-navbar">
+    <div className="home-navbar">
       <Container className="navbar-container">
         <Stack className="menu">
           <Box>

@@ -1,32 +1,52 @@
 export const faq = [
   {
-    question: "How do I buy a car?",
+    question: "How do I buy a car through AUCTION.UZ?",
     answer:
-      "Pick a car, pay a 5% refundable deposit to reserve it, then complete the balance once we ship from Korea. We handle export, customs, and last-mile delivery to your city.",
+      "Browse the catalogue, click Request consultation on a car you like, and our team gets back to you within 24 hours to confirm the price and start the export process.",
+  },
+  {
+    question: "Where do the cars come from?",
+    answer:
+      "We source from three channels: Korean auctions, licensed dealer platforms, and verified private sellers in Korea. Every car is inspected before purchase.",
   },
   {
     question: "How long does delivery take?",
     answer:
-      "Seoul to Tashkent is typically 21 days door-to-door. Almaty 24 days, Bishkek 26, Tbilisi 29. Crashed cars ship in the same container as their replacement parts.",
+      "Around 45–60 days from purchase to plates. Shipping itself is 30–45 days (Korea → China → Kazakhstan → Uzbekistan), plus customs clearance and registration in Uzbekistan.",
+  },
+  {
+    question: "What documents are needed to export the car?",
+    answer:
+      "Car invoice, export certificate, Bill of Lading (issued after shipping), and a copy of the buyer's passport. Our forwarding partner prepares everything for you.",
+  },
+  {
+    question: "How is the car shipped?",
+    answer:
+      "By Ro-Ro (Roll-on/Roll-off) or by container from a Korean port. Route: Korea → China → Kazakhstan → Uzbekistan via rail and truck.",
+  },
+  {
+    question: "What customs fees apply in Uzbekistan?",
+    answer:
+      "Import duty, VAT, recycling fee, and customs processing. The total depends on engine size, manufacture year, and the car's price. A licensed broker handles the calculation and paperwork.",
   },
   {
     question: "What's the difference between 'ready' and 'crashed' cars?",
     answer:
-      "Ready cars pass our 240-point inspection with a Korean grade of 4.0 or higher. Crashed cars are sold as-is with a full damage report and the required replacement parts included in the price.",
+      "Ready cars are inspected and ready to drive. Crashed cars are sold as-is with a full damage report and a list of required replacement parts so you know exactly what to expect.",
+  },
+  {
+    question: "How do I get my Uzbek license plates?",
+    answer:
+      "After customs clearance you receive the car in your city. Register it at the traffic police (GAI) and they issue Uzbek plates — usually the same day.",
   },
   {
     question: "Are the prices final?",
     answer:
-      "Yes. The price you see is the price you pay. There are no bidding wars and no hidden fees beyond the standard 4.5% buyer fee, which is shown on the buy panel of every car.",
+      "Yes. Listed prices are fixed — no bidding wars and no surprise markups. Customs fees and shipping are quoted separately and depend on the destination city and engine size.",
   },
   {
-    question: "How is my deposit protected?",
+    question: "Can I get a consultation before buying?",
     answer:
-      "Deposits are held in escrow with our partner bank and are 100% refundable until the car is loaded for shipment. ID verification is handled by Veriff.",
-  },
-  {
-    question: "Can I cancel an order?",
-    answer:
-      "You can cancel any time before your car is loaded onto the vessel and receive a full refund. After loading, cancellation forfeits the deposit but you keep the car.",
+      "Of course. Open any car and click Request consultation, or use the Get consultation button on the homepage. Our specialists in Seoul and Tashkent reply within 24 hours.",
   },
 ];

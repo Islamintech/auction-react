@@ -21,6 +21,26 @@ class PostService {
       throw err;
     }
   }
+
+  public async like(id: string): Promise<Post> {
+    try {
+      const result = await api.post(`/post/${id}/like`);
+      return result.data;
+    } catch (err) {
+      console.log("Error, PostService.like:", err);
+      throw err;
+    }
+  }
+
+  public async comment(id: string, commentContent: string): Promise<Post> {
+    try {
+      const result = await api.post(`/post/${id}/comment`, { commentContent });
+      return result.data;
+    } catch (err) {
+      console.log("Error, PostService.comment:", err);
+      throw err;
+    }
+  }
 }
 
 export default PostService;

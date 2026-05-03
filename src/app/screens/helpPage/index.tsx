@@ -11,10 +11,9 @@ import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
 import "../../../css/help.css";
 import { faq } from "../../../lib/data/faq";
-import { terms } from "../../../lib/data/terms";
 
 export default function HelpPage() {
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState("2");
 
   /** HANDLERS **/
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
@@ -33,7 +32,6 @@ export default function HelpPage() {
                 aria-label="lab API tabs example"
                 className={"table_list"}
               >
-                <Tab label="TERMS" value={"1"} />
                 <Tab label="FAQ" value={"2"} />
                 <Tab label="CONTACT" value={"3"} />
               </Tabs>
@@ -41,15 +39,6 @@ export default function HelpPage() {
           </Box>
           <Stack>
             <Stack className={"help-main-content"}>
-              <TabPanel value={"1"}>
-                <Stack className={"rules-box"}>
-                  <Box className={"rules-frame"}>
-                    {terms.map((value, number) => {
-                      return <p key={number}>{value}</p>;
-                    })}
-                  </Box>
-                </Stack>
-              </TabPanel>
               <TabPanel value={"2"}>
                 <Stack className={"accordion-menu"}>
                   {faq.map((value, number) => {
