@@ -111,7 +111,7 @@ export default function Footer() {
         </Stack>
         <Stack style={{ borderTop: "1px solid var(--footer-rule)", marginTop: 60, paddingTop: 20 }}>
           <Stack className="copyright-txt" style={{ opacity: 0.5, fontSize: 12 }}>
-            © {new Date().getFullYear()} Auction.uz. Korean cars, fixed-price, door delivered.
+            © {new Date().getFullYear()} Auction.uz. Dream cars, fixed-price, door delivered.
           </Stack>
         </Stack>
       </Container>

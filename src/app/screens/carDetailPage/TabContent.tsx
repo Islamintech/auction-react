@@ -4,6 +4,9 @@ import { AuctionCar } from "../../../lib/types/landing";
 
 export type TabKey = "specs" | "damage" | "parts" | "delivery" | "paperwork";
 
+const formatPartPrice = (price: string | number) =>
+  typeof price === "number" ? `$${price.toLocaleString()}` : price;
+
 export default function TabContent({ tab, car }: { tab: TabKey; car: AuctionCar }) {
   const isCrashed = car.category === "crashed";
   const damaged = car.damagedParts || [];
@@ -38,7 +41,7 @@ export default function TabContent({ tab, car }: { tab: TabKey; car: AuctionCar 
             {damaged.map((d, i) => (
               <li key={i} style={{ padding: "10px 0", borderBottom: "1px solid var(--rule)", display: "flex", justifyContent: "space-between" }}>
                 <span>● {d.name}</span>
-                <span style={{ opacity: 0.7 }}>${d.price.toLocaleString()}</span>
+                <span style={{ opacity: 0.7 }}>{formatPartPrice(d.price)}</span>
               </li>
             ))}
           </ul>
@@ -72,7 +75,7 @@ export default function TabContent({ tab, car }: { tab: TabKey; car: AuctionCar 
               <div key={i} className={`cd-parts-table__row${i === 0 ? " cd-parts-table__row--first" : ""}`}>
                 <span className="cd-parts-table__name">{p.name}</span>
                 <span className="cd-parts-table__oem">{p.oem || "—"}</span>
-                <span className="cd-parts-table__price">${p.price.toLocaleString()}</span>
+                <span className="cd-parts-table__price">{formatPartPrice(p.price)}</span>
                 <Tag outline color={p.ship === false ? "var(--warn)" : "var(--ok)"}>
                   {p.ship === false ? "PENDING" : "✓ READY"}
                 </Tag>

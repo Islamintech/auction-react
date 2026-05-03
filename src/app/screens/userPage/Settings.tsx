@@ -78,17 +78,21 @@ export default function SettingsTab({ onSaved }: { onSaved?: () => void } = {}) 
   const onSave = async () => {
     if (!authMember) return;
     try {
+      if (!nick.trim() || !phone.trim()) {
+        throw new Error("Username and phone number are required");
+      }
+
       setSaving(true);
       const input: MemberUpdateInput = {
         _id: authMember._id,
-        memberNick: nick,
-        memberPhone: phone,
+        memberNick: nick.trim(),
+        memberPhone: phone.trim(),
         memberEmail: email,
         memberCountry: country,
         memberAddress: address,
         memberTelegram: telegram,
         memberDesc: desc,
-        memberImage: (image as any) || undefined,
+        memberImage: image || undefined,
       };
       const service = new MemberService();
       const updated = await service.updateMember(input);

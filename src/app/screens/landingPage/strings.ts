@@ -1,7 +1,7 @@
 export const t = {
   hero: {
     eyebrow: "LIVE INVENTORY · SEOUL → CENTRAL ASIA",
-    headline: "Korean cars,\nfixed price,\ndoor delivery.",
+    headline: "Dream cars,\nfixed price,\ndoor delivery.",
     subtitle:
       "2,800+ inspected vehicles from licensed Korean dealers. Buy ready-to-drive or crashed-with-parts. We handle export, customs, and last-mile.",
     cta1: "Browse cars",

@@ -283,7 +283,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         <DialogContent sx={{ p: 0 }}>
           <Stack direction="row" sx={{ minHeight: 480 }}>
             {renderBrandPanel(
-              "Korean cars, fixed price.",
+              "Dream cars, fixed price.",
               "Create an account to reserve cars, save favorites, and track shipments end-to-end."
             )}
             {renderForm("signup")}

@@ -2,7 +2,7 @@ export type CarCategory = "ready" | "crashed";
 
 export interface DamagedPart {
   name: string;
-  price: number;
+  price: string | number;
   ship?: boolean;
   oem?: string;
 }

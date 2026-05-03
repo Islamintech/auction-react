@@ -41,8 +41,13 @@
 }
 
 .home-navbar .navbar-container .menu .links .login-button {
-  background: #1976d2;
-  color: #f8f8ff;
+  background-color: var(--text, #0b0c0e) !important;
+  color: var(--bg, #f4f2ec) !important;
+}
+
+.home-navbar .navbar-container .menu .links .login-button:hover {
+  background-color: var(--text, #0b0c0e) !important;
+  opacity: 0.88;
 }
 
 .home-navbar .navbar-container .menu .account-trigger,
@@ -293,8 +298,13 @@
 }
 
 .other-navbar .navbar-container .menu .links .login-button {
-  background: #1976d2;
-  color: #f8f8ff;
+  background-color: var(--text, #0b0c0e) !important;
+  color: var(--bg, #f4f2ec) !important;
+}
+
+.other-navbar .navbar-container .menu .links .login-button:hover {
+  background-color: var(--text, #0b0c0e) !important;
+  opacity: 0.88;
 }
 
 .other-navbar .navbar-container .menu .user-avatar {

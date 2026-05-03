@@ -109,6 +109,10 @@ code {
   background: var(--accent);
   color: #0b0c0e;
 }
+:root[data-theme="dark"] .login-button {
+  background-color: var(--accent) !important;
+  color: #0b0c0e !important;
+}
 :root[data-theme="dark"] .cl-density__btn--active {
   background: var(--accent);
   color: #0b0c0e;
