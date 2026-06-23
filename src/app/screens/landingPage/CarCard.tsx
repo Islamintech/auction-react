@@ -14,8 +14,6 @@ interface Props {
 export default function CarCard({ car, saved, onSave, onOpen, density = "spacious" }: Props) {
   const compact = density === "compact";
   const isCrashed = car.category === "crashed";
-  const isLiked = !!car.myFavorite || saved;
-  const partsCount = car.damagedParts?.length ?? 0;
   const img = imageUrl(car.image);
   const mediaHeight = compact ? 150 : 190;
 
@@ -57,19 +55,8 @@ export default function CarCard({ car, saved, onSave, onOpen, density = "spaciou
 
         <div className="car-card__foot">
           <div>
-            <div className="car-card__price-label">{isCrashed ? `Car${partsCount ? ` + ${partsCount} parts` : ""}` : "Price"}</div>
+            <div className="car-card__price-label">{isCrashed ? "Car" : "Price"}</div>
             <div className="car-card__price">${car.price.toLocaleString()}</div>
-          </div>
-          <div className="car-card__ship">
-            <div className="car-card__ship-row">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M3 17c2 2 4 2 6 0s4-2 6 0 4 2 6 0" />
-                <path d="M4 14l1.5-5h13L20 14" />
-                <path d="M12 9V4" />
-              </svg>
-              +$1,240
-            </div>
-            <div className="car-card__ship-label">EST. TO TAS</div>
           </div>
         </div>
       </div>

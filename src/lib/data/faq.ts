@@ -1,6 +1,6 @@
 export const faq = [
   {
-    question: "How do I buy a car through AUCTION.UZ?",
+    question: "How do I buy a car through AUTOAUCTION?",
     answer:
       "Browse the catalogue, click Request consultation on a car you like, and our team gets back to you within 24 hours to confirm the price and start the export process.",
   },

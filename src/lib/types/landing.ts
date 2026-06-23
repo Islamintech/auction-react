@@ -1,12 +1,5 @@
 export type CarCategory = "ready" | "crashed";
 
-export interface DamagedPart {
-  name: string;
-  price: string | number;
-  ship?: boolean;
-  oem?: string;
-}
-
 export interface CarComment {
   _id?: string;
   memberId?: string;
@@ -28,7 +21,8 @@ export interface AuctionCar {
   price: number;
   color: string;
   desc: string;
-  damagedParts: DamagedPart[];
+  damage?: string;
+  damageDesc?: string;
   image: string;
   images: string[];
   status: string;
@@ -36,6 +30,11 @@ export interface AuctionCar {
   likeCount: number;
   commentCount: number;
   consultationCount: number;
+  vin?: string;
+  sold?: boolean;
+  buyerName?: string;
+  salePrice?: number;
+  soldAt?: string;
   createdAt: string;
   updatedAt: string;
 }

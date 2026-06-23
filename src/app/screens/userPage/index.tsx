@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Overview from "./Overview";
 import Saved from "./Saved";
 import SettingsTab from "./Settings";
@@ -21,11 +22,11 @@ function initialsOf(name?: string) {
   return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase() || "?";
 }
 
-function formatJoined(d?: Date | string) {
+function formatJoinedDate(d?: Date | string) {
   if (!d) return "";
   const date = typeof d === "string" ? new Date(d) : d;
   if (isNaN(date.getTime())) return "";
-  return `JOINED ${date.toLocaleDateString("en-US", { month: "short", year: "numeric" }).toUpperCase()}`;
+  return date.toLocaleDateString("en-US", { month: "short", year: "numeric" }).toUpperCase();
 }
 
 export default function UserPage() {
@@ -36,6 +37,7 @@ export default function UserPage() {
   const saved = cars.filter((c) => savedIds.includes(c.id));
   const [tab, setTab] = useState<TabKey>("overview");
   const { authMember, openSignup } = useGlobals();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (cars.length > 0) return;
@@ -43,7 +45,7 @@ export default function UserPage() {
     service
       .getAll({ page: 1, limit: 100, order: "createdAt" })
       .then((data) => dispatch(setCars(data)))
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, [cars.length, dispatch]);
 
   const onSave = (id: string) => dispatch(toggleSaved(id));
@@ -54,15 +56,15 @@ export default function UserPage() {
     return (
       <div className="mypage">
         <div className="mypage__head">
-          <div className="mypage__crumb">ACCOUNT</div>
+          <div className="mypage__crumb">{t("mypage.account")}</div>
           <div style={{ padding: "60px 0", textAlign: "center" }}>
-            <h1 className="mypage__name" style={{ marginBottom: 12 }}>Sign up to access your account</h1>
+            <h1 className="mypage__name" style={{ marginBottom: 12 }}>{t("mypage.signupTitle")}</h1>
             <p style={{ opacity: 0.7, marginBottom: 24 }}>
-              Track shipments, save cars, and manage orders. It takes 30 seconds.
+              {t("mypage.signupBody")}
             </p>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <button className="mp-btn mp-btn--primary mp-btn--md" onClick={openSignup}>
-                Sign up
+                {t("mypage.signup")}
               </button>
             </div>
           </div>
@@ -76,16 +78,16 @@ export default function UserPage() {
   const country = authMember.memberCountry || authMember.memberAddress || "—";
 
   const tabs: [TabKey, string][] = [
-    ["overview", "Overview"],
-    ["saved", `Saved · ${saved.length}`],
-    ["consultations", "Consultations"],
-    ["settings", "Settings"],
+    ["overview", t("mypage.tabOverview")],
+    ["saved", `${t("mypage.tabSaved")} · ${saved.length}`],
+    ["consultations", t("mypage.tabConsultations")],
+    ["settings", t("mypage.tabSettings")],
   ];
 
   return (
     <div className="mypage">
       <div className="mypage__head">
-        <div className="mypage__crumb">ACCOUNT / OVERVIEW</div>
+        <div className="mypage__crumb">{t("mypage.accountOverview")}</div>
         <div className="mypage__head-row">
           <div className="mypage__id">
             {avatar ? (
@@ -96,19 +98,19 @@ export default function UserPage() {
             <div>
               <h1 className="mypage__name">{name}</h1>
               <div className="mypage__meta">
-                <span>{(authMember.memberType || "BUYER").toUpperCase()} · {authMember.memberPoints ?? 0} PTS</span>
+                <span>{(authMember.memberType ? authMember.memberType.toUpperCase() : t("mypage.buyer"))} · {authMember.memberPoints ?? 0} {t("mypage.pts")}</span>
                 <span className="mypage__meta-sep">|</span>
                 <span>{country.toUpperCase()}</span>
                 <span className="mypage__meta-sep">|</span>
-                <span>{formatJoined(authMember.createdAt)}</span>
+                <span>{t("mypage.joined", { date: formatJoinedDate(authMember.createdAt) })}</span>
                 <span className="mypage__meta-sep">|</span>
-                <span className="mypage__meta-ok">● {(authMember.memberStatus || "ACTIVE").toString()}</span>
+                <span className="mypage__meta-ok">● {authMember.memberStatus ? authMember.memberStatus.toString() : t("mypage.active")}</span>
               </div>
             </div>
           </div>
           <div className="mypage__head-cta">
             <button className="mp-btn mp-btn--secondary mp-btn--md" onClick={() => setTab("settings")}>
-              Edit profile
+              {t("mypage.editProfile")}
             </button>
           </div>
         </div>

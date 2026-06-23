@@ -26,7 +26,7 @@ export default function NewsPage() {
     service
       .getAll({ page: 1, limit: 50 })
       .then((data) => setPosts(data))
-      .catch((err) => console.log(err))
+      .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, []);
 

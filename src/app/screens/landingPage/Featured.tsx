@@ -2,7 +2,7 @@ import React from "react";
 import SectionHeader from "./SectionHeader";
 import CarCard from "./CarCard";
 import { AuctionCar } from "../../../lib/types/landing";
-import { t } from "./strings";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   cars: AuctionCar[];
@@ -13,11 +13,12 @@ interface Props {
 }
 
 export default function Featured({ cars, savedIds, onSave, onOpen, onViewAll }: Props) {
+  const { t } = useTranslation();
   return (
     <section className="landing__section">
       <SectionHeader
         number="01"
-        title={t.sections.featured}
+        title={t("sections.featured")}
         subtitle="Curated by our chief inspector each Monday."
         link="View all →"
         onLink={onViewAll}

@@ -1,3 +1,8 @@
 {
-  "name": "Burak"
+  "short_name": "AutoAuction",
+  "name": "AutoAuction",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }

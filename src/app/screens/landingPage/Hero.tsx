@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { AuctionCar } from "../../../lib/types/landing";
-import { t } from "./strings";
+import { useTranslation } from "react-i18next";
 import { useGlobals } from "../../hooks/useGlobals";
 
 interface Props {
@@ -11,10 +11,21 @@ interface Props {
 
 export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
   const { authMember, openSignup } = useGlobals();
+  const { t } = useTranslation();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true; // React doesn't reliably set the muted property; browsers require it for autoplay
+    video.play().catch(() => {});
+  }, []);
+
   return (
     <section className="landing__hero">
       <div className="landing__hero-bg">
         <video
+          ref={videoRef}
           className="landing__hero-video"
           src="/video/hero.mp4"
           autoPlay
@@ -28,15 +39,15 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
 
       <div className="landing__hero-grid">
         <div>
-          <h1 className="landing__headline">{t.hero.headline}</h1>
+          <h1 className="landing__headline">{t("hero.headline")}</h1>
           <div className="landing__cta-row">
             {authMember ? (
               <button className="landing-btn landing-btn--primary landing-btn--lg" onClick={onBrowseCars}>
-                Browse cars →
+                {t("hero.browse")} →
               </button>
             ) : (
               <button className="landing-btn landing-btn--primary landing-btn--lg" onClick={openSignup}>
-                Sign up →
+                {t("hero.signup")} →
               </button>
             )}
           </div>

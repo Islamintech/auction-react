@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import SectionHeader from "../landingPage/SectionHeader";
 import { useGlobals } from "../../hooks/useGlobals";
 
@@ -12,29 +13,30 @@ function hasValue(value?: string | null) {
 
 export default function Overview({ savedCount }: Props) {
   const { authMember } = useGlobals();
+  const { t } = useTranslation();
 
   const joined = authMember?.createdAt
     ? new Date(authMember.createdAt).toLocaleDateString("en-US", { month: "short", year: "numeric" })
     : "-";
 
   const checklist: [string, boolean][] = [
-    ["NAME", hasValue(authMember?.memberNick)],
-    ["PHONE", hasValue(authMember?.memberPhone)],
-    ["EMAIL", hasValue(authMember?.memberEmail)],
-    ["COUNTRY", hasValue(authMember?.memberCountry)],
-    ["ADDRESS", hasValue(authMember?.memberAddress)],
-    ["TELEGRAM", hasValue(authMember?.memberTelegram)],
-    ["ABOUT", hasValue(authMember?.memberDesc)],
-    ["AVATAR", hasValue(authMember?.memberImage)],
+    [t("mypage.ckName"), hasValue(authMember?.memberNick)],
+    [t("mypage.ckPhone"), hasValue(authMember?.memberPhone)],
+    [t("mypage.ckEmail"), hasValue(authMember?.memberEmail)],
+    [t("mypage.ckCountry"), hasValue(authMember?.memberCountry)],
+    [t("mypage.ckAddress"), hasValue(authMember?.memberAddress)],
+    [t("mypage.ckTelegram"), hasValue(authMember?.memberTelegram)],
+    [t("mypage.ckAbout"), hasValue(authMember?.memberDesc)],
+    [t("mypage.ckAvatar"), hasValue(authMember?.memberImage)],
   ];
 
   const missing = checklist.filter(([, done]) => !done);
 
   const stats: [string, string, string][] = [
-    [`${authMember?.memberPoints ?? 0}`, "REWARD POINTS", "var(--accent)"],
-    [`${savedCount}`, "SAVED CARS", "var(--text)"],
-    [`${(authMember?.memberType || "BUYER").toString()}`, "ACCOUNT TYPE", "var(--ok)"],
-    [joined, "MEMBER SINCE", "var(--warn)"],
+    [`${authMember?.memberPoints ?? 0}`, t("mypage.statRewardPoints"), "var(--accent)"],
+    [`${savedCount}`, t("mypage.statSavedCars"), "var(--text)"],
+    [`${(authMember?.memberType || t("mypage.buyer")).toString()}`, t("mypage.statAccountType"), "var(--ok)"],
+    [joined, t("mypage.statMemberSince"), "var(--warn)"],
   ];
 
   return (
@@ -50,30 +52,30 @@ export default function Overview({ savedCount }: Props) {
 
       <div className="mypage__overview">
         <div>
-          <SectionHeader number="01" title="Welcome back" subtitle="Here's a quick snapshot of your account." />
+          <SectionHeader number="01" title={t("mypage.welcome")} subtitle={t("mypage.welcomeSub")} />
           <div className="mp-transit" style={{ padding: 24 }}>
             <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>
-              Hello, {authMember?.memberNick || "Member"}
+              {t("mypage.hello", { name: authMember?.memberNick || t("mypage.member") })}
             </div>
             <div style={{ opacity: 0.7, lineHeight: 1.6 }}>
               {authMember?.memberDesc
                 ? authMember.memberDesc
-                : "Browse Korean cars at fixed prices, save your favorites, and reserve when you're ready. Inspected, insured, and customs-cleared by our team."}
+                : t("mypage.overviewDesc")}
             </div>
             <div style={{ marginTop: 16, fontSize: 12, opacity: 0.6 }}>
-              Phone: {authMember?.memberPhone || "Not set"} | Email: {authMember?.memberEmail || "Not set"}
+              {t("mypage.phone")}: {authMember?.memberPhone || t("mypage.notSet")} | {t("mypage.email")}: {authMember?.memberEmail || t("mypage.notSet")}
             </div>
           </div>
         </div>
 
         {missing.length > 0 && (
           <div>
-            <SectionHeader number="02" title="Account checklist" subtitle="Complete your profile for a smoother experience." />
+            <SectionHeader number="02" title={t("mypage.checklistTitle")} subtitle={t("mypage.checklistSub")} />
             <div className="mp-activity">
               {missing.map(([label], i) => (
                 <div key={label} className={`mp-activity__row${i === 0 ? " mp-activity__row--first" : ""}`}>
                   <span className="mp-activity__kind">- {label}</span>
-                  <span className="mp-activity__msg">Not set</span>
+                  <span className="mp-activity__msg">{t("mypage.notSet")}</span>
                 </div>
               ))}
             </div>

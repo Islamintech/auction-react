@@ -27,6 +27,21 @@ code {
     monospace;
 }
 
+/* Mobile safety nets: prevent media and the page itself from overflowing
+   horizontally on small screens. */
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
 /* ────────────────────────────────────────────────────────────
    Theme tokens — light (default) and dark
    ──────────────────────────────────────────────────────────── */
@@ -45,10 +60,11 @@ code {
   --ok: #3ee07c;
   --danger: #e85a5a;
   --on-accent: #0b0c0e;
-  --footer-bg: #0b0c0e;
-  --footer-text: #d8d6cf;
-  --footer-heading: #ffffff;
-  --footer-rule: rgba(255, 255, 255, 0.1);
+  --footer-bg: #ece9e1;
+  --footer-text: #5a5d63;
+  --footer-heading: #0b0c0e;
+  --footer-link: #9a7b42;
+  --footer-rule: rgba(0, 0, 0, 0.1);
   --nav-bg: transparent;
   --nav-text: #0b0c0e;
 }
@@ -70,6 +86,7 @@ code {
   --footer-bg: #07080a;
   --footer-text: #a8acb3;
   --footer-heading: #f1ece1;
+  --footer-link: #e3c08d;
   --footer-rule: rgba(255, 255, 255, 0.08);
   --nav-bg: transparent;
   --nav-text: #f1ece1;
@@ -83,7 +100,8 @@ code {
 :root[data-theme="dark"] .carlist,
 :root[data-theme="dark"] .cardetail,
 :root[data-theme="dark"] .news,
-:root[data-theme="dark"] .news-detail {
+:root[data-theme="dark"] .news-detail,
+:root[data-theme="dark"] .cv {
   --bg: #0e0f12;
   --surface: #16181c;
   --surface2: #1d2026;
@@ -92,6 +110,14 @@ code {
   --text-dim: #70747c;
   --line: #2a2d33;
   --line-soft: #22252b;
+}
+
+/* Verify page: green badge keeps good contrast in dark mode */
+:root[data-theme="dark"] .cv {
+  --ok: #3ee07c;
+}
+:root[data-theme="dark"] .cv__badge {
+  background: rgba(62, 224, 124, 0.14);
 }
 
 /* Hero overlay gradient flips for dark */

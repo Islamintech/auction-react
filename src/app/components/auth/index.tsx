@@ -21,6 +21,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import GavelIcon from "@mui/icons-material/Gavel";
+import { useTranslation } from "react-i18next";
 import { T } from "../../../lib/types/common";
 import { Messages } from "../../../lib/config";
 import { LoginInput, MemberInput } from "../../../lib/types/member";
@@ -35,14 +36,15 @@ interface AuthenticationModalProps {
   handleLoginClose: () => void;
 }
 
-const PERKS: [JSX.Element, string, string][] = [
-  [<GavelIcon fontSize="small" />, "Fixed-price auctions", "No bidding wars. Reserve at the listed price."],
-  [<VerifiedUserIcon fontSize="small" />, "Inspected in Korea", "Every car graded by independent inspectors."],
-  [<LocalShippingIcon fontSize="small" />, "Door-to-door shipping", "Customs cleared, marine-insured, ~21 days."],
+const PERK_ICONS: [JSX.Element, string, string][] = [
+  [<GavelIcon fontSize="small" />, "auth.perk1Title", "auth.perk1Desc"],
+  [<VerifiedUserIcon fontSize="small" />, "auth.perk2Title", "auth.perk2Desc"],
+  [<LocalShippingIcon fontSize="small" />, "auth.perk3Title", "auth.perk3Desc"],
 ];
 
 export default function AuthenticationModal(props: AuthenticationModalProps) {
   const { signupOpen, loginOpen, handleSignupClose, handleLoginClose } = props;
+  const { t } = useTranslation();
   const [memberNick, setMemberNick] = useState<string>("");
   const [memberPhone, setMemberPhone] = useState<string>("");
   const [memberPassword, setMemberPassword] = useState<string>("");
@@ -80,7 +82,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     try {
       const isFullFill = memberNick.trim() && memberPhone.trim() && memberPassword.trim();
       if (!isFullFill) throw new Error(Messages.error3);
-      if (memberPassword.length < 4) throw new Error("Password must be at least 4 characters");
+      if (memberPassword.length < 4) throw new Error(t("auth.passwordMin"));
 
       setSubmitting(true);
       const signupInput: MemberInput = { memberNick, memberPhone, memberPassword };
@@ -90,7 +92,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       setAuthMember(result);
       closeSignup();
     } catch (err) {
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(err).then();
     } finally {
       setSubmitting(false);
@@ -110,20 +112,13 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       setAuthMember(result);
       closeLogin();
     } catch (err) {
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(err).then();
     } finally {
       setSubmitting(false);
     }
   };
 
-  const switchToLogin = () => {
-    closeSignup();
-    setTimeout(() => {
-      // reuse signup-close to clear, then trigger login open via prop is not available;
-      // simplest: do nothing — user can click LOGIN in navbar.
-    }, 0);
-  };
 
   const renderBrandPanel = (heading: string, sub: string) => (
     <Box
@@ -138,23 +133,23 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       }}
     >
       <Box>
-        <Typography sx={{ fontSize: 12, letterSpacing: "0.18em", opacity: 0.6 }}>AUCTION.UZ</Typography>
+        <Typography sx={{ fontSize: 12, letterSpacing: "0.18em", opacity: 0.6 }}>AUTOAUCTION</Typography>
         <Typography sx={{ fontSize: 26, fontWeight: 700, mt: 2, lineHeight: 1.2 }}>{heading}</Typography>
         <Typography sx={{ fontSize: 13, opacity: 0.7, mt: 1.5, lineHeight: 1.6 }}>{sub}</Typography>
       </Box>
       <Stack spacing={2} sx={{ mt: 4 }}>
-        {PERKS.map(([icon, title, desc], i) => (
+        {PERK_ICONS.map(([icon, titleKey, descKey], i) => (
           <Stack key={i} direction="row" spacing={1.5} alignItems="flex-start">
             <Box sx={{ color: "#d8d6cf", mt: "2px" }}>{icon}</Box>
             <Box>
-              <Typography sx={{ fontSize: 13, fontWeight: 600 }}>{title}</Typography>
-              <Typography sx={{ fontSize: 12, opacity: 0.65 }}>{desc}</Typography>
+              <Typography sx={{ fontSize: 13, fontWeight: 600 }}>{t(titleKey)}</Typography>
+              <Typography sx={{ fontSize: 12, opacity: 0.65 }}>{t(descKey)}</Typography>
             </Box>
           </Stack>
         ))}
       </Stack>
       <Typography sx={{ fontSize: 11, opacity: 0.5, mt: 4 }}>
-        2,800+ inspected cars · Seoul → Central Asia
+        {t("auth.panelStats")}
       </Typography>
     </Box>
   );
@@ -172,22 +167,20 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         </IconButton>
 
         <Typography sx={{ fontSize: 12, letterSpacing: "0.18em", opacity: 0.6 }}>
-          {isSignup ? "GET STARTED" : "WELCOME BACK"}
+          {isSignup ? t("auth.getStarted") : t("auth.welcomeBack")}
         </Typography>
         <Typography sx={{ fontSize: 24, fontWeight: 700, mt: 0.5 }}>
-          {isSignup ? "Create your account" : "Sign in"}
+          {isSignup ? t("auth.createAccountTitle") : t("auth.signInTitle")}
         </Typography>
         <Typography sx={{ fontSize: 13, opacity: 0.7, mt: 0.5, mb: 3 }}>
-          {isSignup
-            ? "Reserve cars, track shipments, and message dealers."
-            : "Continue where you left off."}
+          {isSignup ? t("auth.signupSub") : t("auth.loginSub")}
         </Typography>
 
         <Stack spacing={2}>
           <TextField
             fullWidth
             size="small"
-            label="Username"
+            label={t("auth.username")}
             value={memberNick}
             onChange={handleNick}
             onKeyDown={handleKeyDown}
@@ -204,8 +197,8 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
             <TextField
               fullWidth
               size="small"
-              label="Phone"
-              placeholder="+998 ..."
+              label={t("auth.phone")}
+              placeholder={t("auth.phonePlaceholder")}
               value={memberPhone}
               onChange={handlePhone}
               onKeyDown={handleKeyDown}
@@ -222,7 +215,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
           <TextField
             fullWidth
             size="small"
-            label="Password"
+            label={t("auth.password")}
             type={showPassword ? "text" : "password"}
             value={memberPassword}
             onChange={handlePassword}
@@ -259,13 +252,11 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
               "&:hover": { background: "#1a1d24" },
             }}
           >
-            {submitting ? "Please wait…" : isSignup ? "Create account" : "Sign in"}
+            {submitting ? t("auth.pleaseWait") : isSignup ? t("auth.createAccount") : t("auth.signIn")}
           </Button>
 
           <Typography sx={{ fontSize: 11, opacity: 0.55, textAlign: "center", mt: 1 }}>
-            {isSignup
-              ? "By creating an account you agree to our Terms and Privacy Policy."
-              : "Trouble signing in? Contact hello@auction.uz"}
+            {isSignup ? t("auth.termsNote") : t("auth.troubleNote")}
           </Typography>
         </Stack>
       </Box>
@@ -282,10 +273,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       >
         <DialogContent sx={{ p: 0 }}>
           <Stack direction="row" sx={{ minHeight: 480 }}>
-            {renderBrandPanel(
-              "Dream cars, fixed price.",
-              "Create an account to reserve cars, save favorites, and track shipments end-to-end."
-            )}
+            {renderBrandPanel(t("auth.signupHeading"), t("auth.signupHeadingSub"))}
             {renderForm("signup")}
           </Stack>
         </DialogContent>
@@ -299,10 +287,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       >
         <DialogContent sx={{ p: 0 }}>
           <Stack direction="row" sx={{ minHeight: 440 }}>
-            {renderBrandPanel(
-              "Welcome back to AUCTION.UZ",
-              "Sign in to continue tracking your reservations and saved cars."
-            )}
+            {renderBrandPanel(t("auth.loginHeading"), t("auth.loginHeadingSub"))}
             {renderForm("login")}
           </Stack>
         </DialogContent>

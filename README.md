@@ -1,46 +1,48 @@
-# Getting Started with Create React App
+# AutoAuction
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+Customer-facing web app for **AutoAuction** — Korean cars at fixed prices, inspected, insured, and delivered door-to-door across Central Asia and the Caucasus.
 
-## Available Scripts
+Built with React, TypeScript, Redux Toolkit, and MUI. Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-In the project directory, you can run:
+## Prerequisites
 
-### `npm start`
+- Node.js >= 18
+- Yarn (classic)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Setup
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+yarn install
+cp .env.example .env   # then edit values
+```
 
-### `npm test`
+### Environment variables
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Variable | Description |
+| --- | --- |
+| `REACT_APP_API_URL` | Base URL of the backend API (no trailing slash). For production set this to your deployed backend, e.g. `https://api.autoauction.kr`. |
+| `PORT` | Port for the local dev server (defaults to `3000` if unset). |
 
-### `npm run build`
+> `.env` is gitignored — set `REACT_APP_API_URL` in your deployment environment.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Scripts
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Command | Description |
+| --- | --- |
+| `yarn start` | Run the app in development mode. |
+| `yarn build` | Produce an optimized production build in `build/`. |
+| `yarn test` | Launch the test runner in watch mode. |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Deployment
 
-### `npm run eject`
+`yarn build` outputs static assets to `build/`. Serve them from any static host.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**Required host configuration:**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **SPA fallback** — rewrite all routes to `index.html` (the app uses client-side routing), otherwise deep links and refreshes will 404.
+- **Backend CORS** — the API is called with credentials, so the backend must allow the deployed origin with `Access-Control-Allow-Credentials: true` and an explicit origin.
+- Set `REACT_APP_API_URL` to the production backend.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Related projects
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `../auction` — backend API (Express, MongoDB) and admin panel.

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useGlobals } from "../../hooks/useGlobals";
 import MemberService from "../../services/MemberService";
 import { MemberUpdateInput } from "../../../lib/types/member";
@@ -57,6 +58,7 @@ const labelStyle: React.CSSProperties = {
 
 export default function SettingsTab({ onSaved }: { onSaved?: () => void } = {}) {
   const { authMember, setAuthMember } = useGlobals();
+  const { t } = useTranslation();
   const [nick, setNick] = useState(authMember?.memberNick || "");
   const [phone, setPhone] = useState(authMember?.memberPhone || "");
   const [email, setEmail] = useState(authMember?.memberEmail || "");
@@ -79,7 +81,7 @@ export default function SettingsTab({ onSaved }: { onSaved?: () => void } = {}) 
     if (!authMember) return;
     try {
       if (!nick.trim() || !phone.trim()) {
-        throw new Error("Username and phone number are required");
+        throw new Error(t("mypage.requiredErr"));
       }
 
       setSaving(true);
@@ -97,10 +99,10 @@ export default function SettingsTab({ onSaved }: { onSaved?: () => void } = {}) 
       const service = new MemberService();
       const updated = await service.updateMember(input);
       setAuthMember(updated);
-      await sweetTopSmallSuccessAlert("Profile updated", 800);
+      await sweetTopSmallSuccessAlert(t("mypage.profileUpdated"), 800);
       if (onSaved) onSaved();
     } catch (err) {
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(err).then();
     } finally {
       setSaving(false);
@@ -109,7 +111,7 @@ export default function SettingsTab({ onSaved }: { onSaved?: () => void } = {}) 
 
   return (
     <div className="mp-settings-grid">
-      <SettingsCard title="Profile">
+      <SettingsCard title={t("mypage.cardProfile")}>
         <div style={{ display: "flex", gap: 16, alignItems: "center", marginBottom: 12 }}>
           <div
             style={{
@@ -122,20 +124,20 @@ export default function SettingsTab({ onSaved }: { onSaved?: () => void } = {}) 
           />
           <label style={{ cursor: "pointer", fontSize: 12, opacity: 0.8 }}>
             <input type="file" accept="image/*" onChange={onPickImage} style={{ display: "none" }} />
-            <span style={{ borderBottom: "1px solid currentColor" }}>Change avatar</span>
+            <span style={{ borderBottom: "1px solid currentColor" }}>{t("mypage.changeAvatar")}</span>
           </label>
         </div>
 
-        <label style={labelStyle}>Username</label>
+        <label style={labelStyle}>{t("mypage.username")}</label>
         <input style={inputStyle} value={nick} onChange={(e) => setNick(e.target.value)} />
 
-        <label style={labelStyle}>Phone</label>
+        <label style={labelStyle}>{t("mypage.phone")}</label>
         <input style={inputStyle} value={phone} onChange={(e) => setPhone(e.target.value)} />
 
-        <label style={labelStyle}>Email</label>
+        <label style={labelStyle}>{t("mypage.email")}</label>
         <input style={inputStyle} value={email} onChange={(e) => setEmail(e.target.value)} />
 
-        <label style={labelStyle}>About</label>
+        <label style={labelStyle}>{t("mypage.about")}</label>
         <textarea
           style={{ ...inputStyle, minHeight: 80, resize: "vertical" }}
           value={desc}
@@ -143,14 +145,14 @@ export default function SettingsTab({ onSaved }: { onSaved?: () => void } = {}) 
         />
       </SettingsCard>
 
-      <SettingsCard title="Location & contact">
-        <label style={labelStyle}>Country</label>
+      <SettingsCard title={t("mypage.cardLocation")}>
+        <label style={labelStyle}>{t("mypage.country")}</label>
         <input style={inputStyle} value={country} onChange={(e) => setCountry(e.target.value)} />
 
-        <label style={labelStyle}>Address</label>
+        <label style={labelStyle}>{t("mypage.address")}</label>
         <input style={inputStyle} value={address} onChange={(e) => setAddress(e.target.value)} />
 
-        <label style={labelStyle}>Telegram</label>
+        <label style={labelStyle}>{t("mypage.telegram")}</label>
         <input
           style={inputStyle}
           value={telegram}
@@ -164,15 +166,15 @@ export default function SettingsTab({ onSaved }: { onSaved?: () => void } = {}) 
           onClick={onSave}
           disabled={saving}
         >
-          {saving ? "Saving…" : "Save changes"}
+          {saving ? t("mypage.saving") : t("mypage.saveChanges")}
         </button>
       </SettingsCard>
 
-      <SettingsCard title="Account info">
-        <SettingsRow label="Member ID" value={authMember?._id?.slice(-8) || "—"} />
-        <SettingsRow label="Status" value={(authMember?.memberStatus || "ACTIVE").toString()} status="ok" />
-        <SettingsRow label="Type" value={(authMember?.memberType || "BUYER").toString()} />
-        <SettingsRow label="Reward points" value={String(authMember?.memberPoints ?? 0)} />
+      <SettingsCard title={t("mypage.cardAccount")}>
+        <SettingsRow label={t("mypage.memberId")} value={authMember?._id?.slice(-8) || "—"} />
+        <SettingsRow label={t("mypage.statusLabel")} value={(authMember?.memberStatus || t("mypage.active")).toString()} status="ok" />
+        <SettingsRow label={t("mypage.typeLabel")} value={(authMember?.memberType || t("mypage.buyer")).toString()} />
+        <SettingsRow label={t("mypage.rewardPoints")} value={String(authMember?.memberPoints ?? 0)} />
       </SettingsCard>
     </div>
   );

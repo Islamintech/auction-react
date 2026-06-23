@@ -1,5 +1,5 @@
 import React from "react";
-import { t } from "./strings";
+import { useTranslation } from "react-i18next";
 import { useGlobals } from "../../hooks/useGlobals";
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
 
 export default function BigCTA({ onSignup, onConsultation }: Props) {
   const { authMember } = useGlobals();
+  const { t } = useTranslation();
 
   if (authMember) {
     return (
@@ -43,7 +44,7 @@ export default function BigCTA({ onSignup, onConsultation }: Props) {
         </div>
         <div className="landing-cta__side">
           <button className="landing-cta__btn" onClick={onSignup}>
-            {t.nav.signup} →
+            {t("nav.signup")} →
           </button>
           <span className="landing-cta__note">NO CREDIT CARD REQUIRED</span>
         </div>

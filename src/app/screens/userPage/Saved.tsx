@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import CarCard from "../landingPage/CarCard";
 import { AuctionCar } from "../../../lib/types/landing";
 
@@ -10,17 +11,18 @@ interface Props {
 }
 
 export default function Saved({ saved, onSave, onOpen, onBrowse }: Props) {
+  const { t } = useTranslation();
   return (
     <>
       <div className="mp-section-note">
-        {saved.length} CARS SAVED · TAP HEART TO REMOVE
+        {t("mypage.savedNote", { count: saved.length })}
       </div>
       {saved.length === 0 ? (
         <div className="mp-empty">
-          <div className="mp-empty__title">No saved cars yet</div>
-          <p className="mp-empty__body">Tap the heart on any car to save it for later.</p>
+          <div className="mp-empty__title">{t("mypage.noSavedTitle")}</div>
+          <p className="mp-empty__body">{t("mypage.noSavedBody")}</p>
           <button className="mp-btn mp-btn--primary mp-btn--md" style={{ marginTop: 16 }} onClick={onBrowse}>
-            Browse cars →
+            {t("mypage.browseCars")}
           </button>
         </div>
       ) : (

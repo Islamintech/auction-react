@@ -7,7 +7,7 @@ class PostService {
       const result = await api.get("/post/all", { params });
       return result.data;
     } catch (err) {
-      console.log("Error, PostService.getAll:", err);
+      console.error("Error, PostService.getAll:", err);
       throw err;
     }
   }
@@ -17,7 +17,7 @@ class PostService {
       const result = await api.get(`/post/${id}`);
       return result.data;
     } catch (err) {
-      console.log("Error, PostService.getById:", err);
+      console.error("Error, PostService.getById:", err);
       throw err;
     }
   }
@@ -27,7 +27,7 @@ class PostService {
       const result = await api.post(`/post/${id}/like`);
       return result.data;
     } catch (err) {
-      console.log("Error, PostService.like:", err);
+      console.error("Error, PostService.like:", err);
       throw err;
     }
   }
@@ -37,7 +37,7 @@ class PostService {
       const result = await api.post(`/post/${id}/comment`, { commentContent });
       return result.data;
     } catch (err) {
-      console.log("Error, PostService.comment:", err);
+      console.error("Error, PostService.comment:", err);
       throw err;
     }
   }

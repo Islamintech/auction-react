@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Box, Button, Container, ListItemIcon, Menu, MenuItem, Stack } from "@mui/material";
 import { NavLink, useHistory } from "react-router-dom";
 import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
-import { Logout, Person } from "@mui/icons-material";
+import { Logout, Menu as MenuIcon, Close as CloseIcon, Person, Login as LoginIcon } from "@mui/icons-material";
 import ThemeToggle from "../themeToggle";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 interface HomeNavbarProps {
   setSignupOpen: (isOpen: boolean) => void;
@@ -17,14 +20,16 @@ interface HomeNavbarProps {
 export default function HomeNavbar(props: HomeNavbarProps) {
   const {
     setLoginOpen,
-    setSignupOpen,
     handleCloseLogout,
     handleLogoutClick,
     handleLogoutRequest,
     anchorEl,
   } = props;
   const { authMember } = useGlobals();
+  const { t } = useTranslation();
   const history = useHistory();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = () => setMenuOpen(false);
   const goMyPage = () => {
     handleCloseLogout();
     history.push("/member-page");
@@ -39,35 +44,74 @@ export default function HomeNavbar(props: HomeNavbarProps) {
       <Container className="navbar-container">
         <Stack className="menu">
           <Box>
-            <NavLink to="/">
-              <span className="brand-wordmark">AUCTION.UZ</span>
+            <NavLink to="/" className="brand-link">
+              <img className="brand-logo" src="/img/logo.png" alt="AutoAuction" />
+              <span className="brand-wordmark">AUTOAUCTION</span>
             </NavLink>
           </Box>
-          <Stack className="links">
+          <span className="nav-lang"><LanguageSwitcher /></span>
+          {!authMember ? (
+            <button
+              type="button"
+              className="nav-login-icon"
+              aria-label="Login"
+              onClick={() => setLoginOpen(true)}
+            >
+              <LoginIcon />
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="nav-login-icon nav-login-icon--avatar"
+              aria-label="Account"
+              onClick={handleLogoutClick}
+            >
+              <img
+                className="user-avatar"
+                src={authMember?.memberImage ? `${serverApi}/${authMember?.memberImage}` : "/icons/default-user.svg"}
+                alt="user avatar"
+              />
+            </button>
+          )}
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((o) => !o)}
+          >
+            {menuOpen ? <CloseIcon /> : <MenuIcon />}
+          </button>
+          {menuOpen && <div className="nav-backdrop" onClick={closeMenu} />}
+          <Stack className={`links${menuOpen ? " links--open" : ""}`} onClick={closeMenu}>
             <Box className="hover-line">
-              <NavLink to="/" activeClassName="underline" exact>Home</NavLink>
+              <NavLink to="/" activeClassName="underline" exact>{t("nav.home")}</NavLink>
             </Box>
             <Box className="hover-line">
-              <NavLink to="/products" activeClassName="underline">Cars</NavLink>
+              <NavLink to="/products" activeClassName="underline">{t("nav.cars")}</NavLink>
             </Box>
             <Box className="hover-line">
-              <NavLink to="/news" activeClassName="underline">Community</NavLink>
+              <NavLink to="/news" activeClassName="underline">{t("nav.community")}</NavLink>
             </Box>
             <Box className="hover-line">
-              <NavLink to="/help" activeClassName="underline">Help</NavLink>
+              <NavLink to="/verify" activeClassName="underline">{t("nav.verifyVin")}</NavLink>
+            </Box>
+            <Box className="hover-line">
+              <NavLink to="/help" activeClassName="underline">{t("nav.help")}</NavLink>
             </Box>
             {authMember && (
               <Box className="hover-line">
-                <NavLink to="/member-page" activeClassName="underline">My Account</NavLink>
+                <NavLink to="/member-page" activeClassName="underline">{t("nav.myAccount")}</NavLink>
               </Box>
             )}
 
+            <span className="nav-lang-desktop"><LanguageSwitcher /></span>
             <ThemeToggle />
 
             {!authMember ? (
               <Box>
                 <Button variant="contained" className="login-button" onClick={() => setLoginOpen(true)}>
-                  LOGIN
+                  {t("nav.login")}
                 </Button>
               </Box>
             ) : (
@@ -105,13 +149,13 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 <ListItemIcon>
                   <Person fontSize="small" />
                 </ListItemIcon>
-                My Page
+                {t("nav.myPage")}
               </MenuItem>
               <MenuItem onClick={logout}>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>
-                Logout
+                {t("nav.logout")}
               </MenuItem>
             </Menu>
           </Stack>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import SectionHeader from "./SectionHeader";
-import { t } from "./strings";
+import { useTranslation } from "react-i18next";
 import MemberService from "../../services/MemberService";
 import { Member } from "../../../lib/types/member";
 import { imageUrl } from "../../../lib/api";
 
 export default function Leaderboard() {
+  const { t } = useTranslation();
   const [users, setUsers] = useState<Member[]>([]);
 
   useEffect(() => {
@@ -16,12 +17,12 @@ export default function Leaderboard() {
         const sorted = [...data].sort((a, b) => (b.memberPoints ?? 0) - (a.memberPoints ?? 0));
         setUsers(sorted.slice(0, 5));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, []);
 
   return (
     <div>
-      <SectionHeader number="03" title={t.sections.leaderboard} subtitle="Ranked by reward points." />
+      <SectionHeader number="03" title={t("sections.leaderboard")} subtitle={t("sections.leaderboardSub")} />
       <div className="landing-lb">
         {users.length === 0 && (
           <div style={{ padding: 20, opacity: 0.6 }}>No active users yet.</div>
@@ -72,8 +73,6 @@ export default function Leaderboard() {
                 )}
                 <div className="landing-lb__name">{u.memberNick}</div>
               </div>
-              <div className="landing-lb__count">{(u.memberType || "BUYER").toString()}</div>
-              <div className="landing-lb__vol">{(u.memberPoints ?? 0).toLocaleString()} PTS</div>
             </div>
           );
         })}

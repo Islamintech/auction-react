@@ -25,7 +25,7 @@ class MemberService {
       const result = await api.get("/member/top-users");
       return result.data;
     } catch (err) {
-      console.log("Error, getTopUsers:", err);
+      console.error("Error, getTopUsers:", err);
       throw err;
     }
   }
@@ -37,7 +37,7 @@ class MemberService {
       localStorage.setItem("memberData", JSON.stringify(member));
       return member;
     } catch (err) {
-      console.log("Error signup:", err);
+      console.error("Error signup:", err);
       throw err;
     }
   }
@@ -49,7 +49,7 @@ class MemberService {
       localStorage.setItem("memberData", JSON.stringify(member));
       return member;
     } catch (err) {
-      console.log("Error login:", err);
+      console.error("Error login:", err);
       throw err;
     }
   }
@@ -60,7 +60,7 @@ class MemberService {
       localStorage.removeItem("memberData");
       return result.data.logout;
     } catch (err) {
-      console.log("Error logout:", err);
+      console.error("Error logout:", err);
       throw err;
     }
   }
@@ -70,7 +70,7 @@ class MemberService {
       const result = await api.get("/member/detail");
       return result.data;
     } catch (err) {
-      console.log("Error, getDetail:", err);
+      console.error("Error, getDetail:", err);
       throw err;
     }
   }
@@ -96,7 +96,7 @@ class MemberService {
       localStorage.setItem("memberData", JSON.stringify(member));
       return member;
     } catch (err) {
-      console.log("Error updateMember:", err);
+      console.error("Error updateMember:", err);
       throw err;
     }
   }

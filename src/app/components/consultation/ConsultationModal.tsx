@@ -16,6 +16,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
+import { useTranslation } from "react-i18next";
 import ConsultationService from "../../services/ConsultationService";
 import { ConsultationInput, PreferredContact } from "../../../lib/types/consultation";
 import { useGlobals } from "../../hooks/useGlobals";
@@ -36,19 +37,20 @@ interface Props {
 
 const CONTACT_OPTIONS: PreferredContact[] = ["CALL", "EMAIL", "TELEGRAM", "WHATSAPP"];
 
-const CONTACT_LABELS: Record<PreferredContact, string> = {
-  CALL: "Phone call",
-  EMAIL: "Email",
-  TELEGRAM: "Telegram",
-  WHATSAPP: "WhatsApp",
+const CONTACT_LABEL_KEYS: Record<PreferredContact, string> = {
+  CALL: "consult.contactCall",
+  EMAIL: "consult.contactEmail",
+  TELEGRAM: "consult.contactTelegram",
+  WHATSAPP: "consult.contactWhatsapp",
 };
 
 export default function ConsultationModal({ open, onClose, carId, carTitle, carOptions }: Props) {
   const { authMember } = useGlobals();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [preferred, setPreferred] = useState<PreferredContact>("PHONE");
+  const [preferred, setPreferred] = useState<PreferredContact>("CALL");
   const [message, setMessage] = useState("");
   const [selectedCarId, setSelectedCarId] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
@@ -69,9 +71,9 @@ export default function ConsultationModal({ open, onClose, carId, carTitle, carO
   const handleSubmit = async () => {
     try {
       if (!name.trim() || !email.trim() || !phone.trim()) {
-        throw new Error("Name, email and phone are required");
+        throw new Error(t("consult.requiredErr"));
       }
-      if (!effectiveCarId) throw new Error("Please select a car");
+      if (!effectiveCarId) throw new Error(t("consult.selectCar"));
 
       setSubmitting(true);
       const input: ConsultationInput = {
@@ -84,10 +86,10 @@ export default function ConsultationModal({ open, onClose, carId, carTitle, carO
       };
       const service = new ConsultationService();
       await service.create(input);
-      await sweetTopSmallSuccessAlert("Consultation request sent", 1000);
+      await sweetTopSmallSuccessAlert(t("consult.sentMsg"), 1000);
       onClose();
     } catch (err) {
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(err).then();
     } finally {
       setSubmitting(false);
@@ -111,19 +113,19 @@ export default function ConsultationModal({ open, onClose, carId, carTitle, carO
           <Stack direction="row" alignItems="center" spacing={1.5} sx={{ mb: 0.5 }}>
             <ContactSupportIcon sx={{ color: "var(--accent, #d4a248)" }} />
             <Typography sx={{ fontSize: 12, letterSpacing: "0.18em", opacity: 0.6 }}>
-              REQUEST CONSULTATION
+              {t("consult.badge")}
             </Typography>
           </Stack>
           <Typography sx={{ fontSize: 22, fontWeight: 700 }}>
-            Talk to an expert
+            {t("consult.title")}
           </Typography>
           {carTitle && (
             <Typography sx={{ fontSize: 13, opacity: 0.7, mt: 0.5 }}>
-              About: <b>{carTitle}</b>
+              {t("consult.about")} <b>{carTitle}</b>
             </Typography>
           )}
           <Typography sx={{ fontSize: 12, opacity: 0.6, mt: 0.5, mb: 3 }}>
-            We reply within 24 hours during business days.
+            {t("consult.within24")}
           </Typography>
 
           <Stack spacing={2}>
@@ -132,7 +134,7 @@ export default function ConsultationModal({ open, onClose, carId, carTitle, carO
                 fullWidth
                 size="small"
                 select
-                label="Which car?"
+                label={t("consult.whichCar")}
                 value={selectedCarId}
                 onChange={(e) => setSelectedCarId(e.target.value)}
               >
@@ -146,7 +148,7 @@ export default function ConsultationModal({ open, onClose, carId, carTitle, carO
             <TextField
               fullWidth
               size="small"
-              label="Name"
+              label={t("consult.name")}
               value={name}
               onChange={(e) => setName(e.target.value)}
               InputProps={{
@@ -160,7 +162,7 @@ export default function ConsultationModal({ open, onClose, carId, carTitle, carO
             <TextField
               fullWidth
               size="small"
-              label="Email"
+              label={t("consult.email")}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -175,7 +177,7 @@ export default function ConsultationModal({ open, onClose, carId, carTitle, carO
             <TextField
               fullWidth
               size="small"
-              label="Phone"
+              label={t("consult.phone")}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               InputProps={{
@@ -190,13 +192,13 @@ export default function ConsultationModal({ open, onClose, carId, carTitle, carO
               fullWidth
               size="small"
               select
-              label="Preferred contact"
+              label={t("consult.preferred")}
               value={preferred}
               onChange={(e) => setPreferred(e.target.value as PreferredContact)}
             >
               {CONTACT_OPTIONS.map((c) => (
                 <MenuItem key={c} value={c}>
-                  {CONTACT_LABELS[c]}
+                  {t(CONTACT_LABEL_KEYS[c])}
                 </MenuItem>
               ))}
             </TextField>
@@ -205,8 +207,8 @@ export default function ConsultationModal({ open, onClose, carId, carTitle, carO
               multiline
               minRows={3}
               size="small"
-              label="Message (optional)"
-              placeholder="Anything specific you'd like to know?"
+              label={t("consult.messageLabel")}
+              placeholder={t("consult.messagePlaceholder")}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
@@ -224,10 +226,10 @@ export default function ConsultationModal({ open, onClose, carId, carTitle, carO
                 "&:hover": { background: "var(--text-mute, #1a1d24)" },
               }}
             >
-              {submitting ? "Sending…" : "Send request"}
+              {submitting ? t("consult.sending") : t("consult.sendRequest")}
             </Button>
             <Typography sx={{ fontSize: 11, opacity: 0.55, textAlign: "center" }}>
-              By submitting you agree to be contacted via your selected channel.
+              {t("consult.agreeNote")}
             </Typography>
           </Stack>
         </Box>

@@ -18,6 +18,13 @@
   background: var(--bg);
   color: var(--text);
   min-height: 100%;
+  --page-max: 1200px;
+}
+
+/* Cap content width on wide screens; keep the page background full-bleed. */
+.mypage > * {
+  max-width: var(--page-max);
+  margin-inline: auto;
 }
 
 /* Header */
@@ -507,4 +514,45 @@
     grid-template-columns: 1fr 1fr;
     row-gap: 6px;
   }
+
+  /* Profile header: stack identity, shrink avatar/name, full-width CTA */
+  .mypage__head-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .mypage__id { gap: 14px; align-items: center; }
+  .mypage__avatar { width: 56px; height: 56px; flex-shrink: 0; }
+  .mypage__name { font-size: 24px; }
+  .mypage__meta {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin-top: 6px;
+  }
+  .mypage__meta-sep { display: none; }
+  .mypage__head-cta { width: 100%; }
+  .mypage__head-cta .mp-btn { flex: 1; }
+
+  /* Tabs scroll horizontally instead of overflowing */
+  .mypage__tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .mypage__tabs::-webkit-scrollbar { display: none; }
+  .mypage__tab { flex: 0 0 auto; white-space: nowrap; }
+}
+@media (max-width: 480px) {
+  /* Orders → reflow into a stacked card: model on top, details below */
+  .mp-orders__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 6px;
+  }
+  .mp-orders__row .car-ph { flex: 0 0 56px; width: 56px; }
+  .mp-orders__model { flex: 1 1 100%; order: -1; }
+  .mp-orders__amt { margin-left: auto; }
 }

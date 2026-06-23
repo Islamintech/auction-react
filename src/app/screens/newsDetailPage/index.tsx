@@ -53,7 +53,7 @@ export default function NewsDetailPage() {
         prev ? { ...prev, ...updated, myFavorite: willBeLiked } : prev
       );
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setPost((prev) =>
         prev
           ? {
@@ -84,7 +84,7 @@ export default function NewsDetailPage() {
       const fresh = await service.getById(post._id);
       setPost((prev) => (prev ? { ...prev, ...fresh, myFavorite: prev.myFavorite } : fresh));
     } catch (err) {
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(err).then();
     } finally {
       setPosting(false);
@@ -99,7 +99,7 @@ export default function NewsDetailPage() {
       .getById(id)
       .then((data) => setPost(data))
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setNotFound(true);
       })
       .finally(() => setLoading(false));
@@ -107,7 +107,7 @@ export default function NewsDetailPage() {
     service
       .getAll({ page: 1, limit: 20 })
       .then((data) => setRelated(data.filter((p) => p._id !== id).slice(0, 3)))
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, [id]);
 
   if (loading) {

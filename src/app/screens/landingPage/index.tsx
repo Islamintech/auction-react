@@ -33,11 +33,10 @@ export default function LandingPage() {
     service
       .getAll({ page: 1, limit: 24, order: "createdAt" })
       .then((data) => dispatch(setCars(data)))
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, [dispatch]);
 
   const crashed = cars.filter((c) => c.category === "crashed");
-  const ready = cars.filter((c) => c.category === "ready");
   const featured = [...cars]
     .sort((a, b) => {
       const scoreA = (a.likeCount ?? 0) * 2 + (a.viewCount ?? 0);

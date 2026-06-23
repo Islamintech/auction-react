@@ -205,3 +205,26 @@
 .help-page .MuiTab-root { color: var(--text-mute) !important; }
 .help-page .MuiTab-root.Mui-selected { color: var(--accent) !important; }
 .help-page .MuiTabs-indicator { background-color: var(--accent) !important; }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .help-page .css-1gsv261 { width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .help-page .help-container { margin-top: 28px; margin-bottom: 28px; }
+  .help-page .help-menu { height: auto; }
+  .help-page .help-menu .table-list,
+  .help-page .css-heg063-MuiTabs-flexContainer { justify-content: flex-start; }
+  /* let the tab strip scroll horizontally instead of squishing */
+  .help-page .MuiTabs-flexContainer { gap: 4px; }
+  .help-page .help-main-content { height: auto; }
+  .help-page .admin-letter-box { padding: 28px 20px; }
+  .help-page .rules-box { padding: 18px; }
+}
+
+@media (max-width: 480px) {
+  .help-page .admin-letter-box { padding: 22px 16px; }
+  .help-page .admin-letter-frame span { font-size: 20px; line-height: 26px; }
+  .help-page .admin-letter-frame .admin-input-box input { height: 52px; padding: 14px; }
+}

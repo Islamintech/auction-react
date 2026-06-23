@@ -19,6 +19,13 @@
   background: var(--bg);
   color: var(--text);
   min-height: 100%;
+  --page-max: 1200px;
+}
+
+/* Cap content width on wide screens; keep the page background full-bleed. */
+.cardetail > * {
+  max-width: var(--page-max);
+  margin-inline: auto;
 }
 
 /* Breadcrumb */
@@ -26,6 +33,7 @@
   padding: 20px 48px 0;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   font-family: var(--mono-font);
   font-size: 11px;
@@ -47,6 +55,12 @@
 .cd-gallery {
   position: relative;
   border: 1px solid var(--line);
+}
+.cd-gallery__main {
+  height: 460px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
 }
 .cd-gallery__nav {
   position: absolute;
@@ -114,7 +128,7 @@
   font-family: var(--body-font);
   font-size: 14px;
   color: var(--text-mute);
-  margin-top: 14px;
+  margin: 16px 0 0;
   max-width: 580px;
   line-height: 1.6;
 }
@@ -172,7 +186,7 @@
   border-bottom-color: var(--accent);
 }
 .cd-tab-content {
-  padding-top: 24px;
+  padding-top: 16px;
   min-height: 260px;
 }
 
@@ -400,6 +414,9 @@
 .cd-paper__label { font-family: var(--body-font); font-size: 13px; color: var(--text); }
 
 /* Buy panel */
+/* Mobile sticky reserve bar — hidden on desktop */
+.cd-stickybar { display: none; }
+
 .cd-aside {
   position: sticky;
   top: 88px;
@@ -465,63 +482,14 @@
 .cd-btn--lg { height: 52px; padding: 0 26px; font-size: 14px; }
 .cd-btn--md { height: 42px; padding: 0 20px; font-size: 13px; }
 
-.cd-cost {
-  margin-top: 22px;
-  padding-top: 18px;
-  border-top: 1px solid var(--line-soft);
-}
-.cd-cost__label {
-  font-family: var(--mono-font);
-  font-size: 10px;
-  color: var(--text-dim);
-  letter-spacing: 0.15em;
-  margin-bottom: 10px;
-}
-.cd-cost__row {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-  font-family: var(--mono-font);
-  font-size: 11px;
-  color: var(--text-mute);
-}
-.cd-cost__row b { color: var(--text); font-weight: 600; }
-.cd-cost__total {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 0 0;
-  border-top: 1px solid var(--line-soft);
-  margin-top: 6px;
-  font-family: var(--display-font);
-  font-weight: 700;
-  font-size: 17px;
-}
-
-.cd-trust {
-  margin-top: 12px;
-  padding: 14px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-}
-.cd-trust__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-.cd-trust__cell { text-align: center; }
-.cd-trust__icon { font-size: 16px; }
-.cd-trust__label {
-  font-family: var(--mono-font);
-  font-size: 9px;
-  color: var(--text-mute);
-  letter-spacing: 0.08em;
-  margin-top: 4px;
-}
-
 /* Similar */
 .cd-similar {
   padding: 24px 48px 32px;
+}
+.cd-comments {
+  padding: 8px 48px 40px;
+  border-top: 1px solid var(--line);
+  margin-top: 8px;
 }
 .cd-similar__grid {
   display: grid;
@@ -554,6 +522,49 @@
 @media (max-width: 1024px) {
   .cd-top { grid-template-columns: 1fr; }
   .cd-aside { position: static; }
+  /* Single column now — let the description use the full width */
+  .cd-desc { max-width: none; }
+
+  /* Always-visible reserve CTA pinned to the bottom on mobile */
+  .cardetail { padding-bottom: 76px; }
+  .cd-stickybar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    padding: 10px 16px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.12);
+  }
+  .cd-stickybar__info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  .cd-stickybar__label {
+    font-family: var(--mono-font);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--text-dim);
+  }
+  .cd-stickybar__price {
+    font-family: var(--display-font);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .cd-stickybar__btn {
+    margin-left: auto;
+    height: 46px;
+    padding: 0 26px;
+    font-size: 14px;
+  }
   .cd-similar__grid { grid-template-columns: repeat(2, 1fr); }
   .cd-damage-grid { grid-template-columns: repeat(2, 1fr); }
   .cd-deliv-cards { grid-template-columns: 1fr; }
@@ -562,13 +573,33 @@
   .cd-specs__row:nth-child(even) { padding-left: 0; padding-right: 0; }
 }
 @media (max-width: 640px) {
-  .cd-crumb, .cd-top, .cd-similar { padding-left: 20px; padding-right: 20px; }
-  .cd-thumbs { grid-template-columns: repeat(3, 1fr); }
+  .cd-crumb, .cd-top, .cd-similar, .cd-comments { padding-left: 20px; padding-right: 20px; }
+  .cd-desc { max-width: none; }
+  .cd-top { padding-top: 16px; gap: 24px; }
+  .cd-thumbs { grid-template-columns: repeat(4, 1fr); }
   .cd-title { font-size: 30px; }
   .cd-similar__grid { grid-template-columns: 1fr; }
-  .cd-parts-table__head, .cd-parts-table__row { grid-template-columns: 1fr 80px; }
-  .cd-parts-table__head > *:nth-child(2),
-  .cd-parts-table__head > *:nth-child(4),
-  .cd-parts-table__row > *:nth-child(2),
-  .cd-parts-table__row > *:nth-child(4) { display: none; }
+
+  /* Shorter gallery + bigger touch targets on phones */
+  .cd-gallery__main { height: 260px; }
+  .cd-gallery__nav { width: 44px; height: 44px; }
+
+  /* Tabs scroll horizontally instead of overflowing/wrapping */
+  .cd-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .cd-tabs::-webkit-scrollbar { display: none; }
+  .cd-tab { flex: 0 0 auto; white-space: nowrap; padding: 14px 16px; }
+
+  /* Comfortable tap target for the save/like button */
+  .cd-save { width: 48px; height: 48px; }
+}
+@media (max-width: 480px) {
+  .cd-damage-grid { grid-template-columns: 1fr; }
+  .cd-title { font-size: 26px; }
+  .cd-buy__price { font-size: 36px; }
+  .cd-thumbs { grid-template-columns: repeat(3, 1fr); }
 }

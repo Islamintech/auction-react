@@ -7,7 +7,7 @@ class ConsultationService {
       const result = await api.post("/consultation/create", input);
       return result.data;
     } catch (err) {
-      console.log("Error, ConsultationService.create:", err);
+      console.error("Error, ConsultationService.create:", err);
       throw err;
     }
   }
@@ -17,7 +17,7 @@ class ConsultationService {
       const result = await api.get("/consultation/my");
       return result.data;
     } catch (err) {
-      console.log("Error, ConsultationService.getMy:", err);
+      console.error("Error, ConsultationService.getMy:", err);
       throw err;
     }
   }

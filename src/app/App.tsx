@@ -4,6 +4,7 @@ import LandingPage from "./screens/landingPage";
 import UserPage from "./screens/userPage";
 import CarListPage from "./screens/carListPage";
 import CarDetailPage from "./screens/carDetailPage";
+import CarVerifyPage from "./screens/carVerifyPage";
 import OtherNavbar from "./components/headers/OtherNavbar";
 import Footer from "./components/footer";
 import HelpPage from "./screens/helpPage";
@@ -50,7 +51,7 @@ function App() {
       await sweetTopSmallSuccessAlert("Success", 700);
       setAuthMember(null);
     }catch(err){
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(Messages.error1)
     }
   }
@@ -80,6 +81,9 @@ function App() {
         </Route>
         <Route path="/products">
           <CarListPage />
+        </Route>
+        <Route path="/verify">
+          <CarVerifyPage />
         </Route>
         <Route path="/member-page">
           <UserPage />

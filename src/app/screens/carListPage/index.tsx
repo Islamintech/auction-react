@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import FilterGroup from "./FilterGroup";
 import FilterRow from "./FilterRow";
 import Chip from "./Chip";
@@ -26,12 +27,13 @@ interface Filters {
 }
 
 const CONDITIONS: [string, string][] = [
-  ["all", "All cars"],
-  ["ready", "Ready to drive"],
-  ["crashed", "Crashed + parts"],
+  ["all", "condAll"],
+  ["ready", "condReady"],
+  ["crashed", "condCrashed"],
 ];
 
 export default function CarListPage() {
+  const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
   const cars = useSelector(retrieveCars);
@@ -39,6 +41,20 @@ export default function CarListPage() {
 
   const [view, setView] = useState<View>("grid");
   const [density, setDensity] = useState<Density>("spacious");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(max-width: 640px)").matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px)");
+    const onChange = () => setIsMobile(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  const PAGE_SIZE = 5;
   const [filters, setFilters] = useState<Filters>({
     brand: "all",
     category: "all",
@@ -51,13 +67,13 @@ export default function CarListPage() {
     service
       .getAll({ page: 1, limit: 100, order: "createdAt" })
       .then((data) => dispatch(setCars(data)))
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, [dispatch]);
 
   const brands = useMemo(() => {
     const set = new Set(cars.map((c) => c.brand).filter(Boolean));
-    return [["all", "All"] as [string, string], ...Array.from(set).map((b) => [b, b] as [string, string])];
-  }, [cars]);
+    return [["all", t("carlist.brandAll")] as [string, string], ...Array.from(set).map((b) => [b, b] as [string, string])];
+  }, [cars, t]);
 
   const filtered = useMemo(() => {
     const out = cars.filter((c) => {
@@ -77,6 +93,12 @@ export default function CarListPage() {
     return sorted;
   }, [cars, filters]);
 
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const paged = isMobile ? filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE) : filtered;
+
+  // Reset to first page when the result set or device size changes
+  useEffect(() => { setPage(1); }, [filters, isMobile]);
+
   const onSave = (id: string) => dispatch(toggleSaved(id));
   const openCar = (c: AuctionCar) => history.push(`/products/${c.id}`);
   const update = (patch: Partial<Filters>) => setFilters({ ...filters, ...patch });
@@ -84,52 +106,66 @@ export default function CarListPage() {
   return (
     <div className="carlist">
       <div className="carlist__head">
-        <div className="carlist__crumb">MARKETPLACE / ALL VEHICLES</div>
+        <div className="carlist__crumb">{t("carlist.crumb")}</div>
         <div className="carlist__head-row">
-          <h1 className="carlist__title">{filtered.length} cars from Korea</h1>
+          <h1 className="carlist__title">{t("carlist.title", { count: filtered.length })}</h1>
           <div className="carlist__toolbar">
-            <span className="carlist__toolbar-label">SORT</span>
+            <button
+              type="button"
+              className="carlist__filters-btn"
+              onClick={() => setFiltersOpen(true)}
+            >
+              ⚙ {t("carlist.filters")}
+            </button>
             <select
               className="carlist__sort"
               value={filters.sort}
               onChange={(e) => update({ sort: e.target.value as Sort })}
             >
-              <option value="newest">Newest listed</option>
-              <option value="price-l">Price: low → high</option>
-              <option value="price-h">Price: high → low</option>
-              <option value="km">Mileage</option>
-              <option value="year">Year</option>
+              <option value="newest">{t("carlist.sortNewest")}</option>
+              <option value="price-l">{t("carlist.sortPriceLow")}</option>
+              <option value="price-h">{t("carlist.sortPriceHigh")}</option>
+              <option value="km">{t("carlist.sortMileage")}</option>
+              <option value="year">{t("carlist.sortYear")}</option>
             </select>
             <span className="carlist__divider" />
             <button
-              className={`carlist__view-btn${view === "grid" ? " carlist__view-btn--active" : ""}`}
-              onClick={() => setView("grid")}
-            >▦</button>
-            <button
-              className={`carlist__view-btn${view === "list" ? " carlist__view-btn--active" : ""}`}
-              onClick={() => setView("list")}
-            >☰</button>
+              className="carlist__view-btn"
+              aria-label={view === "grid" ? "Switch to list view" : "Switch to grid view"}
+              onClick={() => setView(view === "grid" ? "list" : "grid")}
+            >{view === "grid" ? "☰" : "▦"}</button>
           </div>
         </div>
       </div>
 
       <div className="carlist__layout">
-        <aside className="carlist__filters">
-          <div className="carlist__filters-title">FILTERS</div>
+        {filtersOpen && <div className="carlist__filters-backdrop" onClick={() => setFiltersOpen(false)} />}
+        <aside className={`carlist__filters${filtersOpen ? " carlist__filters--open" : ""}`}>
+          <div className="carlist__filters-head">
+            <div className="carlist__filters-title">{t("carlist.filters").toUpperCase()}</div>
+            <button
+              type="button"
+              className="carlist__filters-close"
+              aria-label="Close filters"
+              onClick={() => setFiltersOpen(false)}
+            >
+              ✕
+            </button>
+          </div>
 
-          <FilterGroup title="Condition">
+          <FilterGroup title={t("carlist.condition")}>
             {CONDITIONS.map(([v, l]) => (
-              <FilterRow key={v} label={l} active={filters.category === v} onClick={() => update({ category: v })} />
+              <FilterRow key={v} label={t(`carlist.${l}`)} active={filters.category === v} onClick={() => update({ category: v })} />
             ))}
           </FilterGroup>
 
-          <FilterGroup title="Brand">
+          <FilterGroup title={t("carlist.brand")}>
             {brands.map(([v, l]) => (
               <FilterRow key={v} label={l} active={filters.brand === v} onClick={() => update({ brand: v })} />
             ))}
           </FilterGroup>
 
-          <FilterGroup title="Price (USD)">
+          <FilterGroup title={t("carlist.price")}>
             <div className="cl-range">
               <input
                 type="range"
@@ -148,7 +184,7 @@ export default function CarListPage() {
             </div>
           </FilterGroup>
 
-          <FilterGroup title="Density">
+          <FilterGroup title={t("carlist.density")}>
             <div className="cl-density">
               {(["spacious", "compact"] as Density[]).map((v) => (
                 <button
@@ -156,31 +192,39 @@ export default function CarListPage() {
                   onClick={() => setDensity(v)}
                   className={`cl-density__btn${density === v ? " cl-density__btn--active" : ""}`}
                 >
-                  {v.toUpperCase()}
+                  {t(`carlist.${v}`)}
                 </button>
               ))}
             </div>
           </FilterGroup>
+
+          <button
+            type="button"
+            className="carlist__filters-apply"
+            onClick={() => setFiltersOpen(false)}
+          >
+            {t("carlist.show", { count: filtered.length })}
+          </button>
         </aside>
 
         <div className="carlist__results">
           <div className="cl-chips">
             {filters.brand !== "all" && (
-              <Chip label={`Brand: ${filters.brand}`} onClose={() => update({ brand: "all" })} />
+              <Chip label={t("carlist.chipBrand", { value: filters.brand })} onClose={() => update({ brand: "all" })} />
             )}
             {filters.category !== "all" && (
               <Chip
-                label={`Condition: ${filters.category === "ready" ? "Ready" : "Crashed"}`}
+                label={t("carlist.chipCondition", { value: filters.category === "ready" ? t("carlist.ready") : t("carlist.crashed") })}
                 onClose={() => update({ category: "all" })}
               />
             )}
-            <Chip label={`Max $${(filters.priceMax / 1000).toFixed(0)}K`} />
-            <span className="cl-chips__count">· {filtered.length} RESULTS</span>
+            <Chip label={t("carlist.chipMax", { value: (filters.priceMax / 1000).toFixed(0) })} />
+            <span className="cl-chips__count">· {t("carlist.results", { count: filtered.length })}</span>
           </div>
 
           {view === "grid" ? (
             <div className="cl-grid">
-              {filtered.map((c) => (
+              {paged.map((c) => (
                 <CarCard
                   key={c.id}
                   car={c}
@@ -194,15 +238,15 @@ export default function CarListPage() {
           ) : (
             <div className="cl-list">
               <div className="cl-list__head">
-                <span>IMAGE</span>
-                <span>VEHICLE</span>
-                <span>YEAR</span>
-                <span>KM</span>
-                <span>COLOR</span>
-                <span>PRICE</span>
-                <span>STATUS</span>
+                <span>{t("carlist.colImage")}</span>
+                <span>{t("carlist.colVehicle")}</span>
+                <span>{t("carlist.colYear")}</span>
+                <span>{t("carlist.colKm")}</span>
+                <span>{t("carlist.colColor")}</span>
+                <span>{t("carlist.colPrice")}</span>
+                <span>{t("carlist.colStatus")}</span>
               </div>
-              {filtered.map((c) => {
+              {paged.map((c) => {
                 const img = imageUrl(c.image);
                 return (
                   <div key={c.id} onClick={() => openCar(c)} className="cl-list__row">
@@ -219,7 +263,7 @@ export default function CarListPage() {
                     <span className="cl-list__num cl-list__num--mute">{c.color || "—"}</span>
                     <span className="cl-list__price">${c.price.toLocaleString()}</span>
                     <Tag color={c.category === "crashed" ? "var(--warn)" : "var(--text)"} outline={c.category !== "crashed"}>
-                      {c.category === "crashed" ? "CRASHED" : "READY"}
+                      {c.category === "crashed" ? t("carlist.tagCrashed") : t("carlist.tagReady")}
                     </Tag>
                   </div>
                 );
@@ -228,7 +272,27 @@ export default function CarListPage() {
           )}
 
           {filtered.length === 0 && (
-            <div style={{ padding: 40, textAlign: "center", opacity: 0.6 }}>No cars match those filters.</div>
+            <div style={{ padding: 40, textAlign: "center", opacity: 0.6 }}>{t("carlist.noResults")}</div>
+          )}
+
+          {isMobile && totalPages > 1 && (
+            <div className="cl-pagination">
+              <button
+                className="cl-pagination__btn"
+                disabled={page === 1}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+              >
+                {t("carlist.prev")}
+              </button>
+              <span className="cl-pagination__info">{page} / {totalPages}</span>
+              <button
+                className="cl-pagination__btn"
+                disabled={page === totalPages}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              >
+                {t("carlist.next")}
+              </button>
+            </div>
           )}
         </div>
       </div>
