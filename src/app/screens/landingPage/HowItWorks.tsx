@@ -5,23 +5,25 @@ import StepConnector from "@mui/material/StepConnector";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import Typography from "@mui/material/Typography";
+import { useTranslation } from "react-i18next";
 import SectionHeader from "./SectionHeader";
 
-const STEPS: [string, string][] = [
-  ["Vehicle selection", "Choose from auctions, dealers, or private sellers."],
-  ["Documentation", "Invoice, export certificate, and bill of lading prepared."],
-  ["Ocean freight", "Korea to Uzbekistan shipping arranged and tracked."],
-  ["Customs clearance", "Duty, VAT, and import formalities handled for you."],
-  ["Final delivery", "Local delivery, registration support, and handover."],
-];
-
 export default function HowItWorks() {
+  const { t } = useTranslation();
+  const steps: [string, string][] = [
+    [t("howitworks.step1Title"), t("howitworks.step1Body")],
+    [t("howitworks.step2Title"), t("howitworks.step2Body")],
+    [t("howitworks.step3Title"), t("howitworks.step3Body")],
+    [t("howitworks.step4Title"), t("howitworks.step4Body")],
+    [t("howitworks.step5Title"), t("howitworks.step5Body")],
+  ];
+
   return (
     <section className="landing__section--tight">
       <SectionHeader
-        number="02"
-        title="How it works"
-        subtitle="From Korea to your driveway in ~45-60 days."
+        number={t("howitworks.number")}
+        title={t("howitworks.title")}
+        subtitle={t("howitworks.subtitle")}
       />
       <Box className="landing__steps" component="div">
         <Stepper
@@ -29,7 +31,7 @@ export default function HowItWorks() {
           activeStep={-1}
           connector={<StepConnector className="landing__step-connector" />}
         >
-          {STEPS.map(([title, body], i) => (
+          {steps.map(([title, body], i) => (
             <Step key={title} className="landing__step">
               <StepLabel
                 icon={<span className="landing__step-index">{String(i + 1).padStart(2, "0")}</span>}

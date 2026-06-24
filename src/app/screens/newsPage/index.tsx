@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import PostCard from "./PostCard";
 import { Post, PostType } from "../../../lib/types/post";
 import PostService from "../../services/PostService";
@@ -7,15 +8,16 @@ import "../../../css/news.css";
 
 const CATEGORIES: ("ALL" | PostType)[] = ["ALL", "NEWS", "ARTICLE", "FREE_BOARD"];
 
-const LABELS: Record<"ALL" | PostType, string> = {
-  ALL: "ALL",
-  NEWS: "NEWS",
-  ARTICLE: "ARTICLE",
-  FREE_BOARD: "FREE BOARD",
+const LABEL_KEYS: Record<"ALL" | PostType, string> = {
+  ALL: "news.catAll",
+  NEWS: "news.catNews",
+  ARTICLE: "news.catArticle",
+  FREE_BOARD: "news.catFreeBoard",
 };
 
 export default function NewsPage() {
   const history = useHistory();
+  const { t } = useTranslation();
   const [active, setActive] = useState<"ALL" | PostType>("ALL");
   const [query, setQuery] = useState("");
   const [posts, setPosts] = useState<Post[]>([]);
@@ -50,12 +52,12 @@ export default function NewsPage() {
   return (
     <div className="news">
       <div className="news__head">
-        <div className="news__crumb">COMMUNITY / NEWS &amp; STORIES</div>
+        <div className="news__crumb">{t("news.crumb")}</div>
         <div className="news__head-row">
-          <h1 className="news__title">From the community</h1>
+          <h1 className="news__title">{t("news.title")}</h1>
           <input
             className="news__search"
-            placeholder="Search posts…"
+            placeholder={t("news.searchPh")}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -67,13 +69,13 @@ export default function NewsPage() {
               className={`news__cat${active === c ? " news__cat--active" : ""}`}
               onClick={() => setActive(c)}
             >
-              {LABELS[c]}
+              {t(LABEL_KEYS[c])}
             </button>
           ))}
         </div>
       </div>
 
-      {loading && <div className="news__empty">Loading…</div>}
+      {loading && <div className="news__empty">{t("news.loading")}</div>}
 
       {!loading && featured && active === "ALL" && !query && (
         <PostCard post={featured} onOpen={open} variant="feature" />
@@ -86,11 +88,11 @@ export default function NewsPage() {
       </div>
 
       {!loading && posts.length === 0 && (
-        <div className="news__empty">No posts yet.</div>
+        <div className="news__empty">{t("news.noPosts")}</div>
       )}
 
       {!loading && posts.length > 0 && filtered.length === 0 && (
-        <div className="news__empty">No posts match those filters.</div>
+        <div className="news__empty">{t("news.noMatch")}</div>
       )}
     </div>
   );

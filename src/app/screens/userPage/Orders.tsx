@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import CarPlaceholder from "../landingPage/CarPlaceholder";
 import Tag from "./Tag";
 
@@ -10,6 +11,9 @@ const ROWS: [string, string, string, string, string, string][] = [
 ];
 
 export default function Orders() {
+  const { t } = useTranslation();
+  const statusLabel = (status: string) =>
+    status === "Delivered" ? t("orders.statusDelivered") : t("orders.statusInTransit");
   return (
     <div className="mp-orders">
       {ROWS.map(([num, model, date, amt, status, img], i) => (
@@ -20,9 +24,9 @@ export default function Orders() {
           <span className="mp-orders__date">{date}</span>
           <span className="mp-orders__amt">{amt}</span>
           <Tag outline color={status === "Delivered" ? "var(--ok)" : "var(--warn)"}>
-            {status}
+            {statusLabel(status)}
           </Tag>
-          <button className="mp-btn mp-btn--secondary mp-btn--sm">Invoice</button>
+          <button className="mp-btn mp-btn--secondary mp-btn--sm">{t("orders.invoice")}</button>
         </div>
       ))}
     </div>

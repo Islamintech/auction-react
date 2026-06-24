@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { AuctionCar } from "../../../lib/types/landing";
 import CarService from "../../services/CarService";
 import { imageUrl } from "../../../lib/api";
@@ -10,6 +11,7 @@ type Status = "idle" | "loading" | "found" | "empty" | "error";
 
 export default function CarVerifyPage() {
   const history = useHistory();
+  const { t } = useTranslation();
   const [vin, setVin] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [car, setCar] = useState<AuctionCar | null>(null);
@@ -45,12 +47,9 @@ export default function CarVerifyPage() {
   return (
     <div className="cv">
       <div className="cv__container">
-        <div className="cv__crumb">PUBLIC REGISTRY / VEHICLE VERIFICATION</div>
-        <h1 className="cv__title">Verify a vehicle by VIN</h1>
-        <p className="cv__lead">
-          Enter a Vehicle Identification Number to confirm a completed sale.
-          Verified records can be used as proof of purchase for customs clearance.
-        </p>
+        <div className="cv__crumb">{t("verify.crumb")}</div>
+        <h1 className="cv__title">{t("verify.title")}</h1>
+        <p className="cv__lead">{t("verify.lead")}</p>
 
         <form className="cv__search" onSubmit={handleSearch}>
           <input
@@ -68,27 +67,26 @@ export default function CarVerifyPage() {
             type="submit"
             disabled={status === "loading" || !vin.trim()}
           >
-            {status === "loading" ? "Searching…" : "Verify"}
+            {status === "loading" ? t("verify.searching") : t("verify.verify")}
           </button>
         </form>
 
         {status === "loading" && (
-          <div className="cv__state">Looking up VIN…</div>
+          <div className="cv__state">{t("verify.lookingUp")}</div>
         )}
 
         {status === "error" && (
           <div className="cv__state cv__state--error">
-            Something went wrong. Please try again.
+            {t("verify.error")}
           </div>
         )}
 
         {status === "empty" && (
           <div className="cv__state cv__state--empty">
             <div className="cv__empty-mark">∅</div>
-            <div className="cv__empty-title">No verified sale found</div>
+            <div className="cv__empty-title">{t("verify.noSaleTitle")}</div>
             <div className="cv__empty-text">
-              No sold vehicle matches VIN <strong>{searched}</strong>. The VIN may
-              be invalid, or the vehicle has not been sold through our registry.
+              {t("verify.noSaleTextPre")}<strong>{searched}</strong>{t("verify.noSaleTextPost")}
             </div>
           </div>
         )}
@@ -97,7 +95,7 @@ export default function CarVerifyPage() {
           <div className="cv__result">
             <div className="cv__badge">
               <span className="cv__badge-dot" />
-              VERIFIED SALE
+              {t("verify.verifiedBadge")}
             </div>
 
             <div className="cv__card">
@@ -126,7 +124,7 @@ export default function CarVerifyPage() {
                           style={{ backgroundImage: `url(${cover})` }}
                         />
                         <span className="cv__media-hint">
-                          {gallery.length > 1 ? `+${gallery.length} photos` : "View photo"}
+                          {gallery.length > 1 ? t("verify.photos", { count: gallery.length }) : t("verify.viewPhoto")}
                         </span>
                       </>
                     ) : (
@@ -144,18 +142,18 @@ export default function CarVerifyPage() {
 
                 <div className="cv__proof">
                   <div className="cv__proof-row">
-                    <span className="cv__proof-label">Buyer</span>
+                    <span className="cv__proof-label">{t("verify.buyer")}</span>
                     <span className="cv__proof-value">{car.buyerName ?? "—"}</span>
                   </div>
                   <div className="cv__proof-row">
-                    <span className="cv__proof-label">Sale price</span>
+                    <span className="cv__proof-label">{t("verify.salePrice")}</span>
                     <span className="cv__proof-value cv__proof-value--price">
                       {money(car.salePrice ?? car.price)}
                     </span>
                   </div>
                   {car.soldAt && (
                     <div className="cv__proof-row">
-                      <span className="cv__proof-label">Sold on</span>
+                      <span className="cv__proof-label">{t("verify.soldOn")}</span>
                       <span className="cv__proof-value">
                         {new Date(car.soldAt).toLocaleDateString()}
                       </span>
@@ -166,34 +164,34 @@ export default function CarVerifyPage() {
             </div>
 
             <div className="cv__details">
-              <div className="cv__details-title">Vehicle details on record</div>
+              <div className="cv__details-title">{t("verify.detailsTitle")}</div>
               <div className="cv__spec-grid">
-                <Spec label="Brand" value={car.brand} />
-                <Spec label="Model" value={car.title} />
-                <Spec label="Year" value={car.year} />
+                <Spec label={t("verify.brand")} value={car.brand} />
+                <Spec label={t("verify.model")} value={car.title} />
+                <Spec label={t("verify.year")} value={car.year} />
                 <Spec
-                  label="Mileage"
+                  label={t("verify.mileage")}
                   value={car.km != null ? `${car.km.toLocaleString()} km` : "—"}
                 />
-                <Spec label="Color" value={car.color} />
+                <Spec label={t("verify.color")} value={car.color} />
                 <Spec
-                  label="Condition"
-                  value={car.category === "crashed" ? "Crashed" : "Ready"}
+                  label={t("verify.condition")}
+                  value={car.category === "crashed" ? t("verify.crashed") : t("verify.ready")}
                 />
-                <Spec label="Listing price" value={money(car.price)} />
-                <Spec label="Status" value={car.status} />
+                <Spec label={t("verify.listingPrice")} value={money(car.price)} />
+                <Spec label={t("verify.status")} value={car.status} />
               </div>
 
               {car.desc && (
                 <div className="cv__desc">
-                  <div className="cv__desc-label">Description</div>
+                  <div className="cv__desc-label">{t("verify.description")}</div>
                   <p className="cv__desc-text">{car.desc}</p>
                 </div>
               )}
 
               {car.category === "crashed" && (car.damage || car.damageDesc) && (
                 <div className="cv__parts">
-                  <div className="cv__desc-label">Damage</div>
+                  <div className="cv__desc-label">{t("verify.damage")}</div>
                   {car.damage && <p className="cv__desc-text">{car.damage}</p>}
                   {car.damageDesc && <p className="cv__desc-text">{car.damageDesc}</p>}
                 </div>
@@ -203,7 +201,7 @@ export default function CarVerifyPage() {
                 className="cv__open"
                 onClick={() => history.push(`/products/${car.id}`)}
               >
-                View full listing →
+                {t("verify.viewListing")}
               </button>
             </div>
           </div>

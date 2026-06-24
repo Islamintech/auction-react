@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import CarPlaceholder from "./CarPlaceholder";
 import { AuctionCar } from "../../../lib/types/landing";
 import { imageUrl } from "../../../lib/api";
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function CarCard({ car, saved, onSave, onOpen, density = "spacious" }: Props) {
+  const { t } = useTranslation();
   const compact = density === "compact";
   const isCrashed = car.category === "crashed";
   const img = imageUrl(car.image);
@@ -27,9 +29,9 @@ export default function CarCard({ car, saved, onSave, onOpen, density = "spaciou
         )}
         <div className="car-card__tags">
           {isCrashed ? (
-            <span className="car-tag car-tag--warn">● CRASHED</span>
+            <span className="car-tag car-tag--warn">{t("card.crashed")}</span>
           ) : (
-            <span className="car-tag car-tag--outline">READY</span>
+            <span className="car-tag car-tag--outline">{t("card.ready")}</span>
           )}
         </div>
       </div>
@@ -43,7 +45,7 @@ export default function CarCard({ car, saved, onSave, onOpen, density = "spaciou
         </div>
 
         <div className="car-card__specs">
-          <span>{(car.km ?? 0).toLocaleString()} KM</span>
+          <span>{(car.km ?? 0).toLocaleString()} {t("card.km")}</span>
           {car.color && <><span className="car-card__sep">|</span><span>{car.color.toUpperCase()}</span></>}
           <span className="car-card__sep">|</span>
           <span>👁 {(car.viewCount ?? 0).toLocaleString()}</span>
@@ -55,7 +57,7 @@ export default function CarCard({ car, saved, onSave, onOpen, density = "spaciou
 
         <div className="car-card__foot">
           <div>
-            <div className="car-card__price-label">{isCrashed ? "Car" : "Price"}</div>
+            <div className="car-card__price-label">{isCrashed ? t("card.priceCar") : t("card.price")}</div>
             <div className="car-card__price">${car.price.toLocaleString()}</div>
           </div>
         </div>

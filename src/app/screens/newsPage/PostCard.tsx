@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import CarPlaceholder from "../landingPage/CarPlaceholder";
 import { Post } from "../../../lib/types/post";
 import { serverApi } from "../../../lib/config";
@@ -25,6 +26,7 @@ function excerptOf(body: string, len = 160) {
 }
 
 export default function PostCard({ post, onOpen, variant = "card" }: Props) {
+  const { t } = useTranslation();
   const image = post.postImage ? imgUrl(post.postImage) : "";
 
   const renderImage = (height: number, radius: number) =>
@@ -56,9 +58,9 @@ export default function PostCard({ post, onOpen, variant = "card" }: Props) {
           <div className="news-row__meta">
             <span>{formatDate(post.createdAt)}</span>
             <span>·</span>
-            <span>{post.postCommentCount} replies</span>
+            <span>{post.postCommentCount} {t("news.replies")}</span>
             <span>·</span>
-            <span>{post.postViewCount} views</span>
+            <span>{post.postViewCount} {t("news.views")}</span>
           </div>
         </div>
       </div>
@@ -70,17 +72,17 @@ export default function PostCard({ post, onOpen, variant = "card" }: Props) {
       <div className="news-feature" onClick={() => onOpen(post)}>
         {renderImage(320, 12)}
         <div className="news-feature__body">
-          <div className="news-feature__tag">FEATURED · {post.postType.replace("_", " ")}</div>
+          <div className="news-feature__tag">{t("news.featured")} · {post.postType.replace("_", " ")}</div>
           <div className="news-feature__title">{post.postTitle}</div>
           <div className="news-feature__excerpt">{excerptOf(post.postBody)}</div>
           <div className="news-feature__meta">
             <span>{formatDate(post.createdAt)}</span>
             <span>·</span>
-            <span>👁 {post.postViewCount} views</span>
+            <span>👁 {post.postViewCount} {t("news.views")}</span>
             <span>·</span>
-            <span>♥ {post.postLikeCount} likes</span>
+            <span>♥ {post.postLikeCount} {t("news.likes")}</span>
             <span>·</span>
-            <span>💬 {post.postCommentCount} replies</span>
+            <span>💬 {post.postCommentCount} {t("news.replies")}</span>
           </div>
         </div>
       </div>

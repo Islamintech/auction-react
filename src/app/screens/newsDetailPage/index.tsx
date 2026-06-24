@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import CarPlaceholder from "../landingPage/CarPlaceholder";
 import PostCard from "../newsPage/PostCard";
 import { Post } from "../../../lib/types/post";
@@ -19,6 +20,7 @@ function imgUrl(path: string) {
 export default function NewsDetailPage() {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
+  const { t } = useTranslation();
   const [post, setPost] = useState<Post | null>(null);
   const [related, setRelated] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
@@ -111,16 +113,16 @@ export default function NewsDetailPage() {
   }, [id]);
 
   if (loading) {
-    return <div className="news-detail"><div className="news-detail__missing">Loading…</div></div>;
+    return <div className="news-detail"><div className="news-detail__missing">{t("news.loading")}</div></div>;
   }
 
   if (notFound || !post) {
     return (
       <div className="news-detail">
         <div className="news-detail__missing">
-          Post not found.
+          {t("news.postNotFound")}
           <button className="news-detail__back" onClick={() => history.push("/news")}>
-            ← Back to news
+            {t("news.backToNews")}
           </button>
         </div>
       </div>
@@ -135,7 +137,7 @@ export default function NewsDetailPage() {
     <div className="news-detail">
       <div className="news-detail__crumb">
         <button className="news-detail__back" onClick={() => history.push("/news")}>
-          ← All posts
+          {t("news.allPosts")}
         </button>
         <span>COMMUNITY / {post.postType.replace("_", " ")}</span>
       </div>
@@ -144,11 +146,11 @@ export default function NewsDetailPage() {
       <div className="news-detail__meta">
         <span>{date}</span>
         <span>·</span>
-        <span>{post.postCommentCount} replies</span>
+        <span>{post.postCommentCount} {t("news.replies")}</span>
         <span>·</span>
-        <span>{post.postViewCount} views</span>
+        <span>{post.postViewCount} {t("news.views")}</span>
         <span>·</span>
-        <span>{post.postLikeCount} likes</span>
+        <span>{post.postLikeCount} {t("news.likes")}</span>
       </div>
 
       <div className="news-detail__hero">
@@ -197,12 +199,12 @@ export default function NewsDetailPage() {
             <path d="M12 21s-7-4.5-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.5-9 9-9 9Z" />
           </svg>
         </button>
-        <span style={{ fontSize: 13, opacity: 0.7 }}>{post.postLikeCount} likes</span>
+        <span style={{ fontSize: 13, opacity: 0.7 }}>{post.postLikeCount} {t("news.likes")}</span>
       </div>
 
       <section style={{ marginTop: 32 }}>
         <div style={{ fontSize: 12, fontFamily: "var(--mono-font)", letterSpacing: "0.18em", opacity: 0.6, marginBottom: 12 }}>
-          COMMENTS · {post.postCommentCount ?? 0}
+          {t("news.comments")} · {post.postCommentCount ?? 0}
         </div>
 
         <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
@@ -210,7 +212,7 @@ export default function NewsDetailPage() {
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleComment()}
-            placeholder={authMember ? "Share your thoughts…" : "Sign up to comment"}
+            placeholder={authMember ? t("news.commentPh") : t("news.commentPhGuest")}
             disabled={!authMember || posting}
             style={{
               flex: 1,
@@ -237,7 +239,7 @@ export default function NewsDetailPage() {
               fontSize: 12,
             }}
           >
-            {posting ? "Posting…" : authMember ? "Post" : "Sign up"}
+            {posting ? t("news.posting") : authMember ? t("news.post") : t("news.signup")}
           </button>
         </div>
 
@@ -290,7 +292,7 @@ export default function NewsDetailPage() {
                   )}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                      <span style={{ fontSize: 13, fontWeight: 600 }}>{c.memberNick || "Member"}</span>
+                      <span style={{ fontSize: 13, fontWeight: 600 }}>{c.memberNick || t("news.member")}</span>
                       <span style={{ fontSize: 11, opacity: 0.5 }}>{cdate}</span>
                     </div>
                     <div style={{ fontSize: 13, lineHeight: 1.6, opacity: 0.85 }}>{c.commentContent}</div>
@@ -301,14 +303,14 @@ export default function NewsDetailPage() {
           </div>
         ) : (
           <div style={{ padding: 20, textAlign: "center", opacity: 0.5, fontSize: 12 }}>
-            No comments yet. Be the first.
+            {t("news.noComments")}
           </div>
         )}
       </section>
 
       {related.length > 0 && (
         <div className="news-detail__related">
-          <div className="news-detail__related-head">More posts</div>
+          <div className="news-detail__related-head">{t("news.morePosts")}</div>
           <div className="news__grid">
             {related.map((p) => (
               <PostCard
