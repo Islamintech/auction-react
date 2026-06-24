@@ -52,7 +52,37 @@
   grid-template-columns: 1.3fr 1fr;
   gap: 48px;
   align-items: end;
-  min-height: 560px;
+  /* Fill the viewport (minus the navbar) so the stats band sits below the fold */
+  min-height: calc(100vh - 84px);
+}
+
+/* Scroll-down indicator centered at the bottom of the hero */
+.landing__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 42px;
+  border: 2px solid var(--text);
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  opacity: 0.55;
+  cursor: pointer;
+}
+.landing__scroll-dot {
+  width: 4px;
+  height: 8px;
+  margin-top: 7px;
+  border-radius: 2px;
+  background: var(--text);
+  animation: landing-scroll 1.6s ease-in-out infinite;
+}
+@keyframes landing-scroll {
+  0% { opacity: 0; transform: translateY(0); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(14px); }
 }
 .landing__eyebrow {
   display: inline-flex;
@@ -713,6 +743,8 @@
   /* Stack the section header so "View all" doesn't get clipped off the right */
   .landing-sh { flex-direction: column; align-items: flex-start; gap: 10px; }
   .landing-sh__link { white-space: nowrap; }
+  /* Hide the scroll indicator on mobile (shorter hero, different layout) */
+  .landing__scroll { display: none; }
   .landing__headline {
     font-size: 40px;
     /* Reserve 2 lines so switching language doesn't shift the hero/button */

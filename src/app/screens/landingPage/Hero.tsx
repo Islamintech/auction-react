@@ -53,6 +53,15 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
           </div>
         </div>
 
+        <div
+          className="landing__scroll"
+          aria-hidden="true"
+          onClick={() =>
+            window.scrollBy({ top: window.innerHeight * 0.9, behavior: "smooth" })
+          }
+        >
+          <span className="landing__scroll-dot" />
+        </div>
       </div>
 
       <div className="landing__stats">
