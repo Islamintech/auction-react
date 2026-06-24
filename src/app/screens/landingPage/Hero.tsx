@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AuctionCar } from "../../../lib/types/landing";
 import { useTranslation } from "react-i18next";
 import { useGlobals } from "../../hooks/useGlobals";
@@ -13,12 +13,19 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
   const { authMember, openSignup } = useGlobals();
   const { t } = useTranslation();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
     video.muted = true; // React doesn't reliably set the muted property; browsers require it for autoplay
     video.play().catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
@@ -54,13 +61,14 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
         </div>
 
         <div
-          className="landing__scroll"
+          className={`landing__scroll${scrolled ? " landing__scroll--hidden" : ""}`}
           aria-hidden="true"
           onClick={() =>
             window.scrollBy({ top: window.innerHeight * 0.9, behavior: "smooth" })
           }
         >
-          <span className="landing__scroll-dot" />
+          <span className="landing__scroll-label">{t("hero.scroll")}</span>
+          <span className="landing__scroll-arrow" />
         </div>
       </div>
 

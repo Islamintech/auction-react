@@ -62,27 +62,39 @@
   left: 50%;
   bottom: 26px;
   transform: translateX(-50%);
-  width: 26px;
-  height: 42px;
-  border: 2px solid var(--text);
-  border-radius: 14px;
   display: flex;
-  justify-content: center;
-  opacity: 0.55;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.6;
   cursor: pointer;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.landing__scroll-dot {
-  width: 4px;
-  height: 8px;
-  margin-top: 7px;
-  border-radius: 2px;
-  background: var(--text);
+/* Fade + slide away once the user starts scrolling */
+.landing__scroll--hidden {
+  opacity: 0;
+  transform: translateX(-50%) translateY(12px);
+  pointer-events: none;
+}
+.landing__scroll-label {
+  font-family: var(--mono-font);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.landing__scroll-arrow {
+  width: 14px;
+  height: 14px;
+  border-right: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+  transform: rotate(45deg);
   animation: landing-scroll 1.6s ease-in-out infinite;
 }
 @keyframes landing-scroll {
-  0% { opacity: 0; transform: translateY(0); }
-  30% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(14px); }
+  0% { opacity: 0; transform: rotate(45deg) translate(-4px, -4px); }
+  40% { opacity: 1; }
+  100% { opacity: 0; transform: rotate(45deg) translate(4px, 4px); }
 }
 .landing__eyebrow {
   display: inline-flex;

@@ -1,17 +1,22 @@
 import React, { ReactNode, useState } from "react";
-import Cookies from "universal-cookie";
 import { Member } from "../../lib/types/member";
 import { GlobalContext } from "../hooks/useGlobals";
 
-const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const cookies = new Cookies();
-  if (!cookies.get("accessToken")) localStorage.removeItem("memberData");
+function readStoredMember(): Member | null {
+  try {
+    const raw = localStorage.getItem("memberData");
+    return raw ? (JSON.parse(raw) as Member) : null;
+  } catch {
+    localStorage.removeItem("memberData");
+    return null;
+  }
+}
 
-  const [authMember, setAuthMember] = useState<Member | null>(
-    localStorage.getItem("memberData")
-      ? JSON.parse(localStorage.getItem("memberData") as string)
-      : null
-  );
+const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  // The auth token is an httpOnly cookie the browser sends automatically;
+  // JS can't read it, so we trust localStorage for the UI state and let the
+  // API's 401 interceptor clear auth when the server actually rejects us.
+  const [authMember, setAuthMember] = useState<Member | null>(readStoredMember());
 
   const [orderBuilder, setOrderBuilder] = useState<Date>(new Date());
 
