@@ -327,25 +327,6 @@
     "step5Title": "Yakuniy yetkazib berish",
     "step5Body": "Mahalliy yetkazib berish, ro'yxatdan o'tkazishda yordam va topshirish."
   },
-  "track": {
-    "note": "2 TA YO'LDA · 1 TA KOREYA PORTIDA · JONLI GPS",
-    "liveMap": "Xarita",
-    "documents": "Hujjatlar",
-    "contactAgent": "Agent bilan bog'lanish",
-    "crashedParts": "URILGAN + {{count}} QISM",
-    "eta": "Toshkentga yetib kelish",
-    "container": "Konteyner",
-    "step1": "Band qilingan",
-    "step2": "Ko'rikdan o'tgan",
-    "step3": "Yuklangan",
-    "step4": "Yo'lda",
-    "step5": "Yetkazilgan"
-  },
-  "orders": {
-    "invoice": "Hisob-faktura",
-    "statusInTransit": "Yo'lda",
-    "statusDelivered": "Yetkazilgan"
-  },
   "card": {
     "crashed": "● URILGAN",
     "ready": "TAYYOR",

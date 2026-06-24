@@ -327,25 +327,6 @@
     "step5Title": "Final delivery",
     "step5Body": "Local delivery, registration support, and handover."
   },
-  "track": {
-    "note": "2 SHIPMENTS IN TRANSIT · 1 AT KOREAN PORT · LIVE GPS",
-    "liveMap": "Live map",
-    "documents": "Documents",
-    "contactAgent": "Contact agent",
-    "crashedParts": "CRASHED + {{count}} PARTS",
-    "eta": "ETA Tashkent",
-    "container": "Container",
-    "step1": "Reserved",
-    "step2": "Inspected",
-    "step3": "Loaded",
-    "step4": "In transit",
-    "step5": "Delivered"
-  },
-  "orders": {
-    "invoice": "Invoice",
-    "statusInTransit": "In transit",
-    "statusDelivered": "Delivered"
-  },
   "card": {
     "crashed": "● CRASHED",
     "ready": "READY",

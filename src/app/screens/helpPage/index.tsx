@@ -19,10 +19,23 @@ export default function HelpPage() {
     answer: string;
   }[];
   const [value, setValue] = React.useState("2");
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [message, setMessage] = React.useState("");
 
   /** HANDLERS **/
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
+  };
+
+  const handleSend = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!message.trim()) return;
+    const subject = encodeURIComponent(`AUTOAUCTION — message from ${name || "website"}`);
+    const body = encodeURIComponent(
+      `${message}\n\n— ${name || ""}${email ? ` (${email})` : ""}`
+    );
+    window.location.href = `mailto:auction@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -72,8 +85,7 @@ export default function HelpPage() {
                       <p>{t("help.contactSub")}</p>
                     </Box>
                     <form
-                      action={"#"}
-                      method={"POST"}
+                      onSubmit={handleSend}
                       className={"admin-letter-frame"}
                     >
                       <div className={"admin-input-box"}>
@@ -82,14 +94,18 @@ export default function HelpPage() {
                           type={"text"}
                           name={"memberNick"}
                           placeholder={t("help.namePh")}
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
                         />
                       </div>
                       <div className={"admin-input-box"}>
                         <label>{t("help.yourEmail")}</label>
                         <input
-                          type={"text"}
+                          type={"email"}
                           name={"memberEmail"}
                           placeholder={t("help.emailPh")}
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                       <div className={"admin-input-box"}>
@@ -97,6 +113,8 @@ export default function HelpPage() {
                         <textarea
                           name={"memberMsg"}
                           placeholder={t("help.messagePh")}
+                          value={message}
+                          onChange={(e) => setMessage(e.target.value)}
                         ></textarea>
                       </div>
                       <Box
@@ -104,7 +122,7 @@ export default function HelpPage() {
                         justifyContent={"flex-end"}
                         sx={{ mt: "30px" }}
                       >
-                        <Button type={"submit"} variant="contained">
+                        <Button type={"submit"} variant="contained" disabled={!message.trim()}>
                           {t("help.send")}
                         </Button>
                       </Box>

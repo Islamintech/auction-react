@@ -327,25 +327,6 @@
     "step5Title": "최종 배송",
     "step5Body": "현지 배송, 등록 지원 및 인도."
   },
-  "track": {
-    "note": "운송 중 2건 · 한국 항구 1건 · 실시간 GPS",
-    "liveMap": "실시간 지도",
-    "documents": "서류",
-    "contactAgent": "담당자 문의",
-    "crashedParts": "사고 + 부품 {{count}}개",
-    "eta": "타슈켄트 도착 예정",
-    "container": "컨테이너",
-    "step1": "예약됨",
-    "step2": "검수됨",
-    "step3": "선적됨",
-    "step4": "운송 중",
-    "step5": "배송 완료"
-  },
-  "orders": {
-    "invoice": "인보이스",
-    "statusInTransit": "운송 중",
-    "statusDelivered": "배송 완료"
-  },
   "card": {
     "crashed": "● 사고",
     "ready": "정상",
