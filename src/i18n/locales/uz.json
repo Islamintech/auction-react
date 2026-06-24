@@ -352,5 +352,49 @@
     "km": "KM",
     "priceCar": "Avto",
     "price": "Narx"
+  },
+  "faq": {
+    "items": [
+      {
+        "question": "AUTOAUCTION orqali avtomobilni qanday sotib olaman?",
+        "answer": "Katalogni ko'rib chiqing, yoqqan avtomobilda «Konsultatsiya so'rash» tugmasini bosing va jamoamiz 24 soat ichida siz bilan bog'lanib, narxni tasdiqlaydi va eksport jarayonini boshlaydi."
+      },
+      {
+        "question": "Avtomobillar qayerdan keladi?",
+        "answer": "Biz uchta manbadan ishlaymiz: Koreya auksionlari, litsenziyalangan diler platformalari va Koreyadagi tekshirilgan xususiy sotuvchilar. Har bir avtomobil sotib olishdan oldin ko'rikdan o'tkaziladi."
+      },
+      {
+        "question": "Yetkazib berish qancha vaqt oladi?",
+        "answer": "Sotib olishdan raqamlargacha taxminan 45–60 kun. Tashishning o'zi 30–45 kun (Koreya → Xitoy → Qozog'iston → O'zbekiston), shuningdek bojxona rasmiylashtiruvi va O'zbekistonda ro'yxatdan o'tkazish."
+      },
+      {
+        "question": "Avtomobilni eksport qilish uchun qanday hujjatlar kerak?",
+        "answer": "Avtomobil invoysi, eksport sertifikati, konosament (jo'natilgandan keyin beriladi) va xaridor pasportining nusxasi. Logistika hamkorimiz hammasini siz uchun tayyorlaydi."
+      },
+      {
+        "question": "Avtomobil qanday tashiladi?",
+        "answer": "Koreya portidan Ro-Ro usulida yoki konteynerda. Yo'nalish: Koreya → Xitoy → Qozog'iston → O'zbekiston temir yo'l va avtotransport orqali."
+      },
+      {
+        "question": "O'zbekistonda qanday bojxona to'lovlari qo'llaniladi?",
+        "answer": "Import boji, QQS, utilizatsiya yig'imi va bojxona rasmiylashtiruvi. Umumiy summa dvigatel hajmi, ishlab chiqarilgan yili va avtomobil narxiga bog'liq. Litsenziyalangan broker hisob-kitob va hujjatlarni amalga oshiradi."
+      },
+      {
+        "question": "«Tayyor» va «urilgan» avtomobillar o'rtasidagi farq nima?",
+        "answer": "Tayyor avtomobillar ko'rikdan o'tgan va haydashga tayyor. Urilgan avtomobillar to'liq shikast hisoboti va kerakli ehtiyot qismlar ro'yxati bilan boricha sotiladi, shunda nimani kutishni aniq bilasiz."
+      },
+      {
+        "question": "O'zbekiston raqamlarini qanday olaman?",
+        "answer": "Bojxona rasmiylashtiruvidan so'ng avtomobilni o'z shahringizda olasiz. Uni YHXB (GAI)da ro'yxatdan o'tkazing — O'zbekiston raqamlari odatda o'sha kuni beriladi."
+      },
+      {
+        "question": "Narxlar yakuniymi?",
+        "answer": "Ha. Ko'rsatilgan narxlar qat'iy — savdolashuvsiz va yashirin ustamasiz. Bojxona to'lovlari va yetkazib berish alohida hisoblanadi va manzil shahri hamda dvigatel hajmiga bog'liq."
+      },
+      {
+        "question": "Sotib olishdan oldin konsultatsiya olsam bo'ladimi?",
+        "answer": "Albatta. Istalgan avtomobilni oching va «Konsultatsiya so'rash» tugmasini bosing yoki bosh sahifadagi «Konsultatsiya olish» tugmasidan foydalaning. Seul va Toshkentdagi mutaxassislarimiz 24 soat ichida javob beradi."
+      }
+    ]
   }
 }

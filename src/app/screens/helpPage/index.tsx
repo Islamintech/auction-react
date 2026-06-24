@@ -11,10 +11,13 @@ import Button from "@mui/material/Button";
 import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
 import "../../../css/help.css";
-import { faq } from "../../../lib/data/faq";
 
 export default function HelpPage() {
   const { t } = useTranslation();
+  const faq = t("faq.items", { returnObjects: true }) as {
+    question: string;
+    answer: string;
+  }[];
   const [value, setValue] = React.useState("2");
 
   /** HANDLERS **/
