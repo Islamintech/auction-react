@@ -269,7 +269,7 @@
     "status": "Status",
     "description": "Description",
     "damage": "Damage",
-    "viewListing": "View full listing →"
+    "carDetail": "Car detail →"
   },
   "help": {
     "faq": "FAQ",

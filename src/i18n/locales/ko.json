@@ -269,7 +269,7 @@
     "status": "상태",
     "description": "설명",
     "damage": "손상",
-    "viewListing": "전체 매물 보기 →"
+    "carDetail": "차량 상세 →"
   },
   "help": {
     "faq": "자주 묻는 질문",

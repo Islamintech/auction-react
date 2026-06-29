@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AuctionCar } from "../../../lib/types/landing";
@@ -9,6 +9,34 @@ import "../../../css/carVerify.css";
 
 type Status = "idle" | "loading" | "found" | "empty" | "error";
 
+// Keep the last verify result around for a minute so a refresh or a
+// trip to the car detail page and back doesn't wipe the lookup.
+const CACHE_KEY = "vinVerify:last";
+const CACHE_TTL = 60 * 1000; // 1 minute
+
+type Cached = {
+  vin: string;
+  searched: string;
+  status: Status;
+  car: AuctionCar | null;
+  ts: number;
+};
+
+function readCache(): Cached | null {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw) as Cached;
+    if (Date.now() - data.ts > CACHE_TTL) {
+      localStorage.removeItem(CACHE_KEY);
+      return null;
+    }
+    return data;
+  } catch {
+    return null;
+  }
+}
+
 export default function CarVerifyPage() {
   const history = useHistory();
   const { t } = useTranslation();
@@ -17,6 +45,17 @@ export default function CarVerifyPage() {
   const [car, setCar] = useState<AuctionCar | null>(null);
   const [searched, setSearched] = useState("");
   const [lightboxAt, setLightboxAt] = useState<number | null>(null);
+
+  // Restore a recent lookup on mount (handles refresh / back navigation).
+  useEffect(() => {
+    const cached = readCache();
+    if (cached) {
+      setVin(cached.vin);
+      setSearched(cached.searched);
+      setCar(cached.car);
+      setStatus(cached.status);
+    }
+  }, []);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,11 +68,18 @@ export default function CarVerifyPage() {
       const service = new CarService();
       const result = await service.verifyByVin(query);
       // Only a sold record counts as a valid proof of purchase.
-      if (result && result.sold) {
-        setCar(result);
-        setStatus("found");
-      } else {
-        setStatus("empty");
+      const found = !!(result && result.sold);
+      const nextStatus: Status = found ? "found" : "empty";
+      const nextCar = found ? result : null;
+      setCar(nextCar);
+      setStatus(nextStatus);
+      try {
+        localStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({ vin: query, searched: query, status: nextStatus, car: nextCar, ts: Date.now() })
+        );
+      } catch {
+        /* storage may be unavailable — non-fatal */
       }
     } catch (err) {
       console.error(err);
@@ -178,7 +224,6 @@ export default function CarVerifyPage() {
                   label={t("verify.condition")}
                   value={car.category === "crashed" ? t("verify.crashed") : t("verify.ready")}
                 />
-                <Spec label={t("verify.listingPrice")} value={money(car.price)} />
                 <Spec label={t("verify.status")} value={car.status} />
               </div>
 
@@ -201,7 +246,7 @@ export default function CarVerifyPage() {
                 className="cv__open"
                 onClick={() => history.push(`/products/${car.id}`)}
               >
-                {t("verify.viewListing")}
+                {t("verify.carDetail")}
               </button>
             </div>
           </div>
