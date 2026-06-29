@@ -94,6 +94,17 @@
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */
+/* Match the page content width on large monitors. */
+@media (min-width: 1440px) {
+  .footer-container { max-width: 1360px; }
+}
+@media (min-width: 1700px) {
+  .footer-container { max-width: 1560px; }
+}
+@media (min-width: 2000px) {
+  .footer-container { max-width: 1760px; }
+}
+
 @media (max-width: 768px) {
   .foot-top { gap: 40px !important; }
   .foot-brand-col { width: 100% !important; }

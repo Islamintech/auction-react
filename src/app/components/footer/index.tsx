@@ -27,7 +27,7 @@ export default function Footer() {
   const { t } = useTranslation();
   return (
     <Footers>
-      <Container>
+      <Container className="footer-container">
         <Stack className="foot-top" flexDirection="row" flexWrap="wrap" gap="64px">
           <Stack className="foot-brand-col" flexDirection="column" style={{ width: "340px" }}>
             <Box className="brand-wordmark" style={{ fontSize: 22, fontWeight: 700, letterSpacing: "0.05em", color: "var(--footer-heading)" }}>

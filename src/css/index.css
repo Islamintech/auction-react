@@ -43,6 +43,45 @@ svg {
 }
 
 /* ────────────────────────────────────────────────────────────
+   Responsive content width — let the capped page layout grow on
+   large monitors instead of staying pinned at 1200px with huge
+   empty side margins. Each page scopes its own --page-max, so we
+   override all of them here at wider breakpoints.
+   ──────────────────────────────────────────────────────────── */
+@media (min-width: 1440px) {
+  .landing,
+  .carlist,
+  .cardetail,
+  .mypage,
+  .news,
+  .news-detail {
+    --page-max: 1360px;
+  }
+}
+
+@media (min-width: 1700px) {
+  .landing,
+  .carlist,
+  .cardetail,
+  .mypage,
+  .news,
+  .news-detail {
+    --page-max: 1560px;
+  }
+}
+
+@media (min-width: 2000px) {
+  .landing,
+  .carlist,
+  .cardetail,
+  .mypage,
+  .news,
+  .news-detail {
+    --page-max: 1760px;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
    Theme tokens — light (default) and dark
    ──────────────────────────────────────────────────────────── */
 :root,

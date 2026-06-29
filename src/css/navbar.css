@@ -656,6 +656,18 @@
   background: var(--hover, rgba(215, 181, 134, 0.22));
 }
 
+/* Keep the navbar content aligned with the page content as it widens
+   on large monitors (MUI Container defaults to 1200px). */
+@media (min-width: 1440px) {
+  .home-navbar .navbar-container { max-width: 1360px; }
+}
+@media (min-width: 1700px) {
+  .home-navbar .navbar-container { max-width: 1560px; }
+}
+@media (min-width: 2000px) {
+  .home-navbar .navbar-container { max-width: 1760px; }
+}
+
 @media (max-width: 900px) {
   .nav-lang-desktop { display: none; }
   .home-navbar .navbar-container .menu .links {
