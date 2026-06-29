@@ -244,7 +244,10 @@ export default function CarVerifyPage() {
 
               <button
                 className="cv__open"
-                onClick={() => history.push(`/products/${car.id}`)}
+                onClick={() => {
+                  const carId = car.id ?? car._id;
+                  if (carId) history.push(`/products/${carId}`);
+                }}
               >
                 {t("verify.carDetail")}
               </button>

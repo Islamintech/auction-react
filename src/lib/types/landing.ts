@@ -11,6 +11,8 @@ export interface CarComment {
 
 export interface AuctionCar {
   id: string;
+  /* Some endpoints (e.g. VIN verify) return the raw Mongo `_id`. */
+  _id?: string;
   title: string;
   brand: string;
   myFavorite?: boolean;
