@@ -77,7 +77,7 @@
   pointer-events: none;
 }
 .landing__scroll-label {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -101,7 +101,7 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 28px;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   color: var(--text-mute);
   letter-spacing: 0.18em;
@@ -195,7 +195,7 @@
   border-radius: 1px;
 }
 .landing__crashed-label {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.15em;
@@ -203,7 +203,7 @@
   text-transform: uppercase;
 }
 .landing__crashed-count {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   color: var(--text-dim);
 }
@@ -220,7 +220,7 @@
   border-top: none;
 }
 .landing__crashed-meta {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   color: var(--text-dim);
   letter-spacing: 0.12em;
@@ -236,7 +236,7 @@
   margin-top: 2px;
 }
 .landing__crashed-parts {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   color: var(--text-mute);
   margin-top: 3px;
@@ -250,7 +250,7 @@
   text-align: right;
 }
 .landing__crashed-tag {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 9px;
   color: var(--warn);
   letter-spacing: 0.12em;
@@ -264,7 +264,7 @@
   background: transparent;
   border: 1px solid var(--line);
   color: var(--text);
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -298,7 +298,7 @@
   letter-spacing: -0.02em;
 }
 .landing__stat-label {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   color: var(--text-mute);
   letter-spacing: 0.15em;
@@ -338,7 +338,7 @@
   gap: 24px;
 }
 .landing-sh__num {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   color: var(--accent);
   letter-spacing: 0.25em;
@@ -363,7 +363,7 @@
   border: none;
   color: var(--text);
   cursor: pointer;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -422,7 +422,7 @@
   border: 1px solid var(--line);
   border-radius: 2px;
   padding: 4px 10px;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   letter-spacing: 0.1em;
   cursor: pointer;
@@ -439,7 +439,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   letter-spacing: 0.2em;
   color: rgba(11, 12, 14, 0.55);
@@ -471,7 +471,7 @@
   border-radius: 50%;
   background: var(--bg);
   color: var(--text);
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -569,7 +569,7 @@
 }
 .landing-lb__row--first { border-top: none; }
 .landing-lb__rank {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   color: var(--text-dim);
   font-weight: 700;
@@ -582,19 +582,19 @@
   color: var(--text);
 }
 .landing-lb__city {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   color: var(--text-dim);
   letter-spacing: 0.1em;
   margin-top: 1px;
 }
 .landing-lb__count {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   color: var(--text-mute);
 }
 .landing-lb__vol {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 12px;
   color: var(--text);
   font-weight: 600;
@@ -625,7 +625,7 @@
   flex-direction: column;
 }
 .landing-comm__tag {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 9px;
   color: var(--accent);
   letter-spacing: 0.18em;
@@ -650,7 +650,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   color: var(--text-dim);
   letter-spacing: 0.08em;
@@ -711,7 +711,7 @@
   border-radius: 2px;
 }
 .landing-cta__note {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   opacity: 0.5;
   letter-spacing: 0.1em;
@@ -821,7 +821,7 @@
 .car-tag {
   display: inline-flex; align-items: center; gap: 4px;
   height: 24px; padding: 0 10px;
-  font-family: var(--mono-font); font-size: 11px; font-weight: 700;
+  font-family: var(--body-font); font-size: 11px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase;
   color: #0b0c0e; background: #f1ece1;
   border-radius: 4px;
@@ -869,7 +869,7 @@
 }
 .car-card__head-main { min-width: 0; }
 .car-card__meta {
-  font-family: var(--mono-font); font-size: 10px; color: var(--text-dim);
+  font-family: var(--body-font); font-size: 10px; color: var(--text-dim);
   letter-spacing: 0.15em; text-transform: uppercase;
 }
 .car-card__name {
@@ -884,7 +884,7 @@
 }
 .car-card__specs {
   display: flex; gap: 14px;
-  font-family: var(--mono-font); font-size: 10px;
+  font-family: var(--body-font); font-size: 10px;
   color: var(--text-mute); letter-spacing: 0.05em;
 }
 .car-card__sep { color: var(--line-soft); }
@@ -893,7 +893,7 @@
   display: flex; justify-content: space-between; align-items: flex-end; gap: 12px;
 }
 .car-card__price-label {
-  font-family: var(--mono-font); font-size: 9px; color: var(--text-dim);
+  font-family: var(--body-font); font-size: 9px; color: var(--text-dim);
   letter-spacing: 0.15em; text-transform: uppercase;
 }
 .car-card__price {
@@ -901,10 +901,10 @@
   color: var(--text); letter-spacing: -0.02em; margin-top: 1px;
 }
 .car-card__price-extra {
-  font-family: var(--mono-font); font-size: 10px; color: var(--text-mute); margin-top: 2px;
+  font-family: var(--body-font); font-size: 10px; color: var(--text-mute); margin-top: 2px;
 }
 .car-card__ship {
-  font-family: var(--mono-font); font-size: 10px; color: var(--text-mute); text-align: right;
+  font-family: var(--body-font); font-size: 10px; color: var(--text-mute); text-align: right;
 }
 .car-card__ship-row { display: inline-flex; align-items: center; gap: 4px; }
 .car-card__ship-label { color: var(--text-dim); font-size: 9px; margin-top: 2px; }
@@ -929,7 +929,7 @@
 .car-ph__label {
   position: absolute; left: 14px; right: 14px; bottom: 12px;
   display: flex; justify-content: space-between; align-items: flex-end; gap: 8px;
-  font-family: var(--mono-font); font-size: 10px; letter-spacing: 0.08em;
+  font-family: var(--body-font); font-size: 10px; letter-spacing: 0.08em;
   color: #fff; text-transform: uppercase; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 .car-ph--compact .car-ph__label { left: 10px; right: 10px; bottom: 8px; font-size: 9px; }

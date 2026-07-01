@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AuctionCar } from "../../../lib/types/landing";
 import CarService from "../../services/CarService";
@@ -38,7 +37,6 @@ function readCache(): Cached | null {
 }
 
 export default function CarVerifyPage() {
-  const history = useHistory();
   const { t } = useTranslation();
   const [vin, setVin] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -241,16 +239,6 @@ export default function CarVerifyPage() {
                   {car.damageDesc && <p className="cv__desc-text">{car.damageDesc}</p>}
                 </div>
               )}
-
-              <button
-                className="cv__open"
-                onClick={() => {
-                  const carId = car.id ?? car._id;
-                  if (carId) history.push(`/products/${carId}`);
-                }}
-              >
-                {t("verify.carDetail")}
-              </button>
             </div>
           </div>
         )}

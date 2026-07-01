@@ -33,7 +33,7 @@
   border-bottom: 1px solid var(--line);
 }
 .mypage__crumb {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   color: var(--text-dim);
   letter-spacing: 0.18em;
@@ -76,7 +76,7 @@
   display: flex;
   gap: 14px;
   margin-top: 8px;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   color: var(--text-mute);
   letter-spacing: 0.1em;
@@ -152,7 +152,7 @@
   letter-spacing: -0.02em;
 }
 .mypage__stat-label {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   color: var(--text-mute);
   letter-spacing: 0.15em;
@@ -193,13 +193,13 @@
   letter-spacing: -0.015em;
 }
 .mp-transit__sub {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   color: var(--text-mute);
   margin-top: 4px;
 }
 .mp-transit__loc {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   color: var(--text);
   margin-top: 8px;
@@ -244,7 +244,7 @@
   border-color: var(--accent);
 }
 .mp-timeline__label {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-align: center;
@@ -254,7 +254,7 @@
 .mp-timeline__label--done { color: var(--text-mute); }
 .mp-timeline__label--active { color: var(--text); font-weight: 700; }
 .mp-timeline__date {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 9px;
   color: var(--text-dim);
   text-align: center;
@@ -276,7 +276,7 @@
 }
 .mp-activity__row--first { border-top: none; }
 .mp-activity__kind {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -290,7 +290,7 @@
   color: var(--text);
 }
 .mp-activity__time {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   color: var(--text-dim);
   text-align: right;
@@ -299,7 +299,7 @@
 /* Saved tab */
 .mp-section-note {
   margin-bottom: 20px;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   color: var(--text-mute);
   letter-spacing: 0.1em;
@@ -361,7 +361,7 @@
   letter-spacing: -0.015em;
 }
 .mp-track-card__sub {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   color: var(--text-mute);
   margin-top: 6px;
@@ -371,7 +371,7 @@
   padding: 8px 12px;
   background: var(--bg);
   border: 1px solid var(--line-soft);
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   display: inline-block;
 }
@@ -386,7 +386,7 @@
   display: inline-flex;
   align-items: center;
   padding: 3px 8px;
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -422,7 +422,7 @@
   color: var(--text);
 }
 .mp-orders__date {
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 11px;
   color: var(--text-mute);
 }
@@ -446,7 +446,7 @@
 .mp-card__head {
   padding: 14px 18px;
   border-bottom: 1px solid var(--line);
-  font-family: var(--mono-font);
+  font-family: var(--body-font);
   font-size: 10px;
   color: var(--text-dim);
   letter-spacing: 0.18em;
