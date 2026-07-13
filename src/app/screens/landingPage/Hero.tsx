@@ -14,6 +14,19 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
   const { t } = useTranslation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [videoPaused, setVideoPaused] = useState(false);
+
+  const toggleVideo = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play().catch(() => {});
+      setVideoPaused(false);
+    } else {
+      video.pause();
+      setVideoPaused(true);
+    }
+  };
 
   useEffect(() => {
     const video = videoRef.current;
@@ -70,6 +83,23 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
           <span className="landing__scroll-label">{t("hero.scroll")}</span>
           <span className="landing__scroll-arrow" />
         </div>
+
+        <button
+          type="button"
+          className="landing__video-toggle"
+          aria-label={videoPaused ? "Play background video" : "Pause background video"}
+          onClick={toggleVideo}
+        >
+          {videoPaused ? (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+            </svg>
+          )}
+        </button>
       </div>
 
       <div className="landing__stats">
