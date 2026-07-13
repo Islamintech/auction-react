@@ -819,15 +819,15 @@
   .landing__stat-label { font-size: 9px; letter-spacing: 0.1em; }
   .landing__stat:nth-child(2n) { border-right: none; }
   .landing__stat:nth-child(n+3) { border-top: 1px solid var(--line); }
-  /* Sit hero content a little below center without a big empty gap on top */
+  /* Fill exactly one screen (svh tracks the collapsing URL bar) so the
+     stats band starts cleanly below the fold instead of peeking in half-cut */
   .landing__hero-grid {
     align-items: end;
-    min-height: 500px;
+    min-height: calc(100vh - 82px);
+    min-height: calc(100svh - 82px);
     padding-top: 48px;
-    padding-bottom: 0;
+    padding-bottom: 44px;
   }
-  /* Nudge the stats row down a touch on mobile */
-  .landing__stats { margin-top: 40px; }
 }
 
 /* ──────────────────────────────────────────────────────────
