@@ -788,8 +788,8 @@
   .landing-sh__link { white-space: nowrap; }
   /* Hide the scroll indicator on mobile (shorter hero, different layout) */
   .landing__scroll { display: none; }
-  /* Video toggle: bottom-left would sit on the CTA button, so keep it right */
-  .landing__video-toggle { left: auto; right: 20px; bottom: 14px; }
+  /* No video toggle on phones — the video is background ambiance there */
+  .landing__video-toggle { display: none; }
   .landing__headline {
     font-size: 40px;
     /* Reserve 2 lines so switching language doesn't shift the hero/button */
