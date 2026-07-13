@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import LiveDot from "./LiveDot";
 import { AuctionCar } from "../../../lib/types/landing";
 import { useTranslation } from "react-i18next";
 import { useGlobals } from "../../hooks/useGlobals";
@@ -60,9 +59,6 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
 
       <div className="landing__hero-grid">
         <div>
-          <div className="landing__eyebrow">
-            <LiveDot size={6} /> {t("hero.eyebrow")}
-          </div>
           <h1 className="landing__headline">{t("hero.headline")}</h1>
           <div className="landing__cta-row">
             {authMember ? (
