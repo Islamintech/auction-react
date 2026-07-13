@@ -83,6 +83,45 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
           </div>
         </div>
 
+        {crashed.length > 0 && (
+          <div className="landing__crashed-panel">
+            <div className="landing__crashed-head">
+              <div className="landing__crashed-head-left">
+                <span className="landing__warn-dot" />
+                <span className="landing__crashed-label">{t("sections.crashed")}</span>
+              </div>
+              <span className="landing__crashed-count">
+                {t("sections.crashedListed", { count: crashed.length })}
+              </span>
+            </div>
+
+            {crashed.slice(0, 3).map((c, i) => (
+              <div
+                key={c.id}
+                onClick={() => onOpenCar(c)}
+                className={`landing__crashed-row${i === 0 ? " landing__crashed-row--first" : ""}`}
+              >
+                <div style={{ minWidth: 0 }}>
+                  <div className="landing__crashed-meta">
+                    {c.year} · {c.km.toLocaleString()} KM
+                  </div>
+                  <div className="landing__crashed-name">
+                    {c.brand} {c.title}
+                  </div>
+                </div>
+                <div>
+                  <div className="landing__crashed-price">${c.price.toLocaleString()}</div>
+                  {c.damage && <div className="landing__crashed-tag">{c.damage.toUpperCase()}</div>}
+                </div>
+              </div>
+            ))}
+
+            <button className="landing__crashed-cta" onClick={onBrowseCars}>
+              {t("sections.browseCrashed")} →
+            </button>
+          </div>
+        )}
+
         <div
           className={`landing__scroll${scrolled ? " landing__scroll--hidden" : ""}`}
           aria-hidden="true"

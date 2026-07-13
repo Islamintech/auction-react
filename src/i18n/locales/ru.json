@@ -22,6 +22,8 @@
   },
   "sections": {
     "crashed": "БИТЫЕ · С ЗАПЧАСТЯМИ",
+    "crashedListed": "{{count}} В ПРОДАЖЕ",
+    "browseCrashed": "Все битые авто",
     "featured": "Рекомендуемые на неделе",
     "leaderboard": "Активные пользователи",
     "community": "Из сообщества",
