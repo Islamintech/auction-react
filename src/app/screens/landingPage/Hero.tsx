@@ -96,7 +96,7 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
             </svg>
           ) : (
             <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+              <path d="M6 19h4V5H6zm8-14v14h4V5z" />
             </svg>
           )}
         </button>
