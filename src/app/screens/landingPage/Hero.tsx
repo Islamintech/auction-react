@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import LiveDot from "./LiveDot";
 import { AuctionCar } from "../../../lib/types/landing";
 import { useTranslation } from "react-i18next";
 import { useGlobals } from "../../hooks/useGlobals";
@@ -59,16 +60,25 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
 
       <div className="landing__hero-grid">
         <div>
+          <div className="landing__eyebrow">
+            <LiveDot size={6} /> {t("hero.eyebrow")}
+          </div>
           <h1 className="landing__headline">{t("hero.headline")}</h1>
+          <p className="landing__subtitle">{t("hero.subtitle")}</p>
           <div className="landing__cta-row">
             {authMember ? (
               <button className="landing-btn landing-btn--primary landing-btn--lg" onClick={onBrowseCars}>
                 {t("hero.browse")} →
               </button>
             ) : (
-              <button className="landing-btn landing-btn--primary landing-btn--lg" onClick={openSignup}>
-                {t("hero.signup")} →
-              </button>
+              <>
+                <button className="landing-btn landing-btn--primary landing-btn--lg" onClick={openSignup}>
+                  {t("hero.signup")} →
+                </button>
+                <button className="landing-btn landing-btn--secondary landing-btn--lg" onClick={onBrowseCars}>
+                  {t("hero.browse")}
+                </button>
+              </>
             )}
           </div>
         </div>
