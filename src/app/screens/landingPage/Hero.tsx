@@ -103,11 +103,10 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
               >
                 <div style={{ minWidth: 0 }}>
                   <div className="landing__crashed-meta">
-                    {c.year} · {c.km.toLocaleString()} KM
+                    {c.brand} · {c.year}
+                    {c.km > 0 && <> · {c.km.toLocaleString()} KM</>}
                   </div>
-                  <div className="landing__crashed-name">
-                    {c.brand} {c.title}
-                  </div>
+                  <div className="landing__crashed-name">{c.title}</div>
                 </div>
                 <div>
                   <div className="landing__crashed-price">${c.price.toLocaleString()}</div>
