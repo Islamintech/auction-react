@@ -47,7 +47,7 @@
   position: relative;
   max-width: var(--page-max);
   margin-inline: auto;
-  padding: 56px 48px 72px;
+  padding: 56px 48px 140px;
   display: grid;
   grid-template-columns: 1.3fr 1fr;
   gap: 48px;
