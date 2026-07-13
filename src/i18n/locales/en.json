@@ -22,8 +22,6 @@
   },
   "sections": {
     "crashed": "CRASHED · WITH PARTS",
-    "crashedListed": "{{count}} LISTED",
-    "browseCrashed": "Browse all crashed",
     "featured": "Featured this week",
     "leaderboard": "Active users",
     "community": "From the community",

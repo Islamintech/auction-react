@@ -22,8 +22,6 @@
   },
   "sections": {
     "crashed": "사고 차량 · 부품 포함",
-    "crashedListed": "{{count}}대 등록",
-    "browseCrashed": "사고 차량 전체 보기",
     "featured": "이번 주 추천",
     "leaderboard": "활성 사용자",
     "community": "커뮤니티에서",
