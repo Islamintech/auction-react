@@ -1,3 +1,5 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /member-page
+
+Sitemap: https://autoauction.kr/sitemap.xml
