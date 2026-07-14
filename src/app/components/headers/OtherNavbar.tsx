@@ -1,8 +1,8 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Box, Button, Container, ListItemIcon, Menu, MenuItem, Stack } from "@mui/material";
 import { NavLink, useHistory } from "react-router-dom";
 import { useGlobals } from "../../hooks/useGlobals";
-import { serverApi } from "../../../lib/config";
+import { imageUrl } from "../../../lib/api";
 import { Logout, Menu as MenuIcon, Close as CloseIcon, Person, Login as LoginIcon } from "@mui/icons-material";
 import ThemeToggle from "../themeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -68,7 +68,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
             >
               <img
                 className="user-avatar"
-                src={authMember?.memberImage ? `${serverApi}/${authMember?.memberImage}` : "/icons/default-user.svg"}
+                src={imageUrl(authMember?.memberImage) || "/icons/default-user.svg"}
                 alt="user avatar"
               />
             </button>
@@ -125,7 +125,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               >
                 <img
                   className="user-avatar"
-                  src={authMember?.memberImage ? `${serverApi}/${authMember?.memberImage}` : "/icons/default-user.svg"}
+                  src={imageUrl(authMember?.memberImage) || "/icons/default-user.svg"}
                   alt="user avatar"
                 />
               </button>
