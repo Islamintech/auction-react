@@ -786,10 +786,13 @@
   /* Stack the section header so "View all" doesn't get clipped off the right */
   .landing-sh { flex-direction: column; align-items: flex-start; gap: 10px; }
   .landing-sh__link { white-space: nowrap; }
-  /* Hide the scroll indicator on mobile (shorter hero, different layout) */
-  .landing__scroll { display: none; }
+  /* Scroll cue centered under the CTAs, k-apply style */
+  .landing__scroll { bottom: 14px; }
   /* No video toggle on phones — the video is background ambiance there */
   .landing__video-toggle { display: none; }
+  /* CTAs stacked full-width near the bottom of the full-screen hero */
+  .landing__cta-row { flex-direction: column; }
+  .landing__cta-row .landing-btn { width: 100%; justify-content: center; }
   .landing__headline {
     font-size: 40px;
     /* Reserve 2 lines so switching language doesn't shift the hero/button */
@@ -826,7 +829,8 @@
     min-height: calc(100vh - 82px);
     min-height: calc(100svh - 82px);
     padding-top: 48px;
-    padding-bottom: 44px;
+    /* Room for the scroll cue below the stacked CTAs */
+    padding-bottom: 88px;
   }
 }
 
