@@ -266,8 +266,8 @@ export default function CarListPage() {
                     <span className="cl-list__num cl-list__num--mute">{c.km?.toLocaleString() ?? "—"}</span>
                     <span className="cl-list__num cl-list__num--mute">{c.color || "—"}</span>
                     <span className="cl-list__price">
-                      {formatUsdEstimate(c.price, usdRate) ?? formatKrw(c.price)}
-                      {usdRate && <span className="cl-list__price-krw">{formatKrw(c.price)}</span>}
+                      {formatKrw(c.price)}
+                      {usdRate && <span className="cl-list__price-sub">{formatUsdEstimate(c.price, usdRate)}</span>}
                     </span>
                     <Tag color={c.category === "crashed" ? "var(--warn)" : "var(--text)"} outline={c.category !== "crashed"}>
                       {c.category === "crashed" ? t("carlist.tagCrashed") : t("carlist.tagReady")}

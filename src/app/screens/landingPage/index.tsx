@@ -13,7 +13,7 @@ import { setCars, toggleSaved } from "./slice";
 import { AuctionCar } from "../../../lib/types/landing";
 import CarService from "../../services/CarService";
 import { useGlobals } from "../../hooks/useGlobals";
-import { formatKrw, formatUsdEstimate, useUsdKrwRate } from "../../../lib/currency";
+import { formatKrw } from "../../../lib/currency";
 import "../../../css/landing.css";
 
 export default function LandingPage() {
@@ -23,15 +23,14 @@ export default function LandingPage() {
   const savedIds = useSelector(retrieveSavedIds);
   const { openSignup } = useGlobals();
   const [consultOpen, setConsultOpen] = useState(false);
-  const usdRate = useUsdKrwRate();
 
   const carOptions = useMemo(
     () =>
       cars.map((c) => ({
         id: c.id,
-        label: `${c.brand} ${c.title} · ${formatUsdEstimate(c.price, usdRate) ?? formatKrw(c.price)}`,
+        label: `${c.brand} ${c.title} · ${formatKrw(c.price)}`,
       })),
-    [cars, usdRate]
+    [cars]
   );
 
   useEffect(() => {

@@ -61,8 +61,8 @@ export default function CarCard({ car, saved, onSave, onOpen, density = "spaciou
         <div className="car-card__foot">
           <div>
             <div className="car-card__price-label">{isCrashed ? t("card.priceCar") : t("card.price")}</div>
-            <div className="car-card__price">{usd ?? formatKrw(car.price)}</div>
-            {usd && <div className="car-card__price-krw">{formatKrw(car.price)}</div>}
+            <div className="car-card__price">{formatKrw(car.price)}</div>
+            {usd && <div className="car-card__price-sub">{usd}</div>}
           </div>
         </div>
       </div>

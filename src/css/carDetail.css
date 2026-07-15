@@ -449,11 +449,15 @@
   color: var(--text);
   margin-top: 4px;
 }
-.cd-buy__price-krw {
+.cd-buy__price-sub {
   font-family: var(--mono-font);
   font-size: 13px;
   color: var(--text-mute);
   margin-top: 2px;
+}
+/* Double class so it also wins over the mobile font-size override below. */
+.cd-buy__price.cd-buy__price--long {
+  font-size: 28px;
 }
 .cd-buy__breakdown {
   margin-top: 8px;

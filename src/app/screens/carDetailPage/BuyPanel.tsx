@@ -11,6 +11,7 @@ export default function BuyPanel({ car }: { car: AuctionCar }) {
   const isCrashed = car.category === "crashed";
   const rate = useUsdKrwRate();
   const usd = formatUsdEstimate(car.price, rate);
+  const krw = formatKrw(car.price);
 
   return (
     <aside className="cd-aside" id="cd-buy-panel">
@@ -23,8 +24,8 @@ export default function BuyPanel({ car }: { car: AuctionCar }) {
           )}
         </div>
         <div className="cd-buy__label">{t("cardetail.fixedPrice")}</div>
-        <div className="cd-buy__price">{usd ?? formatKrw(car.price)}</div>
-        {usd && <div className="cd-buy__price-krw">{formatKrw(car.price)}</div>}
+        <div className={`cd-buy__price${krw.length > 14 ? " cd-buy__price--long" : ""}`}>{krw}</div>
+        {usd && <div className="cd-buy__price-sub">{usd}</div>}
 
         <button className="cd-btn cd-btn--primary cd-btn--lg" style={{ marginTop: 18 }}>
           {t("cardetail.reserveDeposit")}

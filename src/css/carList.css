@@ -296,7 +296,7 @@
   font-weight: 700;
   color: var(--text);
 }
-.cl-list__price-krw {
+.cl-list__price-sub {
   display: block;
   font-family: var(--mono-font);
   font-size: 10px;
