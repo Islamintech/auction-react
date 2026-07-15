@@ -940,6 +940,9 @@
 .car-card__price-extra {
   font-family: var(--body-font); font-size: 10px; color: var(--text-mute); margin-top: 2px;
 }
+.car-card__price-krw {
+  font-family: var(--mono-font); font-size: 11px; color: var(--text-mute); margin-top: 2px;
+}
 .car-card__ship {
   font-family: var(--body-font); font-size: 10px; color: var(--text-mute); text-align: right;
 }

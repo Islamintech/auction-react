@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { AuctionCar } from "../../../lib/types/landing";
 import CarService from "../../services/CarService";
 import { imageUrl } from "../../../lib/api";
+import { formatKrw, formatUsdEstimate, parseKrw, useUsdKrwRate } from "../../../lib/currency";
 import Lightbox from "./Lightbox";
 import "../../../css/carVerify.css";
 
@@ -85,8 +86,14 @@ export default function CarVerifyPage() {
     }
   };
 
-  const money = (n?: number) =>
-    typeof n === "number" ? `$${n.toLocaleString()}` : "—";
+  const usdRate = useUsdKrwRate();
+
+  // Sale prices are recorded in KRW; show the recorded amount with a USD estimate.
+  const money = (n?: number | string) => {
+    if (!parseKrw(n).length) return "—";
+    const usd = formatUsdEstimate(n, usdRate);
+    return usd ? `${formatKrw(n)} (${usd})` : formatKrw(n);
+  };
 
   return (
     <div className="cv">

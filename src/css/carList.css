@@ -296,6 +296,14 @@
   font-weight: 700;
   color: var(--text);
 }
+.cl-list__price-krw {
+  display: block;
+  font-family: var(--mono-font);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-mute);
+  margin-top: 2px;
+}
 
 /* Tag (shared style with userPage's mp-tag) */
 .cl-tag {

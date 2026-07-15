@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import CarPlaceholder from "./CarPlaceholder";
 import { AuctionCar } from "../../../lib/types/landing";
 import { imageUrl } from "../../../lib/api";
+import { formatKrw, formatUsdEstimate, useUsdKrwRate } from "../../../lib/currency";
 
 interface Props {
   car: AuctionCar;
@@ -14,6 +15,8 @@ interface Props {
 
 export default function CarCard({ car, saved, onSave, onOpen, density = "spacious" }: Props) {
   const { t } = useTranslation();
+  const rate = useUsdKrwRate();
+  const usd = formatUsdEstimate(car.price, rate);
   const compact = density === "compact";
   const isCrashed = car.category === "crashed";
   const img = imageUrl(car.image);
@@ -58,7 +61,8 @@ export default function CarCard({ car, saved, onSave, onOpen, density = "spaciou
         <div className="car-card__foot">
           <div>
             <div className="car-card__price-label">{isCrashed ? t("card.priceCar") : t("card.price")}</div>
-            <div className="car-card__price">${car.price.toLocaleString()}</div>
+            <div className="car-card__price">{usd ?? formatKrw(car.price)}</div>
+            {usd && <div className="car-card__price-krw">{formatKrw(car.price)}</div>}
           </div>
         </div>
       </div>

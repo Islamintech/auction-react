@@ -13,6 +13,7 @@ import { toggleSaved } from "../landingPage/slice";
 import { AuctionCar } from "../../../lib/types/landing";
 import CarService from "../../services/CarService";
 import { imageUrl } from "../../../lib/api";
+import { formatKrw, formatUsdEstimate, useUsdKrwRate } from "../../../lib/currency";
 import { useGlobals } from "../../hooks/useGlobals";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import "../../../css/carDetail.css";
@@ -34,6 +35,7 @@ export default function CarDetailPage() {
   const [posting, setPosting] = useState(false);
   const [liking, setLiking] = useState(false);
   const { authMember, openSignup } = useGlobals();
+  const usdRate = useUsdKrwRate();
 
   useEffect(() => {
     const service = new CarService();
@@ -394,7 +396,9 @@ export default function CarDetailPage() {
       <div className="cd-stickybar">
         <div className="cd-stickybar__info">
           <span className="cd-stickybar__label">{t("cardetail.fixedPrice")}</span>
-          <span className="cd-stickybar__price">${car.price.toLocaleString()}</span>
+          <span className="cd-stickybar__price">
+            {formatUsdEstimate(car.price, usdRate) ?? formatKrw(car.price)}
+          </span>
         </div>
         <button
           className="cd-btn cd-btn--primary cd-stickybar__btn"

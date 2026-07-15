@@ -13,6 +13,7 @@ import { setCars, toggleSaved } from "../landingPage/slice";
 import { AuctionCar } from "../../../lib/types/landing";
 import CarService from "../../services/CarService";
 import { imageUrl } from "../../../lib/api";
+import { formatKrw, formatUsdEstimate, krwValue, useUsdKrwRate } from "../../../lib/currency";
 import "../../../css/carList.css";
 
 type View = "grid" | "list";
@@ -38,6 +39,7 @@ export default function CarListPage() {
   const dispatch = useDispatch();
   const cars = useSelector(retrieveCars);
   const savedIds = useSelector(retrieveSavedIds);
+  const usdRate = useUsdKrwRate();
 
   const [view, setView] = useState<View>("grid");
   const [density, setDensity] = useState<Density>("spacious");
@@ -79,19 +81,21 @@ export default function CarListPage() {
     const out = cars.filter((c) => {
       if (filters.brand !== "all" && c.brand !== filters.brand) return false;
       if (filters.category !== "all" && c.category !== filters.category) return false;
-      if (c.price > filters.priceMax) return false;
+      // Prices are stored in KRW; the slider is in USD. Skip the price
+      // filter until the exchange rate has loaded.
+      if (usdRate && krwValue(c.price) / usdRate > filters.priceMax) return false;
       return true;
     });
     const sorted = [...out];
     switch (filters.sort) {
-      case "price-l": sorted.sort((a, b) => a.price - b.price); break;
-      case "price-h": sorted.sort((a, b) => b.price - a.price); break;
+      case "price-l": sorted.sort((a, b) => krwValue(a.price) - krwValue(b.price)); break;
+      case "price-h": sorted.sort((a, b) => krwValue(b.price) - krwValue(a.price)); break;
       case "km":     sorted.sort((a, b) => (a.km ?? 0) - (b.km ?? 0)); break;
       case "year":   sorted.sort((a, b) => b.year - a.year); break;
       default: break;
     }
     return sorted;
-  }, [cars, filters]);
+  }, [cars, filters, usdRate]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paged = isMobile ? filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE) : filtered;
@@ -261,7 +265,10 @@ export default function CarListPage() {
                     <span className="cl-list__num">{c.year}</span>
                     <span className="cl-list__num cl-list__num--mute">{c.km?.toLocaleString() ?? "—"}</span>
                     <span className="cl-list__num cl-list__num--mute">{c.color || "—"}</span>
-                    <span className="cl-list__price">${c.price.toLocaleString()}</span>
+                    <span className="cl-list__price">
+                      {formatUsdEstimate(c.price, usdRate) ?? formatKrw(c.price)}
+                      {usdRate && <span className="cl-list__price-krw">{formatKrw(c.price)}</span>}
+                    </span>
                     <Tag color={c.category === "crashed" ? "var(--warn)" : "var(--text)"} outline={c.category !== "crashed"}>
                       {c.category === "crashed" ? t("carlist.tagCrashed") : t("carlist.tagReady")}
                     </Tag>

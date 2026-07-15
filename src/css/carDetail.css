@@ -449,6 +449,12 @@
   color: var(--text);
   margin-top: 4px;
 }
+.cd-buy__price-krw {
+  font-family: var(--mono-font);
+  font-size: 13px;
+  color: var(--text-mute);
+  margin-top: 2px;
+}
 .cd-buy__breakdown {
   margin-top: 8px;
   padding: 10px 12px;
