@@ -1,8 +1,20 @@
+/* ────────────────────────────────────────────────────────────
+   Typography tokens — global fallback. Per-page stylesheets
+   (landing/carList/carDetail/news/userPage) re-declare the same
+   values on their own scope; pages that don't inherit from here.
+   One readable sans for body and headings, plain mono only for
+   VIN / IDs / figures. Noto Sans KR carries the Korean glyphs
+   Inter does not ship.
+   ──────────────────────────────────────────────────────────── */
+:root {
+  --body-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--body-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg);
@@ -23,8 +35,7 @@ body::-webkit-scrollbar {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: var(--mono-font);
 }
 
 /* Mobile safety nets: prevent media and the page itself from overflowing

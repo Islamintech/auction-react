@@ -8,9 +8,9 @@
   --line: #e3e0d8;
   --line-soft: #ecebe5;
   --accent: #d7b586;
-  --display-font: "Roboto Serif", Georgia, serif;
-  --body-font: "Poppins", system-ui, sans-serif;
-  --mono-font: "JetBrains Mono", ui-monospace, monospace;
+  --display-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --body-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
   background: var(--bg);
   color: var(--text);

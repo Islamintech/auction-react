@@ -67,7 +67,7 @@
 .rules-box .rules-frame p {
   border-bottom: 1px solid var(--line-soft, #dddddd);
   color: var(--text, #000000);
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: var(--body-font);
   font-weight: 400;
   font-size: 1rem;
   letter-spacing: 0.00938em;
@@ -108,7 +108,7 @@
 }
 
 .help-page .admin-letter-frame span {
-  font-family: "ABeeZee";
+  font-family: var(--body-font);
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -118,7 +118,7 @@
 
 .help-page .admin-letter-frame p {
   margin-top: 20px;
-  font-family: "Sedan";
+  font-family: var(--display-font);
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -140,7 +140,7 @@
 }
 
 .help-page .admin-letter-frame .admin-input-box label {
-  font-family: "Verdana";
+  font-family: var(--body-font);
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -157,7 +157,7 @@
   background: var(--surface, #f8f8ff);
   border: 1px solid var(--line, #dddddd);
   border-radius: 8px;
-  font-family: "Verdana";
+  font-family: var(--body-font);
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -174,7 +174,7 @@
   background: var(--surface, #f8f8ff);
   border: 1px solid var(--line, #dddddd);
   border-radius: 8px;
-  font-family: "Verdana";
+  font-family: var(--body-font);
   font-style: normal;
   font-weight: 400;
   font-size: 15px;

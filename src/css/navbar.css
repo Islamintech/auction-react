@@ -131,7 +131,7 @@
   min-height: 40px;
   gap: 8px;
   border-radius: 6px;
-  font-family: Poppins, Arial, sans-serif;
+  font-family: var(--body-font);
   font-size: 14px;
   color: var(--text, #0b0c0e);
 }
@@ -155,7 +155,7 @@
 }
 
 .home-navbar .brand-wordmark {
-  font-family: "Roboto Serif", Georgia, serif;
+  font-family: var(--display-font);
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -203,7 +203,7 @@
 .home-navbar .navbar-container .header-frame .detail .head-main-txt {
   width: 450px;
   height: 150px;
-  font-family: "Roboto Serif";
+  font-family: var(--display-font);
   font-size: 50px;
   font-style: normal;
   font-weight: 500;
@@ -215,7 +215,7 @@
 .home-navbar .navbar-container .header-frame .detail .wel-txt {
   width: 510px;
   height: 42px;
-  font-family: "Roboto Serif";
+  font-family: var(--display-font);
   font-size: 36px;
   font-style: normal;
   font-weight: 400;
@@ -228,7 +228,7 @@
   margin-top: 23px;
   width: 153px;
   height: 23px;
-  font-family: "Roboto Serif";
+  font-family: var(--display-font);
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -247,7 +247,7 @@
   border-radius: 4px;
   background: #1976d2;
   text-align: center;
-  font-family: Poppins;
+  font-family: var(--body-font);
   font-size: 17px;
   font-style: normal;
   font-weight: 400;
@@ -360,7 +360,7 @@
 }
 
 .other-navbar .brand-wordmark {
-  font-family: "Roboto Serif", Georgia, serif;
+  font-family: var(--display-font);
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -442,7 +442,7 @@
 .basket-info-box .product-name {
   margin-left: 11px;
   width: 185px;
-  font-family: "Poppins";
+  font-family: var(--body-font);
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -452,7 +452,7 @@
 
 .basket-info-box .product-price {
   width: 80px;
-  font-family: "Poppins";
+  font-family: var(--body-font);
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
@@ -490,7 +490,7 @@
 .basket-order .price {
   width: 200px;
   display: flex;
-  font-family: "Poppins";
+  font-family: var(--body-font);
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
