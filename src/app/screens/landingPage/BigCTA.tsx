@@ -18,8 +18,8 @@ export default function BigCTA({ onSignup, onConsultation }: Props) {
           <div>
             <h2 className="landing-cta__title">Need help choosing? Talk to an expert.</h2>
             <p className="landing-cta__body">
-              Our specialists in Seoul and Tashkent can guide you through inspection grades,
-              shipping options, and customs — free for verified members.
+              Our specialists can guide you through inspection grades, shipping options,
+              and customs for your country — free for verified members.
             </p>
           </div>
           <div className="landing-cta__side">

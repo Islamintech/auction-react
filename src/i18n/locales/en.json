@@ -12,7 +12,7 @@
     "logout": "Logout"
   },
   "hero": {
-    "eyebrow": "LIVE INVENTORY · SEOUL → CENTRAL ASIA",
+    "eyebrow": "LIVE INVENTORY · SEOUL → WORLDWIDE",
     "headline": "Dream cars",
     "subtitle": "2,800+ inspected vehicles from licensed Korean dealers. Buy ready-to-drive or crashed-with-parts. We handle export, customs, and last-mile.",
     "browse": "Browse cars",
@@ -36,7 +36,7 @@
     "myAccount": "My account",
     "helpFaq": "Help & FAQ",
     "findUs": "Find us",
-    "desc": "Korean cars at fixed prices, shipped door-to-door across Central Asia and the Caucasus. Inspected, insured, and customs-cleared by us."
+    "desc": "Korean cars at fixed prices, shipped door-to-door worldwide. Inspected, insured, and customs-cleared by us."
   },
   "carlist": {
     "crumb": "MARKETPLACE / ALL VEHICLES",
@@ -196,7 +196,7 @@
     "loginSub": "Continue where you left off.",
     "username": "Username",
     "phone": "Phone",
-    "phonePlaceholder": "+998 ...",
+    "phonePlaceholder": "+ country code and number",
     "password": "Password",
     "pleaseWait": "Please wait…",
     "createAccount": "Create account",
@@ -208,7 +208,7 @@
     "signupHeadingSub": "Create an account to reserve cars, save favorites, and track shipments end-to-end.",
     "loginHeading": "Welcome back to AUTOAUCTION",
     "loginHeadingSub": "Sign in to continue tracking your reservations and saved cars.",
-    "panelStats": "2,800+ inspected cars · Seoul → Central Asia",
+    "panelStats": "2,800+ inspected cars · Seoul → worldwide",
     "perk1Title": "Fixed-price auctions",
     "perk1Desc": "No bidding wars. Reserve at the listed price.",
     "perk2Title": "Inspected in Korea",
@@ -321,7 +321,7 @@
     "step2Title": "Documentation",
     "step2Body": "Invoice, export certificate, and bill of lading prepared.",
     "step3Title": "Ocean freight",
-    "step3Body": "Korea to Uzbekistan shipping arranged and tracked.",
+    "step3Body": "Ocean freight from Korea to your port arranged and tracked.",
     "step4Title": "Customs clearance",
     "step4Body": "Duty, VAT, and import formalities handled for you.",
     "step5Title": "Final delivery",
@@ -346,7 +346,7 @@
       },
       {
         "question": "How long does delivery take?",
-        "answer": "Around 45–60 days from purchase to plates. Shipping itself is 30–45 days (Korea → China → Kazakhstan → Uzbekistan), plus customs clearance and registration in Uzbekistan."
+        "answer": "Typically 45–60 days from purchase to registration, though it depends on your destination. Ocean freight is usually 30–45 days, plus customs clearance and local registration. Ask us for a timeline for your country."
       },
       {
         "question": "What documents are needed to export the car?",
@@ -354,19 +354,19 @@
       },
       {
         "question": "How is the car shipped?",
-        "answer": "By Ro-Ro (Roll-on/Roll-off) or by container from a Korean port. Route: Korea → China → Kazakhstan → Uzbekistan via rail and truck."
+        "answer": "By Ro-Ro (Roll-on/Roll-off) or in a container from a Korean port. We pick the route — sea, rail, or road — that best suits your destination."
       },
       {
-        "question": "What customs fees apply in Uzbekistan?",
-        "answer": "Import duty, VAT, recycling fee, and customs processing. The total depends on engine size, manufacture year, and the car's price. A licensed broker handles the calculation and paperwork."
+        "question": "How do customs fees work?",
+        "answer": "Import duty, VAT, and customs processing, plus a recycling or environmental fee in some countries. Rates vary by destination and usually depend on engine size, manufacture year, and the car’s value. A licensed broker in your country handles the calculation and paperwork."
       },
       {
         "question": "What's the difference between 'ready' and 'crashed' cars?",
         "answer": "Ready cars are inspected and ready to drive. Crashed cars are sold as-is with a full damage report and a list of required replacement parts so you know exactly what to expect."
       },
       {
-        "question": "How do I get my Uzbek license plates?",
-        "answer": "After customs clearance you receive the car in your city. Register it at the traffic police (GAI) and they issue Uzbek plates — usually the same day."
+        "question": "How do I register the car and get plates?",
+        "answer": "After customs clearance you collect the car in your city. Register it with your local vehicle authority to receive your plates. We tell you which documents you will need before the car ships."
       },
       {
         "question": "Are the prices final?",
@@ -374,7 +374,7 @@
       },
       {
         "question": "Can I get a consultation before buying?",
-        "answer": "Of course. Open any car and click Request consultation, or use the Get consultation button on the homepage. Our specialists in Seoul and Tashkent reply within 24 hours."
+        "answer": "Of course. Open any car and click Request consultation, or use the Get consultation button on the homepage. Our specialists reply within 24 hours."
       }
     ]
   }

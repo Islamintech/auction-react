@@ -12,7 +12,7 @@
     "logout": "Chiqish"
   },
   "hero": {
-    "eyebrow": "JONLI OMBOR · SEUL → MARKAZIY OSIYO",
+    "eyebrow": "JONLI OMBOR · SEUL → BUTUN DUNYO",
     "headline": "Orzudagi avtomobillar",
     "subtitle": "Litsenziyalangan Koreya dilerlaridan 2800+ tekshirilgan avtomobil. Haydashga tayyor yoki extiyot qismlari bilan urilgan holda sotib oling. Eksport, bojxona va yetkazib berishni biz hal qilamiz.",
     "browse": "Avtomobillarni ko'rish",
@@ -36,7 +36,7 @@
     "myAccount": "Mening sahifam",
     "helpFaq": "Yordam va savollar",
     "findUs": "Biz bilan bog'lanish",
-    "desc": "Markaziy Osiyo va Kavkaz bo'ylab eshikkacha yetkazib beriladigan qat'iy narxdagi Koreya avtomobillari. Tekshirilgan, sug'urtalangan va bojxonadan o'tkazilgan."
+    "desc": "Koreya avtomobillari belgilangan narxlarda, butun dunyoga eshikdan eshikkacha yetkazib beriladi. Tekshiruv, sug‘urta va bojxona rasmiylashtiruvi bizda."
   },
   "carlist": {
     "crumb": "BOZOR / BARCHA AVTOMOBILLAR",
@@ -196,7 +196,7 @@
     "loginSub": "Qoldirgan joyingizdan davom eting.",
     "username": "Foydalanuvchi nomi",
     "phone": "Telefon",
-    "phonePlaceholder": "+998 ...",
+    "phonePlaceholder": "Davlat kodi va raqam",
     "password": "Parol",
     "pleaseWait": "Kuting…",
     "createAccount": "Hisob yaratish",
@@ -208,7 +208,7 @@
     "signupHeadingSub": "Avtomobil band qilish, sevimlilarni saqlash va yetkazib berishni kuzatish uchun hisob yarating.",
     "loginHeading": "AUTOAUCTION'ga xush kelibsiz",
     "loginHeadingSub": "Bron va saqlangan avtomobillarni kuzatishni davom ettirish uchun kiring.",
-    "panelStats": "2 800+ tekshirilgan avtomobil · Seul → Markaziy Osiyo",
+    "panelStats": "2 800+ tekshirilgan avtomobil · Seul → butun dunyo",
     "perk1Title": "Qat'iy narxli auksionlar",
     "perk1Desc": "Savdolashishsiz. Ko'rsatilgan narxda band qiling.",
     "perk2Title": "Koreyada tekshirilgan",
@@ -321,7 +321,7 @@
     "step2Title": "Hujjatlar",
     "step2Body": "Invoys, eksport sertifikati va konosament tayyorlanadi.",
     "step3Title": "Dengiz tashuvi",
-    "step3Body": "Koreyadan O'zbekistonga yetkazib berish tashkil etiladi va kuzatiladi.",
+    "step3Body": "Koreyadan portingizgacha dengiz yo‘li bilan tashishni tashkil qilamiz va kuzatamiz.",
     "step4Title": "Bojxona rasmiylashtiruvi",
     "step4Body": "Boj, QQS va import rasmiyatchiliklari biz tomonidan hal qilinadi.",
     "step5Title": "Yakuniy yetkazib berish",
@@ -346,7 +346,7 @@
       },
       {
         "question": "Yetkazib berish qancha vaqt oladi?",
-        "answer": "Sotib olishdan raqamlargacha taxminan 45–60 kun. Tashishning o'zi 30–45 kun (Koreya → Xitoy → Qozog'iston → O'zbekiston), shuningdek bojxona rasmiylashtiruvi va O'zbekistonda ro'yxatdan o'tkazish."
+        "answer": "Xariddan ro‘yxatga olishgacha odatda 45–60 kun, lekin bu yetkazib berish davlatiga bog‘liq. Dengiz tashuvi 30–45 kun, ustiga bojxona rasmiylashtiruvi va mahalliy ro‘yxatga olish qo‘shiladi. Davlatingiz uchun muddatni bizdan so‘rang."
       },
       {
         "question": "Avtomobilni eksport qilish uchun qanday hujjatlar kerak?",
@@ -354,19 +354,19 @@
       },
       {
         "question": "Avtomobil qanday tashiladi?",
-        "answer": "Koreya portidan Ro-Ro usulida yoki konteynerda. Yo'nalish: Koreya → Xitoy → Qozog'iston → O'zbekiston temir yo'l va avtotransport orqali."
+        "answer": "Koreya portidan Ro-Ro (yuk ko‘tarish usuli) yoki konteynerda. Yo‘nalishni — dengiz, temir yo‘l yoki avtomobil — yetkazib berish davlatingizga qarab tanlaymiz."
       },
       {
-        "question": "O'zbekistonda qanday bojxona to'lovlari qo'llaniladi?",
-        "answer": "Import boji, QQS, utilizatsiya yig'imi va bojxona rasmiylashtiruvi. Umumiy summa dvigatel hajmi, ishlab chiqarilgan yili va avtomobil narxiga bog'liq. Litsenziyalangan broker hisob-kitob va hujjatlarni amalga oshiradi."
+        "question": "Bojxona to‘lovlari qanday hisoblanadi?",
+        "answer": "Import boji, QQS va bojxona rasmiylashtiruvi, ba’zi davlatlarda esa utilizatsiya yoki ekologik yig‘im. Stavkalar yetkazib berish davlatiga bog‘liq va odatda dvigatel hajmi, ishlab chiqarilgan yili va avtomobil qiymatiga qarab belgilanadi. Litsenziyalangan broker hisob-kitob va hujjatlarni bajaradi."
       },
       {
         "question": "«Tayyor» va «urilgan» avtomobillar o'rtasidagi farq nima?",
         "answer": "Tayyor avtomobillar ko'rikdan o'tgan va haydashga tayyor. Urilgan avtomobillar to'liq shikast hisoboti va kerakli ehtiyot qismlar ro'yxati bilan boricha sotiladi, shunda nimani kutishni aniq bilasiz."
       },
       {
-        "question": "O'zbekiston raqamlarini qanday olaman?",
-        "answer": "Bojxona rasmiylashtiruvidan so'ng avtomobilni o'z shahringizda olasiz. Uni YHXB (GAI)da ro'yxatdan o'tkazing — O'zbekiston raqamlari odatda o'sha kuni beriladi."
+        "question": "Avtomobilni qanday ro‘yxatga olaman va raqam olaman?",
+        "answer": "Bojxona rasmiylashtiruvidan so‘ng avtomobilni o‘z shahringizda olasiz. Uni mahalliy transport ro‘yxatga olish organida ro‘yxatdan o‘tkazing — raqamlar shu yerda beriladi. Kerakli hujjatlar ro‘yxatini jo‘natishdan oldin aytamiz."
       },
       {
         "question": "Narxlar yakuniymi?",
@@ -374,7 +374,7 @@
       },
       {
         "question": "Sotib olishdan oldin konsultatsiya olsam bo'ladimi?",
-        "answer": "Albatta. Istalgan avtomobilni oching va «Konsultatsiya so'rash» tugmasini bosing yoki bosh sahifadagi «Konsultatsiya olish» tugmasidan foydalaning. Seul va Toshkentdagi mutaxassislarimiz 24 soat ichida javob beradi."
+        "answer": "Albatta. Istalgan avtomobilni oching va «Konsultatsiya so‘rash» tugmasini bosing yoki bosh sahifadagi «Konsultatsiya olish» tugmasidan foydalaning. Mutaxassislarimiz 24 soat ichida javob beradi."
       }
     ]
   }

@@ -79,7 +79,7 @@ export default function Footer() {
               </Box>
               <Box className="foot-category-link" style={{ display: "flex", flexDirection: "column", gap: 10, opacity: 0.75 }}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <LocationOnIcon fontSize="small" /> Tashkent · Seoul
+                  <LocationOnIcon fontSize="small" /> Seoul, Korea · shipping worldwide
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <PhoneIcon fontSize="small" /> +998 71 ••• 4781

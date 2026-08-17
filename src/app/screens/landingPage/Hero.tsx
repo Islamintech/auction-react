@@ -111,7 +111,7 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
         {[
           ["1,200+", "CARS DELIVERED"],
           ["3", "SOURCING CHANNELS"],
-          ["45–60d", "KOREA → UZBEKISTAN"],
+          ["45–60d", "KOREA → WORLDWIDE"],
           ["96%", "REPEAT BUYERS"],
         ].map(([n, l]) => (
           <div key={l} className="landing__stat">
