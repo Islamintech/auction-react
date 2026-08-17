@@ -10,9 +10,9 @@
   --line-soft: #ecebe5;
   --accent: #d7b586;
   --warn: #ffb547;
-  --display-font: "Roboto Serif", Georgia, serif;
-  --body-font: "Poppins", system-ui, sans-serif;
-  --mono-font: "JetBrains Mono", ui-monospace, monospace;
+  --display-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --body-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   /* Cap content width on wide screens so the layout doesn't stretch edge-to-edge. */
   --page-max: 1200px;
 
@@ -350,10 +350,13 @@
 .landing__section--tight {
   padding: 40px 48px 32px;
 }
+/* Single column since the member leaderboard was removed — it published member
+   nicknames and avatars on a public page. Kept as a grid so a second panel can
+   be dropped back in without restyling. */
 .landing__section--split {
   padding: 48px 48px;
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: 1fr;
   gap: 32px;
 }
 .landing__section--cta {

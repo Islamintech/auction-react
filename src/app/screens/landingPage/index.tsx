@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import Hero from "./Hero";
 import Featured from "./Featured";
 import HowItWorks from "./HowItWorks";
-import Leaderboard from "./Leaderboard";
 import CommunityGrid from "./CommunityGrid";
 import BigCTA from "./BigCTA";
 import ConsultationModal from "../../components/consultation/ConsultationModal";
@@ -67,8 +66,9 @@ export default function LandingPage() {
         onViewAll={goCars}
       />
       <HowItWorks />
+      {/* The member leaderboard used to sit here. It rendered real nicknames and
+          avatars publicly, so it was removed rather than hidden with CSS. */}
       <section className="landing__section--split">
-        <Leaderboard />
         <CommunityGrid onOpen={goCommunity} />
       </section>
       <BigCTA onSignup={openSignup} onConsultation={goConsultation} />

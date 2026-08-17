@@ -20,15 +20,6 @@ function applyClearedFields(member: Member, input: MemberUpdateInput): Member {
 }
 
 class MemberService {
-  public async getTopUsers(): Promise<Member[]> {
-    try {
-      const result = await api.get("/member/top-users");
-      return result.data;
-    } catch (err) {
-      console.error("Error, getTopUsers:", err);
-      throw err;
-    }
-  }
 
   public async signup(input: MemberInput): Promise<Member> {
     try {
