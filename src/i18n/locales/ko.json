@@ -203,7 +203,7 @@
     "signIn": "로그인",
     "termsNote": "계정을 만들면 이용약관 및 개인정보처리방침에 동의하는 것입니다.",
     "troubleNote": "로그인에 문제가 있나요? hello@autoauction.kr 로 문의하세요",
-    "passwordMin": "비밀번호는 최소 4자 이상이어야 합니다",
+    "passwordMin": "비밀번호는 최소 8자 이상이어야 합니다",
     "signupHeading": "꿈의 자동차, 고정 가격.",
     "signupHeadingSub": "계정을 만들어 차량을 예약하고, 즐겨찾기를 저장하고, 배송을 끝까지 추적하세요.",
     "loginHeading": "AUTOAUCTION에 다시 오신 것을 환영합니다",

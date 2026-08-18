@@ -203,7 +203,7 @@
     "signIn": "Kirish",
     "termsNote": "Hisob yaratish orqali siz Shartlar va Maxfiylik siyosatiga rozilik bildirasiz.",
     "troubleNote": "Kirishda muammo bormi? hello@autoauction.kr ga yozing",
-    "passwordMin": "Parol kamida 4 ta belgidan iborat bo'lishi kerak",
+    "passwordMin": "Parol kamida 8 ta belgidan iborat bo'lishi kerak",
     "signupHeading": "Orzudagi avtomobillar, qat'iy narx.",
     "signupHeadingSub": "Avtomobil band qilish, sevimlilarni saqlash va yetkazib berishni kuzatish uchun hisob yarating.",
     "loginHeading": "AUTOAUCTION'ga xush kelibsiz",

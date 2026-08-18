@@ -82,7 +82,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     try {
       const isFullFill = memberNick.trim() && memberPhone.trim() && memberPassword.trim();
       if (!isFullFill) throw new Error(Messages.error3);
-      if (memberPassword.length < 4) throw new Error(t("auth.passwordMin"));
+      if (memberPassword.length < 8) throw new Error(t("auth.passwordMin"));
 
       setSubmitting(true);
       const signupInput: MemberInput = { memberNick, memberPhone, memberPassword };
