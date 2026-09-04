@@ -349,7 +349,12 @@
   border-color: var(--text);
 }
 
-@media (max-width: 680px) {
+@media (max-width: 640px) {
+  /* Match the page rhythm the other screens use at phone width: 20px gutters
+     and a 28px page title, rather than keeping the desktop sizes. */
+  .cv__container { padding: 0 20px; }
+  .cv__title { font-size: 28px; }
+  .cv__lead { font-size: 14px; margin-bottom: 22px; }
   .cv__card {
     grid-template-columns: 1fr;
   }
@@ -479,7 +484,7 @@
   border-color: #fff;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 640px) {
   .cvlb__nav {
     width: 40px;
     height: 40px;

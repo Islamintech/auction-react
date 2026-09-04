@@ -451,8 +451,10 @@
     gap: 12px;
   }
   .carlist__title {
-    font-size: 24px;
-    white-space: nowrap;
+    font-size: 28px;
+    /* Wrap rather than overflow: translated titles run longer than the
+       English one and nowrap pushed them past the viewport. */
+    white-space: normal;
   }
   .carlist__toolbar {
     flex-wrap: wrap;

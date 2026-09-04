@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { AuctionCar } from "../../../lib/types/landing";
 import CarService from "../../services/CarService";
 import { imageUrl } from "../../../lib/api";
@@ -49,6 +49,7 @@ export default function CarVerifyPage() {
   const [copied, setCopied] = useState(false);
   const history = useHistory();
   const location = useLocation();
+  const { vin: pathVin } = useParams<{ vin?: string }>();
 
   const runSearch = useCallback(async (raw: string) => {
     const query = raw.trim().toUpperCase();
@@ -83,7 +84,8 @@ export default function CarVerifyPage() {
   // The VIN in the query string is the source of truth: it makes every lookup
   // a shareable link, and re-runs when someone opens or navigates to one.
   useEffect(() => {
-    const urlVin = (new URLSearchParams(location.search).get("vin") ?? "").trim();
+    // Prefer /verify/<VIN>; ?vin= stays supported so links already shared keep working.
+    const urlVin = (pathVin ?? new URLSearchParams(location.search).get("vin") ?? "").trim();
     if (urlVin) {
       if (urlVin.toUpperCase() !== searched) runSearch(urlVin);
       return;
@@ -98,20 +100,20 @@ export default function CarVerifyPage() {
       setStatus(cached.status);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search, runSearch]);
+  }, [location.search, pathVin, runSearch]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const query = vin.trim().toUpperCase();
     if (!query) return;
-    // Push the VIN into the URL; the effect above performs the lookup, so the
+    // Push the VIN into the path; the effect above performs the lookup, so the
     // address bar always matches what is on screen and can be copied as-is.
-    history.push({ search: `?vin=${encodeURIComponent(query)}` });
+    history.push(`/verify/${encodeURIComponent(query)}`);
   };
 
   const shareUrl =
     searched && typeof window !== "undefined"
-      ? `${window.location.origin}/verify?vin=${encodeURIComponent(searched)}`
+      ? `${window.location.origin}/verify/${encodeURIComponent(searched)}`
       : "";
 
   const handleShare = async () => {

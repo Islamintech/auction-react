@@ -582,11 +582,6 @@
     display: none;
   }
 }
-@media (max-width: 520px) {
-  .landing__steps {
-    border-radius: 6px;
-  }
-}
 
 /* Leaderboard */
 .landing-lb {
@@ -805,6 +800,7 @@
   }
   /* Car cards: one per row on mobile */
   .landing__featured-grid { grid-template-columns: 1fr; }
+  .landing__steps { border-radius: 6px; }
   .landing__steps { grid-template-columns: 1fr; }
   /* Keep community posts compact (2-up) on mobile instead of full-width */
   .landing-comm { grid-template-columns: 1fr 1fr; gap: 12px; }

@@ -587,7 +587,7 @@
   .cd-desc { max-width: none; }
   .cd-top { padding-top: 16px; gap: 24px; }
   .cd-thumbs { grid-template-columns: repeat(4, 1fr); }
-  .cd-title { font-size: 30px; }
+  .cd-title { font-size: 28px; }
   .cd-similar__grid { grid-template-columns: 1fr; }
 
   /* Shorter gallery + bigger touch targets on phones */
