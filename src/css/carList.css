@@ -461,6 +461,11 @@
     gap: 8px;
   }
   .carlist__sort { flex: 1; min-width: 0; }
+  /* 32px is fine for a cursor, tight for a thumb. */
+  .carlist__sort,
+  .carlist__view-btn,
+  .carlist__filters-btn { height: 40px; }
+  .carlist__view-btn { width: 40px; }
 }
 @media (max-width: 480px) {
   /* List view → image, vehicle, price only */

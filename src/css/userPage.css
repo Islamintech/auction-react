@@ -508,6 +508,7 @@
 }
 @media (max-width: 640px) {
   .mypage__head, .mypage__body { padding-inline-start: 20px; padding-inline-end: 20px; }
+  .mp-btn--sm { height: 40px; }
   .mp-saved-grid,
   .mypage__stats { grid-template-columns: 1fr; }
   .mp-orders__row {

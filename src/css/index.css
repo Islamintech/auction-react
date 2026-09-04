@@ -227,3 +227,9 @@ svg {
 [dir="rtl"] {
   --dir-x: -1;
 }
+
+/* Arabic letters join into words. The tracking that gives the Latin
+   uppercase labels their look severs those joins, so drop it in RTL. */
+[dir="rtl"] * {
+  letter-spacing: normal !important;
+}

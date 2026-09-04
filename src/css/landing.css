@@ -818,7 +818,7 @@
   .landing__stats { grid-template-columns: repeat(2, 1fr); }
   .landing__stat { padding: 18px 16px; }
   .landing__stat-num { font-size: 24px; }
-  .landing__stat-label { font-size: 9px; letter-spacing: 0.1em; }
+  .landing__stat-label { font-size: 11px; letter-spacing: 0.08em; }
   .landing__stat:nth-child(2n) { border-inline-end: none; }
   .landing__stat:nth-child(n+3) { border-top: 1px solid var(--line); }
   /* Fill exactly one screen (svh tracks the collapsing URL bar) so the
