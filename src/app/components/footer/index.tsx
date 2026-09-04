@@ -67,7 +67,7 @@ export default function Footer() {
         </Stack>
         <Stack className="foot-bottom" style={{ borderTop: "1px solid var(--footer-rule)", marginTop: 60, paddingTop: 20 }}>
           <Stack className="copyright-txt" style={{ opacity: 0.5, fontSize: 12 }}>
-            © {new Date().getFullYear()} {CONTACT.companyName}. Dream cars, fixed-price, door delivered.
+            © {new Date().getFullYear()} {CONTACT.companyName}. {t("footer.rights")}
           </Stack>
         </Stack>
       </Container>

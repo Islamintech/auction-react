@@ -42,7 +42,8 @@
     "myAccount": "My account",
     "helpFaq": "Help & FAQ",
     "findUs": "Find us",
-    "desc": "Korean cars at fixed prices, shipped door-to-door worldwide. Inspected, insured, and customs-cleared by us."
+    "desc": "Korean cars at fixed prices, shipped door-to-door worldwide. Inspected, insured, and customs-cleared by us.",
+    "rights": "All rights reserved."
   },
   "carlist": {
     "crumb": "MARKETPLACE / ALL VEHICLES",
