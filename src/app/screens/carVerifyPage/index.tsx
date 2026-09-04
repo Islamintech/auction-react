@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { AuctionCar } from "../../../lib/types/landing";
 import CarService from "../../services/CarService";
 import { imageUrl } from "../../../lib/api";
@@ -45,22 +46,14 @@ export default function CarVerifyPage() {
   const [car, setCar] = useState<AuctionCar | null>(null);
   const [searched, setSearched] = useState("");
   const [lightboxAt, setLightboxAt] = useState<number | null>(null);
+  const history = useHistory();
+  const location = useLocation();
+  const { vin: pathVin } = useParams<{ vin?: string }>();
 
-  // Restore a recent lookup on mount (handles refresh / back navigation).
-  useEffect(() => {
-    const cached = readCache();
-    if (cached) {
-      setVin(cached.vin);
-      setSearched(cached.searched);
-      setCar(cached.car);
-      setStatus(cached.status);
-    }
-  }, []);
-
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const query = vin.trim();
+  const runSearch = useCallback(async (raw: string) => {
+    const query = raw.trim().toUpperCase();
     if (!query) return;
+    setVin(query);
     setStatus("loading");
     setCar(null);
     setSearched(query);
@@ -85,7 +78,38 @@ export default function CarVerifyPage() {
       console.error(err);
       setStatus("error");
     }
+  }, []);
+
+  // The VIN in the query string is the source of truth: it makes every lookup
+  // a shareable link, and re-runs when someone opens or navigates to one.
+  useEffect(() => {
+    // Prefer /verify/<VIN>; ?vin= stays supported so links already shared keep working.
+    const urlVin = (pathVin ?? new URLSearchParams(location.search).get("vin") ?? "").trim();
+    if (urlVin) {
+      if (urlVin.toUpperCase() !== searched) runSearch(urlVin);
+      return;
+    }
+    // No VIN in the URL — fall back to a recent lookup (refresh / back nav).
+    if (searched) return;
+    const cached = readCache();
+    if (cached) {
+      setVin(cached.vin);
+      setSearched(cached.searched);
+      setCar(cached.car);
+      setStatus(cached.status);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search, pathVin, runSearch]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = vin.trim().toUpperCase();
+    if (!query) return;
+    // Push the VIN into the path; the effect above performs the lookup, so the
+    // address bar always matches what is on screen and can be copied as-is.
+    history.push(`/verify/${encodeURIComponent(query)}`);
   };
+
 
   const usdRate = useUsdKrwRate();
 
