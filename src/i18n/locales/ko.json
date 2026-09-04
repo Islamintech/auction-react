@@ -277,10 +277,7 @@
     "description": "설명",
     "damage": "손상",
     "carDetail": "차량 상세 →",
-    "vinPlaceholder": "예: KMHD84LF5KU123456",
-    "shareLink": "공유 링크 복사",
-    "linkCopied": "링크가 복사되었습니다",
-    "shareHint": "이 링크를 여는 사람은 해당 VIN의 조회 결과를 바로 보게 됩니다."
+    "vinPlaceholder": "예: KMHD84LF5KU123456"
   },
   "help": {
     "faq": "자주 묻는 질문",

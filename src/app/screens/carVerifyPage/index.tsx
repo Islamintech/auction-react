@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation, useParams } from "react-router-dom";
 import { AuctionCar } from "../../../lib/types/landing";
 import CarService from "../../services/CarService";
 import { imageUrl } from "../../../lib/api";
@@ -46,16 +45,22 @@ export default function CarVerifyPage() {
   const [car, setCar] = useState<AuctionCar | null>(null);
   const [searched, setSearched] = useState("");
   const [lightboxAt, setLightboxAt] = useState<number | null>(null);
-  const [copied, setCopied] = useState(false);
-  const [recordId, setRecordId] = useState("");
-  const history = useHistory();
-  const location = useLocation();
-  const { vin: pathVin, carId } = useParams<{ vin?: string; carId?: string }>();
 
-  const runSearch = useCallback(async (raw: string) => {
-    const query = raw.trim().toUpperCase();
+  // Restore a recent lookup on mount (handles refresh / back navigation).
+  useEffect(() => {
+    const cached = readCache();
+    if (cached) {
+      setVin(cached.vin);
+      setSearched(cached.searched);
+      setCar(cached.car);
+      setStatus(cached.status);
+    }
+  }, []);
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = vin.trim();
     if (!query) return;
-    setVin(query);
     setStatus("loading");
     setCar(null);
     setSearched(query);
@@ -68,11 +73,6 @@ export default function CarVerifyPage() {
       const nextCar = found ? result : null;
       setCar(nextCar);
       setStatus(nextStatus);
-      const id = nextCar ? String(nextCar.id ?? nextCar._id ?? "") : "";
-      setRecordId(id);
-      // Swap the VIN out of the address bar for the record id, so the URL is
-      // safe to copy straight from the browser.
-      if (id) history.replace(`/verify/c/${encodeURIComponent(id)}`);
       try {
         localStorage.setItem(
           CACHE_KEY,
@@ -84,88 +84,6 @@ export default function CarVerifyPage() {
     } catch (err) {
       console.error(err);
       setStatus("error");
-    }
-  }, [history]);
-
-  // Lookup by record id. Same proof rules as a VIN search; it exists so a
-  // shared link need not spell out the VIN.
-  const runSearchById = useCallback(async (id: string) => {
-    setStatus("loading");
-    setCar(null);
-    try {
-      const service = new CarService();
-      const result = await service.getById(id);
-      const found = !!(result && result.sold);
-      setCar(found ? result : null);
-      setStatus(found ? "found" : "empty");
-      setSearched(found ? String(result.vin ?? "") : "");
-      setVin(found ? String(result.vin ?? "") : "");
-      setRecordId(found ? id : "");
-    } catch (err: any) {
-      if (err?.response?.status === 404) {
-        setStatus("empty");
-        setSearched("");
-        return;
-      }
-      console.error(err);
-      setStatus("error");
-    }
-  }, []);
-
-  // The VIN in the query string is the source of truth: it makes every lookup
-  // a shareable link, and re-runs when someone opens or navigates to one.
-  useEffect(() => {
-    // A record id keeps the VIN out of the URL; /verify/<VIN> and ?vin= stay
-    // supported so links already shared keep working.
-    if (carId) {
-      if (carId !== recordId) runSearchById(carId);
-      return;
-    }
-    const urlVin = (pathVin ?? new URLSearchParams(location.search).get("vin") ?? "").trim();
-    if (urlVin) {
-      if (urlVin.toUpperCase() !== searched) runSearch(urlVin);
-      return;
-    }
-    // No VIN in the URL — fall back to a recent lookup (refresh / back nav).
-    if (searched) return;
-    const cached = readCache();
-    if (cached) {
-      setVin(cached.vin);
-      setSearched(cached.searched);
-      setCar(cached.car);
-      setStatus(cached.status);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search, pathVin, carId, runSearch, runSearchById]);
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const query = vin.trim().toUpperCase();
-    if (!query) return;
-    // Push the VIN into the path; the effect above performs the lookup, so the
-    // address bar always matches what is on screen and can be copied as-is.
-    history.push(`/verify/${encodeURIComponent(query)}`);
-  };
-
-  // Prefer the record id so the VIN is not exposed in a link that gets
-  // forwarded around; fall back to the VIN when no id came back.
-  const shareUrl =
-    typeof window === "undefined"
-      ? ""
-      : recordId
-      ? `${window.location.origin}/verify/c/${encodeURIComponent(recordId)}`
-      : searched
-      ? `${window.location.origin}/verify/${encodeURIComponent(searched)}`
-      : "";
-
-  const handleShare = async () => {
-    if (!shareUrl) return;
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* clipboard blocked (insecure origin / permission) — leave the URL visible */
     }
   };
 
@@ -227,16 +145,10 @@ export default function CarVerifyPage() {
 
         {status === "found" && car && (
           <div className="cv__result">
-            <div className="cv__result-head">
-              <div className="cv__badge">
-                <span className="cv__badge-dot" />
-                {t("verify.verifiedBadge")}
-              </div>
-              <button type="button" className="cv__share" onClick={handleShare}>
-                {copied ? t("verify.linkCopied") : t("verify.shareLink")}
-              </button>
+            <div className="cv__badge">
+              <span className="cv__badge-dot" />
+              {t("verify.verifiedBadge")}
             </div>
-            <p className="cv__share-hint">{t("verify.shareHint")}</p>
 
             <div className="cv__card">
               {(() => {

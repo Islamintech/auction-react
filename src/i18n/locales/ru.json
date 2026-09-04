@@ -277,10 +277,7 @@
     "description": "Описание",
     "damage": "Повреждения",
     "carDetail": "Детали автомобиля →",
-    "vinPlaceholder": "например, KMHD84LF5KU123456",
-    "shareLink": "Скопировать ссылку",
-    "linkCopied": "Ссылка скопирована",
-    "shareHint": "Любой, кто откроет эту ссылку, сразу увидит проверку по этому VIN."
+    "vinPlaceholder": "например, KMHD84LF5KU123456"
   },
   "help": {
     "faq": "ВОПРОСЫ",
