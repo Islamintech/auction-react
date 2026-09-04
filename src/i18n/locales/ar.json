@@ -276,7 +276,10 @@
     "description": "الوصف",
     "damage": "الأضرار",
     "carDetail": "← تفاصيل السيارة",
-    "vinPlaceholder": "مثال: KMHD84LF5KU123456"
+    "vinPlaceholder": "مثال: KMHD84LF5KU123456",
+    "shareLink": "نسخ رابط المشاركة",
+    "linkCopied": "تم نسخ الرابط",
+    "shareHint": "أي شخص يفتح هذا الرابط سيرى نتيجة التحقق من رقم الهيكل مباشرة."
   },
   "help": {
     "faq": "الأسئلة الشائعة",

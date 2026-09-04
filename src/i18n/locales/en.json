@@ -276,7 +276,10 @@
     "description": "Description",
     "damage": "Damage",
     "carDetail": "Car detail →",
-    "vinPlaceholder": "e.g. KMHD84LF5KU123456"
+    "vinPlaceholder": "e.g. KMHD84LF5KU123456",
+    "shareLink": "Copy shareable link",
+    "linkCopied": "Link copied",
+    "shareHint": "Anyone with this link opens this VIN already verified."
   },
   "help": {
     "faq": "FAQ",
