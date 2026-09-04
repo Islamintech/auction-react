@@ -47,9 +47,10 @@ export default function CarVerifyPage() {
   const [searched, setSearched] = useState("");
   const [lightboxAt, setLightboxAt] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
+  const [recordId, setRecordId] = useState("");
   const history = useHistory();
   const location = useLocation();
-  const { vin: pathVin } = useParams<{ vin?: string }>();
+  const { vin: pathVin, carId } = useParams<{ vin?: string; carId?: string }>();
 
   const runSearch = useCallback(async (raw: string) => {
     const query = raw.trim().toUpperCase();
@@ -67,6 +68,11 @@ export default function CarVerifyPage() {
       const nextCar = found ? result : null;
       setCar(nextCar);
       setStatus(nextStatus);
+      const id = nextCar ? String(nextCar.id ?? nextCar._id ?? "") : "";
+      setRecordId(id);
+      // Swap the VIN out of the address bar for the record id, so the URL is
+      // safe to copy straight from the browser.
+      if (id) history.replace(`/verify/c/${encodeURIComponent(id)}`);
       try {
         localStorage.setItem(
           CACHE_KEY,
@@ -79,12 +85,42 @@ export default function CarVerifyPage() {
       console.error(err);
       setStatus("error");
     }
+  }, [history]);
+
+  // Lookup by record id. Same proof rules as a VIN search; it exists so a
+  // shared link need not spell out the VIN.
+  const runSearchById = useCallback(async (id: string) => {
+    setStatus("loading");
+    setCar(null);
+    try {
+      const service = new CarService();
+      const result = await service.getById(id);
+      const found = !!(result && result.sold);
+      setCar(found ? result : null);
+      setStatus(found ? "found" : "empty");
+      setSearched(found ? String(result.vin ?? "") : "");
+      setVin(found ? String(result.vin ?? "") : "");
+      setRecordId(found ? id : "");
+    } catch (err: any) {
+      if (err?.response?.status === 404) {
+        setStatus("empty");
+        setSearched("");
+        return;
+      }
+      console.error(err);
+      setStatus("error");
+    }
   }, []);
 
   // The VIN in the query string is the source of truth: it makes every lookup
   // a shareable link, and re-runs when someone opens or navigates to one.
   useEffect(() => {
-    // Prefer /verify/<VIN>; ?vin= stays supported so links already shared keep working.
+    // A record id keeps the VIN out of the URL; /verify/<VIN> and ?vin= stay
+    // supported so links already shared keep working.
+    if (carId) {
+      if (carId !== recordId) runSearchById(carId);
+      return;
+    }
     const urlVin = (pathVin ?? new URLSearchParams(location.search).get("vin") ?? "").trim();
     if (urlVin) {
       if (urlVin.toUpperCase() !== searched) runSearch(urlVin);
@@ -100,7 +136,7 @@ export default function CarVerifyPage() {
       setStatus(cached.status);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search, pathVin, runSearch]);
+  }, [location.search, pathVin, carId, runSearch, runSearchById]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,8 +147,14 @@ export default function CarVerifyPage() {
     history.push(`/verify/${encodeURIComponent(query)}`);
   };
 
+  // Prefer the record id so the VIN is not exposed in a link that gets
+  // forwarded around; fall back to the VIN when no id came back.
   const shareUrl =
-    searched && typeof window !== "undefined"
+    typeof window === "undefined"
+      ? ""
+      : recordId
+      ? `${window.location.origin}/verify/c/${encodeURIComponent(recordId)}`
+      : searched
       ? `${window.location.origin}/verify/${encodeURIComponent(searched)}`
       : "";
 

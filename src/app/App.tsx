@@ -84,6 +84,9 @@ function App() {
         <Route path="/products">
           <CarListPage />
         </Route>
+        <Route path="/verify/c/:carId">
+          <CarVerifyPage />
+        </Route>
         <Route path="/verify/:vin">
           <CarVerifyPage />
         </Route>
