@@ -1,10 +1,14 @@
 /** SweetAlertHandling **/
 import Swal from "sweetalert2";
 import { Messages } from "./config";
+import i18n from "../i18n";
+
+/** Our own messages are i18n keys; server messages come through untouched. */
+const localize = (msg: string) => (i18n.exists(msg) ? i18n.t(msg) : msg);
 
 export const sweetErrorHandling = async (err: any) => {
   const error = err.response?.data ?? err;
-  const message = error?.message ?? Messages.error1;
+  const message = localize(error?.message ?? Messages.error1);
   await Swal.fire({
     icon: "error",
     text: message,

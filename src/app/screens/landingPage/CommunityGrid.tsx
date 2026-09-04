@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import PostService from "../../services/PostService";
 import { Post } from "../../../lib/types/post";
 import { imageUrl } from "../../../lib/api";
+import { formatDate } from "../../../lib/locale";
 
 export default function CommunityGrid({ onOpen }: { onOpen: () => void }) {
   const { t } = useTranslation();
@@ -35,12 +36,12 @@ export default function CommunityGrid({ onOpen }: { onOpen: () => void }) {
       />
       <div className="landing-comm">
         {posts.length === 0 && (
-          <div style={{ padding: 20, opacity: 0.6 }}>No posts yet.</div>
+          <div style={{ padding: 20, opacity: 0.6 }}>{t("news.noPosts")}</div>
         )}
         {posts.map((p) => {
           const img = imageUrl(p.postImage);
           const date = p.createdAt
-            ? new Date(p.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" }).toUpperCase()
+            ? formatDate(p.createdAt, { month: "short", day: "numeric" }).toUpperCase()
             : "";
           return (
             <div key={p._id} className="landing-comm__card" onClick={() => goPost(p)}>

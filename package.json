@@ -24,6 +24,8 @@
     "redux-logger": "^3.0.6",
     "serve": "^14.2.6",
     "styled-components": "^5.3.5",
+    "stylis": "^4.4.0",
+    "stylis-plugin-rtl": "^2.1.1",
     "sweetalert2": "^11.4.23",
     "swiper": "^8.3.1",
     "typescript": "^5.4.5",
@@ -39,7 +41,8 @@
     "@types/react-dom": "^18.2.18",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-logger": "^3.0.13",
-    "@types/styled-components": "^5.1.36"
+    "@types/styled-components": "^5.1.36",
+    "@types/stylis": "^4.2.7"
   },
   "scripts": {
     "start": "react-scripts start",

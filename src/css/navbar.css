@@ -114,11 +114,11 @@
   content: "";
   position: absolute;
   top: -6px;
-  right: 18px;
+  inset-inline-end: 18px;
   width: 12px;
   height: 12px;
   transform: rotate(45deg);
-  border-left: 1px solid var(--line, #e3e0d8);
+  border-inline-start: 1px solid var(--line, #e3e0d8);
   border-top: 1px solid var(--line, #e3e0d8);
   background: var(--surface, #ffffff);
 }
@@ -440,7 +440,7 @@
 }
 
 .basket-info-box .product-name {
-  margin-left: 11px;
+  margin-inline-start: 11px;
   width: 185px;
   font-family: var(--body-font);
   font-style: normal;
@@ -472,7 +472,7 @@
 .basket-frame .cancel-btn {
   position: absolute;
   top: 33%;
-  right: 2%;
+  inset-inline-end: 2%;
   cursor: pointer;
 }
 
@@ -579,7 +579,7 @@
   width: 32px;
   height: 32px;
   padding: 0;
-  margin-right: 8px;
+  margin-inline-end: 8px;
   border: 1px solid var(--line, #e3e0d8);
   border-radius: 8px;
   background: transparent;
@@ -689,8 +689,8 @@
     align-items: center;
     position: relative;
     z-index: 130;
-    margin-left: auto;
-    margin-right: 8px;
+    margin-inline-start: auto;
+    margin-inline-end: 8px;
   }
   .home-navbar .navbar-container .menu .nav-login-icon {
     display: inline-flex;
@@ -702,9 +702,9 @@
   .home-navbar .navbar-container .menu .links {
     position: fixed;
     top: 0;
-    right: 0;
+    inset-inline-end: 0;
     bottom: 0;
-    left: auto;
+    inset-inline-start: auto;
     width: min(82vw, 360px);
     height: 100vh;
     height: 100dvh;
@@ -715,11 +715,11 @@
     gap: 4px;
     padding: 84px 20px 24px;
     background: var(--surface, #ffffff);
-    border-left: 1px solid var(--line, #e3e0d8);
-    box-shadow: -16px 0 40px rgba(15, 23, 42, 0.22);
+    border-inline-start: 1px solid var(--line, #e3e0d8);
+    box-shadow: calc(-16px * var(--dir-x)) 0 40px rgba(15, 23, 42, 0.22);
     /* hidden state — full-height drawer slides in from the right */
     visibility: hidden;
-    transform: translateX(100%);
+    transform: translateX(calc(100% * var(--dir-x)));
     transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.3s;
     z-index: 120;
     overflow-y: auto;
@@ -809,9 +809,9 @@
   .other-navbar .navbar-container .menu .links {
     position: fixed;
     top: 0;
-    right: 0;
+    inset-inline-end: 0;
     bottom: 0;
-    left: auto;
+    inset-inline-start: auto;
     width: min(82vw, 360px);
     height: 100vh;
     height: 100dvh;
@@ -822,11 +822,11 @@
     gap: 4px;
     padding: 84px 20px 24px;
     background: var(--surface, #ffffff);
-    border-left: 1px solid var(--line, #e3e0d8);
-    box-shadow: -16px 0 40px rgba(15, 23, 42, 0.22);
+    border-inline-start: 1px solid var(--line, #e3e0d8);
+    box-shadow: calc(-16px * var(--dir-x)) 0 40px rgba(15, 23, 42, 0.22);
     /* hidden state — full-height drawer slides in from the right */
     visibility: hidden;
-    transform: translateX(100%);
+    transform: translateX(calc(100% * var(--dir-x)));
     transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.3s;
     z-index: 120;
     overflow-y: auto;

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { imageUrl } from "../../../lib/api";
 
 interface LightboxProps {
@@ -8,6 +9,7 @@ interface LightboxProps {
 }
 
 export default function Lightbox({ images, startIndex = 0, onClose }: LightboxProps) {
+  const { t } = useTranslation();
   const [index, setIndex] = useState(startIndex);
   const touchStartX = useRef<number | null>(null);
 
@@ -50,7 +52,7 @@ export default function Lightbox({ images, startIndex = 0, onClose }: LightboxPr
 
   return (
     <div className="cvlb" onClick={onClose}>
-      <button className="cvlb__close" aria-label="Close" onClick={onClose}>
+      <button className="cvlb__close" aria-label={t("a11y.close")} onClick={onClose}>
         ✕
       </button>
 
@@ -61,7 +63,7 @@ export default function Lightbox({ images, startIndex = 0, onClose }: LightboxPr
         onTouchEnd={onTouchEnd}
       >
         {images.length > 1 && (
-          <button className="cvlb__nav cvlb__nav--prev" aria-label="Previous" onClick={prev}>
+          <button className="cvlb__nav cvlb__nav--prev" aria-label={t("a11y.previous")} onClick={prev}>
             ‹
           </button>
         )}
@@ -69,7 +71,7 @@ export default function Lightbox({ images, startIndex = 0, onClose }: LightboxPr
         <img className="cvlb__img" src={imageUrl(images[index])} alt={`View ${index + 1}`} />
 
         {images.length > 1 && (
-          <button className="cvlb__nav cvlb__nav--next" aria-label="Next" onClick={next}>
+          <button className="cvlb__nav cvlb__nav--next" aria-label={t("a11y.next")} onClick={next}>
             ›
           </button>
         )}

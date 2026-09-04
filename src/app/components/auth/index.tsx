@@ -133,7 +133,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       }}
     >
       <Box>
-        <Typography sx={{ fontSize: 12, letterSpacing: "0.18em", opacity: 0.6 }}>AUTOAUCTION</Typography>
+        <Typography sx={{ fontSize: 12, letterSpacing: "0.18em", opacity: 0.6 }}>AUTO AUCTION</Typography>
         <Typography sx={{ fontSize: 26, fontWeight: 700, mt: 2, lineHeight: 1.2 }}>{heading}</Typography>
         <Typography sx={{ fontSize: 13, opacity: 0.7, mt: 1.5, lineHeight: 1.6 }}>{sub}</Typography>
       </Box>
@@ -159,9 +159,9 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     return (
       <Box sx={{ flex: 1, p: { xs: 3, md: 4 }, position: "relative", minWidth: { xs: "100%", md: 380 } }}>
         <IconButton
-          aria-label="close"
+          aria-label={t("a11y.close")}
           onClick={isSignup ? closeSignup : closeLogin}
-          sx={{ position: "absolute", right: 8, top: 8 }}
+          sx={{ position: "absolute", insetInlineEnd: 8, top: 8 }}
         >
           <CloseIcon />
         </IconButton>

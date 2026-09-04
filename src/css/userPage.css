@@ -11,8 +11,8 @@
   --accent: #d7b586;
   --warn: #ffb547;
   --ok: #3ee07c;
-  --display-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --body-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display-font: "Inter", "Noto Sans Arabic", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --body-font: "Inter", "Noto Sans Arabic", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
   background: var(--bg);
@@ -142,9 +142,9 @@
 }
 .mypage__stat {
   padding: 24px 28px;
-  border-right: 1px solid var(--line);
+  border-inline-end: 1px solid var(--line);
 }
-.mypage__stat:last-child { border-right: none; }
+.mypage__stat:last-child { border-inline-end: none; }
 .mypage__stat-num {
   font-family: var(--display-font);
   font-size: 32px;
@@ -222,8 +222,8 @@
 .mp-timeline__bar {
   position: absolute;
   top: 6px;
-  left: 0;
-  right: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
   height: 2px;
   background: var(--line);
 }
@@ -231,7 +231,7 @@
 .mp-timeline__dot {
   position: absolute;
   top: 0;
-  left: 50%;
+  inset-inline-start: 50%;
   transform: translateX(-50%);
   width: 12px;
   height: 12px;
@@ -293,7 +293,7 @@
   font-family: var(--body-font);
   font-size: 10px;
   color: var(--text-dim);
-  text-align: right;
+  text-align: end;
 }
 
 /* Saved tab */
@@ -489,14 +489,14 @@
 .mp-toggle__thumb {
   position: absolute;
   top: 2px;
-  left: 2px;
+  inset-inline-start: 2px;
   width: 16px;
   height: 16px;
   background: #fff;
   border-radius: 50%;
   transition: left 0.15s;
 }
-.mp-toggle--on .mp-toggle__thumb { left: 18px; }
+.mp-toggle--on .mp-toggle__thumb { inset-inline-start: 18px; }
 
 @media (max-width: 1024px) {
   .mypage__overview,
@@ -507,7 +507,7 @@
   .mp-saved-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
-  .mypage__head, .mypage__body { padding-left: 20px; padding-right: 20px; }
+  .mypage__head, .mypage__body { padding-inline-start: 20px; padding-inline-end: 20px; }
   .mp-saved-grid,
   .mypage__stats { grid-template-columns: 1fr; }
   .mp-orders__row {
@@ -554,5 +554,5 @@
   }
   .mp-orders__row .car-ph { flex: 0 0 56px; width: 56px; }
   .mp-orders__model { flex: 1 1 100%; order: -1; }
-  .mp-orders__amt { margin-left: auto; }
+  .mp-orders__amt { margin-inline-start: auto; }
 }

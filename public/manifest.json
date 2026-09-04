@@ -1,6 +1,6 @@
 {
-  "short_name": "AutoAuction",
-  "name": "AutoAuction",
+  "short_name": "Auto Auction",
+  "name": "Auto Auction",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

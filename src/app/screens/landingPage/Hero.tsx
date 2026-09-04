@@ -63,12 +63,12 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
           <div className="landing__cta-row">
             {authMember ? (
               <button className="landing-btn landing-btn--primary landing-btn--lg" onClick={onBrowseCars}>
-                {t("hero.browse")} →
+                {t("hero.browse")} {t("cta.arrow")}
               </button>
             ) : (
               <>
                 <button className="landing-btn landing-btn--primary landing-btn--lg" onClick={openSignup}>
-                  {t("hero.signup")} →
+                  {t("hero.signup")} {t("cta.arrow")}
                 </button>
                 <button className="landing-btn landing-btn--secondary landing-btn--lg" onClick={onBrowseCars}>
                   {t("hero.browse")}
@@ -109,10 +109,10 @@ export default function Hero({ crashed, onBrowseCars, onOpenCar }: Props) {
 
       <div className="landing__stats">
         {[
-          ["1,200+", "CARS DELIVERED"],
-          ["3", "SOURCING CHANNELS"],
-          ["45–60d", "KOREA → WORLDWIDE"],
-          ["96%", "REPEAT BUYERS"],
+          ["1,200+", t("hero.statDelivered")],
+          ["3", t("hero.statChannels")],
+          ["45–60d", t("hero.statTransit")],
+          ["96%", t("hero.statRepeat")],
         ].map(([n, l]) => (
           <div key={l} className="landing__stat">
             <div className="landing__stat-num">{n}</div>

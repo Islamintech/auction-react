@@ -10,6 +10,7 @@ import { imageUrl } from "../../../lib/api";
 import { useGlobals } from "../../hooks/useGlobals";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import "../../../css/news.css";
+import { formatDateTime } from "../../../lib/locale";
 
 function imgUrl(path: string) {
   if (!path) return "";
@@ -248,7 +249,7 @@ export default function NewsDetailPage() {
             {post.comments.map((c, i) => {
               const avatar = imageUrl(c.memberImage);
               const cdate = c.createdAt
-                ? new Date(c.createdAt).toLocaleString("en-US", {
+                ? formatDateTime(c.createdAt, {
                     month: "short",
                     day: "numeric",
                     hour: "2-digit",

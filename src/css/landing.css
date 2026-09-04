@@ -10,8 +10,8 @@
   --line-soft: #ecebe5;
   --accent: #d7b586;
   --warn: #ffb547;
-  --display-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --body-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display-font: "Inter", "Noto Sans Arabic", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --body-font: "Inter", "Noto Sans Arabic", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   /* Cap content width on wide screens so the layout doesn't stretch edge-to-edge. */
   --page-max: 1200px;
@@ -59,7 +59,7 @@
 /* Scroll-down indicator centered at the bottom of the hero */
 .landing__scroll {
   position: absolute;
-  left: 50%;
+  inset-inline-start: 50%;
   bottom: 26px;
   transform: translateX(-50%);
   display: flex;
@@ -102,7 +102,7 @@
    light page background where a white outline would disappear. */
 .landing__video-toggle {
   position: absolute;
-  left: 48px;
+  inset-inline-start: 48px;
   bottom: 26px;
   width: 40px;
   height: 40px;
@@ -278,7 +278,7 @@
   font-weight: 700;
   color: var(--text);
   letter-spacing: -0.01em;
-  text-align: right;
+  text-align: end;
 }
 .landing__crashed-tag {
   font-family: var(--body-font);
@@ -286,7 +286,7 @@
   color: var(--warn);
   letter-spacing: 0.12em;
   margin-top: 2px;
-  text-align: right;
+  text-align: end;
 }
 .landing__crashed-cta {
   margin-top: 6px;
@@ -316,10 +316,10 @@
 }
 .landing__stat {
   padding: 24px 28px;
-  border-right: 1px solid var(--line);
+  border-inline-end: 1px solid var(--line);
 }
 .landing__stat:last-child {
-  border-right: none;
+  border-inline-end: none;
 }
 .landing__stat-num {
   font-family: var(--display-font);
@@ -552,11 +552,11 @@
   .landing__steps .MuiStep-root:not(:last-child)::before {
     content: "";
     position: absolute;
-    left: 18px;
+    inset-inline-start: 18px;
     top: 40px;
     bottom: -16px;
     width: 0;
-    border-left: 1px dashed var(--line);
+    border-inline-start: 1px dashed var(--line);
   }
   /* Accent the numbered circles */
   .landing__steps .landing__step-index {
@@ -565,10 +565,10 @@
   }
   .landing__steps .MuiStepLabel-root {
     align-items: flex-start;
-    text-align: left;
+    text-align: start;
   }
   .landing__steps .MuiStepLabel-iconContainer {
-    padding-right: 14px;
+    padding-inline-end: 14px;
   }
   .landing__step .MuiStepLabel-labelContainer {
     margin-top: 0;
@@ -576,7 +576,7 @@
   }
   .landing__step-body {
     max-width: none;
-    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
   }
   .landing__step-connector {
     display: none;
@@ -632,7 +632,7 @@
   font-size: 12px;
   color: var(--text);
   font-weight: 600;
-  text-align: right;
+  text-align: end;
 }
 
 /* Community */
@@ -694,7 +694,7 @@
   align-items: center;
   gap: 4px;
 }
-.landing-comm__date { margin-left: auto; }
+.landing-comm__date { margin-inline-start: auto; }
 
 /* Big CTA */
 .landing-cta {
@@ -785,7 +785,7 @@
   .landing__section,
   .landing__section--tight,
   .landing__section--split,
-  .landing__section--cta { padding-left: 20px; padding-right: 20px; }
+  .landing__section--cta { padding-inline-start: 20px; padding-inline-end: 20px; }
   /* Stack the section header so "View all" doesn't get clipped off the right */
   .landing-sh { flex-direction: column; align-items: flex-start; gap: 10px; }
   .landing-sh__link { white-space: nowrap; }
@@ -823,7 +823,7 @@
   .landing__stat { padding: 18px 16px; }
   .landing__stat-num { font-size: 24px; }
   .landing__stat-label { font-size: 9px; letter-spacing: 0.1em; }
-  .landing__stat:nth-child(2n) { border-right: none; }
+  .landing__stat:nth-child(2n) { border-inline-end: none; }
   .landing__stat:nth-child(n+3) { border-top: 1px solid var(--line); }
   /* Fill exactly one screen (svh tracks the collapsing URL bar) so the
      stats band starts cleanly below the fold instead of peeking in half-cut */
@@ -854,7 +854,7 @@
 .car-card:hover { border-color: var(--text-mute); }
 .car-card__media { position: relative; }
 .car-card__tags {
-  position: absolute; top: 12px; left: 12px;
+  position: absolute; top: 12px; inset-inline-start: 12px;
   display: flex; gap: 6px;
   z-index: 2;
 }
@@ -891,7 +891,7 @@
 }
 
 .car-card__save {
-  position: absolute; top: 10px; right: 10px;
+  position: absolute; top: 10px; inset-inline-end: 10px;
   width: 30px; height: 30px;
   background: rgba(11,12,14,0.55); border: none; color: #fff;
   display: flex; align-items: center; justify-content: center;
@@ -947,7 +947,7 @@
   font-family: var(--mono-font); font-size: 11px; color: var(--text-mute); margin-top: 2px;
 }
 .car-card__ship {
-  font-family: var(--body-font); font-size: 10px; color: var(--text-mute); text-align: right;
+  font-family: var(--body-font); font-size: 10px; color: var(--text-mute); text-align: end;
 }
 .car-card__ship-row { display: inline-flex; align-items: center; gap: 4px; }
 .car-card__ship-label { color: var(--text-dim); font-size: 9px; margin-top: 2px; }
@@ -966,15 +966,15 @@
   background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.45) 100%);
 }
 .car-ph__bar {
-  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  position: absolute; inset-inline-start: 0; top: 0; bottom: 0; width: 3px;
   background: var(--ph-accent);
 }
 .car-ph__label {
-  position: absolute; left: 14px; right: 14px; bottom: 12px;
+  position: absolute; inset-inline-start: 14px; inset-inline-end: 14px; bottom: 12px;
   display: flex; justify-content: space-between; align-items: flex-end; gap: 8px;
   font-family: var(--body-font); font-size: 10px; letter-spacing: 0.08em;
   color: #fff; text-transform: uppercase; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
-.car-ph--compact .car-ph__label { left: 10px; right: 10px; bottom: 8px; font-size: 9px; }
+.car-ph--compact .car-ph__label { inset-inline-start: 10px; inset-inline-end: 10px; bottom: 8px; font-size: 9px; }
 .car-ph__label-main { opacity: 0.9; }
 .car-ph__label-tone { opacity: 0.55; }

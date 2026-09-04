@@ -10,6 +10,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Button from "@mui/material/Button";
 import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
+import { CONTACT } from "../../../lib/contact";
 import "../../../css/help.css";
 
 export default function HelpPage() {
@@ -31,11 +32,10 @@ export default function HelpPage() {
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) return;
-    const subject = encodeURIComponent(`AUTOAUCTION — message from ${name || "website"}`);
     const body = encodeURIComponent(
-      `${message}\n\n— ${name || ""}${email ? ` (${email})` : ""}`
+      `${CONTACT.companyName} — ${name || "website"}\n\n${message}${email ? `\n\n(${email})` : ""}`
     );
-    window.location.href = `mailto:auction@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `sms:${CONTACT.phoneRaw}?body=${body}`;
   };
 
   return (
@@ -47,7 +47,7 @@ export default function HelpPage() {
               <Tabs
                 value={value}
                 onChange={handleChange}
-                aria-label="lab API tabs example"
+                aria-label={t("a11y.helpTabs")}
                 className={"table_list"}
               >
                 <Tab label={t("help.faq")} value={"2"} />

@@ -61,7 +61,7 @@
 }
 
 .find-us div {
-  margin-left: 10px;
+  margin-inline-start: 10px;
   font-family: var(--body-font);
   font-style: normal;
   font-weight: 400;

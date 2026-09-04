@@ -18,7 +18,11 @@
     "browse": "Browse cars",
     "howItWorks": "How it works",
     "signup": "Sign up",
-    "scroll": "Scroll"
+    "scroll": "Scroll",
+    "statDelivered": "CARS DELIVERED",
+    "statChannels": "SOURCING CHANNELS",
+    "statTransit": "KOREA → WORLDWIDE",
+    "statRepeat": "REPEAT BUYERS"
   },
   "sections": {
     "crashed": "CRASHED · WITH PARTS",
@@ -27,7 +31,9 @@
     "community": "From the community",
     "allPosts": "All posts →",
     "communitySub": "Stories from buyers and sellers.",
-    "leaderboardSub": "Ranked by reward points."
+    "leaderboardSub": "Ranked by reward points.",
+    "featuredSub": "Curated by our chief inspector each Monday.",
+    "viewAll": "View all →"
   },
   "footer": {
     "marketplace": "Marketplace",
@@ -202,11 +208,11 @@
     "createAccount": "Create account",
     "signIn": "Sign in",
     "termsNote": "By creating an account you agree to our Terms and Privacy Policy.",
-    "troubleNote": "Trouble signing in? Contact hello@autoauction.kr",
+    "troubleNote": "Trouble signing in? Call +82 10 8185 5009",
     "passwordMin": "Password must be at least 8 characters",
     "signupHeading": "Dream cars, fixed price.",
     "signupHeadingSub": "Create an account to reserve cars, save favorites, and track shipments end-to-end.",
-    "loginHeading": "Welcome back to AUTOAUCTION",
+    "loginHeading": "Welcome back to AUTO AUCTION",
     "loginHeadingSub": "Sign in to continue tracking your reservations and saved cars.",
     "panelStats": "2,800+ inspected cars · Seoul → worldwide",
     "perk1Title": "Fixed-price auctions",
@@ -269,7 +275,8 @@
     "status": "Status",
     "description": "Description",
     "damage": "Damage",
-    "carDetail": "Car detail →"
+    "carDetail": "Car detail →",
+    "vinPlaceholder": "e.g. KMHD84LF5KU123456"
   },
   "help": {
     "faq": "FAQ",
@@ -337,7 +344,7 @@
   "faq": {
     "items": [
       {
-        "question": "How do I buy a car through AUTOAUCTION?",
+        "question": "How do I buy a car through AUTO AUCTION?",
         "answer": "Browse the catalogue, click Request consultation on a car you like, and our team gets back to you within 24 hours to confirm the price and start the export process."
       },
       {
@@ -377,5 +384,39 @@
         "answer": "Of course. Open any car and click Request consultation, or use the Get consultation button on the homepage. Our specialists reply within 24 hours."
       }
     ]
+  },
+  "cta": {
+    "memberTitle": "Need help choosing? Talk to an expert.",
+    "memberBody": "Our specialists can guide you through inspection grades, shipping options, and customs for your country — free for verified members.",
+    "getConsultation": "Get consultation →",
+    "replyWithin24": "REPLY WITHIN 24 HOURS",
+    "guestTitle": "Ready to buy? Set up your account in 4 minutes.",
+    "guestBody": "Free to register. 5% refundable deposit only when you reserve your first car. ID verification handled by Veriff.",
+    "noCreditCard": "NO CREDIT CARD REQUIRED",
+    "arrow": "→"
+  },
+  "a11y": {
+    "login": "Login",
+    "account": "Account",
+    "changeLanguage": "Change language",
+    "closeFilters": "Close filters",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "helpTabs": "Help sections"
+  },
+  "errors": {
+    "generic": "Something went wrong",
+    "loginFirst": "Please login first",
+    "fillAll": "Please fill in all fields",
+    "emptyMessage": "Message is empty",
+    "imageFormat": "Only images in jpeg, jpg or png format are allowed"
+  },
+  "toast": {
+    "loggedOut": "Signed out"
   }
 }

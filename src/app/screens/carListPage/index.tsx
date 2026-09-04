@@ -15,6 +15,7 @@ import CarService from "../../services/CarService";
 import { imageUrl } from "../../../lib/api";
 import { formatKrw, formatUsdEstimate, krwValue, useUsdKrwRate } from "../../../lib/currency";
 import "../../../css/carList.css";
+import { formatNumber } from "../../../lib/locale";
 
 type View = "grid" | "list";
 type Density = "spacious" | "compact";
@@ -150,7 +151,7 @@ export default function CarListPage() {
             <button
               type="button"
               className="carlist__filters-close"
-              aria-label="Close filters"
+              aria-label={t("a11y.closeFilters")}
               onClick={() => setFiltersOpen(false)}
             >
               ✕
@@ -263,7 +264,7 @@ export default function CarListPage() {
                       <div className="cl-list__model">{c.brand} {c.title}</div>
                     </div>
                     <span className="cl-list__num">{c.year}</span>
-                    <span className="cl-list__num cl-list__num--mute">{c.km?.toLocaleString() ?? "—"}</span>
+                    <span className="cl-list__num cl-list__num--mute">{c.km != null ? formatNumber(c.km) : "—"}</span>
                     <span className="cl-list__num cl-list__num--mute">{c.color || "—"}</span>
                     <span className="cl-list__price">
                       {formatKrw(c.price)}

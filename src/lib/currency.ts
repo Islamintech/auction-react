@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "./api";
+import { formatNumber } from "./locale";
 
 /**
  * USD/KRW exchange rate shared across the app.
@@ -73,7 +74,7 @@ export function krwValue(price: string | number | null | undefined): number {
 export function formatKrw(price: string | number | null | undefined): string {
   const amounts = parseKrw(price);
   if (!amounts.length) return "—";
-  return "₩" + amounts.map((n) => n.toLocaleString()).join("–");
+  return "₩" + amounts.map((n) => formatNumber(n)).join("–");
 }
 
 /** "≈ $20,077" or "≈ $20,077–$23,424", null while the rate is unknown. */
@@ -85,6 +86,6 @@ export function formatUsdEstimate(
   const amounts = parseKrw(price);
   if (!amounts.length) return null;
   return (
-    "≈ " + amounts.map((n) => "$" + Math.round(n / rate).toLocaleString()).join("–")
+    "≈ " + amounts.map((n) => "$" + formatNumber(Math.round(n / rate))).join("–")
   );
 }

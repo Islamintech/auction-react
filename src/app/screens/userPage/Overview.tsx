@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import SectionHeader from "../landingPage/SectionHeader";
 import { useGlobals } from "../../hooks/useGlobals";
+import { formatDate } from "../../../lib/locale";
 
 interface Props {
   savedCount: number;
@@ -16,7 +17,7 @@ export default function Overview({ savedCount }: Props) {
   const { t } = useTranslation();
 
   const joined = authMember?.createdAt
-    ? new Date(authMember.createdAt).toLocaleDateString("en-US", { month: "short", year: "numeric" })
+    ? formatDate(authMember.createdAt, { month: "short", year: "numeric" })
     : "-";
 
   const checklist: [string, boolean][] = [

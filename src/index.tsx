@@ -5,8 +5,7 @@ import { store } from "./app/store";
 import App from "./app/App";
 import "./css/index.css";
 import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from "@mui/material/styles";
-import theme from './app/MaterialTheme';
+import DirectionProvider from './app/DirectionProvider';
 import {BrowserRouter as Router} from "react-router-dom";
 import ContextProvider from "./app/context/ContextProvider";
 import { ThemeContextProvider } from "./app/context/ThemeContext";
@@ -20,12 +19,12 @@ root.render(
     <Provider store={store}>
      <ContextProvider>
       <ThemeContextProvider>
-       <ThemeProvider theme={theme}>
+       <DirectionProvider>
         <CssBaseline />
         <Router>
          <App />
         </Router>
-       </ThemeProvider>
+       </DirectionProvider>
       </ThemeContextProvider>
     </ContextProvider>
     </Provider>

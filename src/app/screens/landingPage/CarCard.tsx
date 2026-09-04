@@ -4,6 +4,7 @@ import CarPlaceholder from "./CarPlaceholder";
 import { AuctionCar } from "../../../lib/types/landing";
 import { imageUrl } from "../../../lib/api";
 import { formatKrw, formatUsdEstimate, useUsdKrwRate } from "../../../lib/currency";
+import { formatNumber } from "../../../lib/locale";
 
 interface Props {
   car: AuctionCar;
@@ -48,12 +49,12 @@ export default function CarCard({ car, saved, onSave, onOpen, density = "spaciou
         </div>
 
         <div className="car-card__specs">
-          <span>{(car.km ?? 0).toLocaleString()} {t("card.km")}</span>
+          <span>{formatNumber(car.km ?? 0)} {t("card.km")}</span>
           {car.color && <><span className="car-card__sep">|</span><span>{car.color.toUpperCase()}</span></>}
           <span className="car-card__sep">|</span>
-          <span>👁 {(car.viewCount ?? 0).toLocaleString()}</span>
+          <span>👁 {formatNumber(car.viewCount ?? 0)}</span>
           <span className="car-card__sep">|</span>
-          <span>♥ {(car.likeCount ?? 0).toLocaleString()}</span>
+          <span>♥ {formatNumber(car.likeCount ?? 0)}</span>
         </div>
 
         <div className="car-card__rule" />

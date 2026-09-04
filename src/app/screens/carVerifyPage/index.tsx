@@ -6,6 +6,7 @@ import { imageUrl } from "../../../lib/api";
 import { formatKrw, formatUsdEstimate, parseKrw, useUsdKrwRate } from "../../../lib/currency";
 import Lightbox from "./Lightbox";
 import "../../../css/carVerify.css";
+import { formatDate, formatNumber } from "../../../lib/locale";
 
 type Status = "idle" | "loading" | "found" | "empty" | "error";
 
@@ -108,7 +109,7 @@ export default function CarVerifyPage() {
             type="text"
             value={vin}
             onChange={(e) => setVin(e.target.value.toUpperCase())}
-            placeholder="e.g. KMHD84LF5KU123456"
+            placeholder={t("verify.vinPlaceholder")}
             spellCheck={false}
             autoComplete="off"
             maxLength={32}
@@ -206,7 +207,7 @@ export default function CarVerifyPage() {
                     <div className="cv__proof-row">
                       <span className="cv__proof-label">{t("verify.soldOn")}</span>
                       <span className="cv__proof-value">
-                        {new Date(car.soldAt).toLocaleDateString()}
+                        {formatDate(car.soldAt, { year: "numeric", month: "short", day: "numeric" })}
                       </span>
                     </div>
                   )}
@@ -222,7 +223,7 @@ export default function CarVerifyPage() {
                 <Spec label={t("verify.year")} value={car.year} />
                 <Spec
                   label={t("verify.mileage")}
-                  value={car.km != null ? `${car.km.toLocaleString()} km` : "—"}
+                  value={car.km != null ? `${formatNumber(car.km)} km` : "—"}
                 />
                 <Spec label={t("verify.color")} value={car.color} />
                 <Spec

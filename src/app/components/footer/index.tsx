@@ -1,13 +1,11 @@
 import React from "react";
-import { Box, Container, IconButton, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import InstagramIcon from "@mui/icons-material/Instagram";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
 import { useTranslation } from "react-i18next";
+import { CONTACT } from "../../../lib/contact";
 
 const Footers = styled.div`
   width: 100%;
@@ -31,34 +29,10 @@ export default function Footer() {
         <Stack className="foot-top" flexDirection="row" flexWrap="wrap" gap="64px">
           <Stack className="foot-brand-col" flexDirection="column" style={{ width: "340px" }}>
             <Box className="brand-wordmark" style={{ fontSize: 22, fontWeight: 700, letterSpacing: "0.05em", color: "var(--footer-heading)" }}>
-              AUTOAUCTION
+              {CONTACT.wordmark}
             </Box>
             <Box className="foot-desc-txt" style={{ marginTop: 16, lineHeight: 1.6, opacity: 0.7 }}>
               {t("footer.desc")}
-            </Box>
-            <Box className="sns-context" style={{ marginTop: 20, display: "flex", gap: 4 }}>
-              <IconButton
-                size="small"
-                component="a"
-                href="https://t.me/hmauctionuz"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{ color: "inherit", opacity: 0.8, "&:hover": { opacity: 1 } }}
-                aria-label="telegram"
-              >
-                <TelegramIcon />
-              </IconButton>
-              <IconButton
-                size="small"
-                component="a"
-                href="https://instagram.com/auctionuz_kr"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{ color: "inherit", opacity: 0.8, "&:hover": { opacity: 1 } }}
-                aria-label="instagram"
-              >
-                <InstagramIcon />
-              </IconButton>
             </Box>
           </Stack>
           <Stack className="foot-link-cols" flexDirection="row" gap="100px">
@@ -79,13 +53,13 @@ export default function Footer() {
               </Box>
               <Box className="foot-category-link" style={{ display: "flex", flexDirection: "column", gap: 10, opacity: 0.75 }}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <LocationOnIcon fontSize="small" /> Seoul, Korea · shipping worldwide
+                  <LocationOnIcon fontSize="small" /> {CONTACT.address}
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <PhoneIcon fontSize="small" /> +998 71 ••• 4781
-                </Box>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <EmailIcon fontSize="small" /> auction@gmail.com
+                  <PhoneIcon fontSize="small" />
+                  <a href={CONTACT.phoneHref} style={{ color: "inherit", textDecoration: "none" }}>
+                    {CONTACT.phone}
+                  </a>
                 </Box>
               </Box>
             </Stack>
@@ -93,7 +67,7 @@ export default function Footer() {
         </Stack>
         <Stack className="foot-bottom" style={{ borderTop: "1px solid var(--footer-rule)", marginTop: 60, paddingTop: 20 }}>
           <Stack className="copyright-txt" style={{ opacity: 0.5, fontSize: 12 }}>
-            © {new Date().getFullYear()} AutoAuction. Dream cars, fixed-price, door delivered.
+            © {new Date().getFullYear()} {CONTACT.companyName}. Dream cars, fixed-price, door delivered.
           </Stack>
         </Stack>
       </Container>

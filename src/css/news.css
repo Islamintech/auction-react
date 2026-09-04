@@ -8,8 +8,8 @@
   --line: #e3e0d8;
   --line-soft: #ecebe5;
   --accent: #d7b586;
-  --display-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --body-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display-font: "Inter", "Noto Sans Arabic", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --body-font: "Inter", "Noto Sans Arabic", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
   background: var(--bg);
@@ -160,7 +160,7 @@
 .news-detail__excerpt {
   font-family: var(--display-font); font-size: 19px; font-style: italic;
   color: var(--text-mute); line-height: 1.5; margin-bottom: 28px;
-  padding-left: 16px; border-left: 2px solid var(--accent);
+  padding-inline-start: 16px; border-inline-start: 2px solid var(--accent);
 }
 .news-detail__body p {
   font-family: var(--body-font); font-size: 15px; color: var(--text);

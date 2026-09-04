@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ConsultationService from "../../services/ConsultationService";
 import { Consultation, ConsultationStatus } from "../../../lib/types/consultation";
+import { formatDateTime } from "../../../lib/locale";
 
 const statusColor: Record<ConsultationStatus, string> = {
   PENDING: "var(--warn, #ffb547)",
@@ -54,7 +55,7 @@ export default function Consultations() {
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {items.map((c) => {
           const date = c.createdAt
-            ? new Date(c.createdAt).toLocaleString("en-US", {
+            ? formatDateTime(c.createdAt, {
                 month: "short",
                 day: "numeric",
                 hour: "2-digit",
@@ -108,7 +109,7 @@ export default function Consultations() {
                     marginTop: 12,
                     padding: 12,
                     background: "rgba(62, 224, 124, 0.08)",
-                    borderLeft: "3px solid var(--ok, #3ee07c)",
+                    borderInlineStart: "3px solid var(--ok, #3ee07c)",
                     borderRadius: 4,
                     fontSize: 13,
                     lineHeight: 1.6,

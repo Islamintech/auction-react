@@ -7,8 +7,11 @@
    Inter does not ship.
    ──────────────────────────────────────────────────────────── */
 :root {
-  --body-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --display-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* +1 in LTR, -1 in RTL — multiply physical translateX offsets by this so
+     off-canvas drawers slide in from the correct edge in both directions. */
+  --dir-x: 1;
+  --body-font: "Inter", "Noto Sans Arabic", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display-font: "Inter", "Noto Sans Arabic", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
 
@@ -216,4 +219,11 @@ svg {
 /* Save badges over images */
 :root[data-theme="dark"] .car-card__save {
   background: rgba(241, 236, 225, 0.15);
+}
+
+/* ── Right-to-left (Arabic) ──────────────────────────────────
+   Layout uses logical properties, so only the physical bits
+   need flipping: the slide direction of off-canvas drawers.  */
+[dir="rtl"] {
+  --dir-x: -1;
 }

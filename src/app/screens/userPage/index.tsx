@@ -13,6 +13,7 @@ import { useGlobals } from "../../hooks/useGlobals";
 import { imageUrl } from "../../../lib/api";
 import CarService from "../../services/CarService";
 import "../../../css/userPage.css";
+import { formatDate } from "../../../lib/locale";
 
 type TabKey = "overview" | "saved" | "consultations" | "settings";
 
@@ -26,7 +27,7 @@ function formatJoinedDate(d?: Date | string) {
   if (!d) return "";
   const date = typeof d === "string" ? new Date(d) : d;
   if (isNaN(date.getTime())) return "";
-  return date.toLocaleDateString("en-US", { month: "short", year: "numeric" }).toUpperCase();
+  return formatDate(date, { month: "short", year: "numeric" }).toUpperCase();
 }
 
 export default function UserPage() {

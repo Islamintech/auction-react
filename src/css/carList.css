@@ -11,8 +11,8 @@
   --line-soft: #ecebe5;
   --accent: #d7b586;
   --warn: #ffb547;
-  --display-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --body-font: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display-font: "Inter", "Noto Sans Arabic", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --body-font: "Inter", "Noto Sans Arabic", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
   background: var(--bg);
@@ -107,7 +107,7 @@
 /* Filters */
 .carlist__filters {
   padding: 24px 24px 24px 48px;
-  border-right: 1px solid var(--line);
+  border-inline-end: 1px solid var(--line);
   align-self: flex-start;
   position: sticky;
   top: 64px;
@@ -150,14 +150,14 @@
   font-family: var(--body-font);
   font-size: 13px;
   color: var(--text-mute);
-  text-align: left;
+  text-align: start;
 }
 .cl-fr--active { color: var(--text); }
 .cl-fr__box {
   display: inline-block;
   width: 12px;
   height: 12px;
-  margin-right: 10px;
+  margin-inline-end: 10px;
   border: 1px solid var(--line);
   background: transparent;
   position: relative;
@@ -342,17 +342,17 @@
   .carlist__filters {
     position: fixed;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     bottom: 0;
     width: min(86vw, 340px);
     height: 100vh;
     height: 100dvh;
     padding: 20px 20px 24px;
-    border-right: 1px solid var(--line);
+    border-inline-end: 1px solid var(--line);
     background: var(--bg);
     overflow-y: auto;
     z-index: 220;
-    transform: translateX(-100%);
+    transform: translateX(calc(-100% * var(--dir-x)));
     transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .carlist__filters--open { transform: translateX(0); }
@@ -442,7 +442,7 @@
 }
 
 @media (max-width: 640px) {
-  .carlist__head, .carlist__results { padding-left: 20px; padding-right: 20px; }
+  .carlist__head, .carlist__results { padding-inline-start: 20px; padding-inline-end: 20px; }
   .cl-grid { grid-template-columns: 1fr; }
   /* Title on its own line; move Filters/Sort to a row below so nothing overflows */
   .carlist__head-row {

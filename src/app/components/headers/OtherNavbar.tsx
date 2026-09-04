@@ -45,8 +45,8 @@ export default function OtherNavbar(props: OtherNavbarProps) {
         <Stack className="menu">
           <Box>
             <NavLink to="/" className="brand-link">
-              <img className="brand-logo" src="/img/logo.png" alt="AutoAuction" />
-              <span className="brand-wordmark">AUTOAUCTION</span>
+              <img className="brand-logo" src="/img/logo.png" alt="Auto Auction" />
+              <span className="brand-wordmark">AUTO AUCTION</span>
             </NavLink>
           </Box>
           <span className="nav-lang"><LanguageSwitcher /></span>
@@ -54,7 +54,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
             <button
               type="button"
               className="nav-login-icon"
-              aria-label="Login"
+              aria-label={t("a11y.login")}
               onClick={() => setLoginOpen(true)}
             >
               <LoginIcon />
@@ -63,7 +63,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
             <button
               type="button"
               className="nav-login-icon nav-login-icon--avatar"
-              aria-label="Account"
+              aria-label={t("a11y.account")}
               onClick={handleLogoutClick}
             >
               <img

@@ -19,8 +19,8 @@ export default function Featured({ cars, savedIds, onSave, onOpen, onViewAll }: 
       <SectionHeader
         number="01"
         title={t("sections.featured")}
-        subtitle="Curated by our chief inspector each Monday."
-        link="View all →"
+        subtitle={t("sections.featuredSub")}
+        link={t("sections.viewAll")}
         onLink={onViewAll}
       />
       <div className="landing__featured-grid">

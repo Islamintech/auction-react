@@ -16,17 +16,14 @@ export default function BigCTA({ onSignup, onConsultation }: Props) {
       <section className="landing__section--cta">
         <div className="landing-cta">
           <div>
-            <h2 className="landing-cta__title">Need help choosing? Talk to an expert.</h2>
-            <p className="landing-cta__body">
-              Our specialists can guide you through inspection grades, shipping options,
-              and customs for your country — free for verified members.
-            </p>
+            <h2 className="landing-cta__title">{t("cta.memberTitle")}</h2>
+            <p className="landing-cta__body">{t("cta.memberBody")}</p>
           </div>
           <div className="landing-cta__side">
             <button className="landing-cta__btn" onClick={onConsultation}>
-              Get consultation →
+              {t("cta.getConsultation")}
             </button>
-            <span className="landing-cta__note">REPLY WITHIN 24 HOURS</span>
+            <span className="landing-cta__note">{t("cta.replyWithin24")}</span>
           </div>
         </div>
       </section>
@@ -37,16 +34,14 @@ export default function BigCTA({ onSignup, onConsultation }: Props) {
     <section className="landing__section--cta">
       <div className="landing-cta">
         <div>
-          <h2 className="landing-cta__title">Ready to buy? Set up your account in 4 minutes.</h2>
-          <p className="landing-cta__body">
-            Free to register. 5% refundable deposit only when you reserve your first car. ID verification handled by Veriff.
-          </p>
+          <h2 className="landing-cta__title">{t("cta.guestTitle")}</h2>
+          <p className="landing-cta__body">{t("cta.guestBody")}</p>
         </div>
         <div className="landing-cta__side">
           <button className="landing-cta__btn" onClick={onSignup}>
-            {t("nav.signup")} →
+            {t("nav.signup")} {t("cta.arrow")}
           </button>
-          <span className="landing-cta__note">NO CREDIT CARD REQUIRED</span>
+          <span className="landing-cta__note">{t("cta.noCreditCard")}</span>
         </div>
       </div>
     </section>

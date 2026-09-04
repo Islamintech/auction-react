@@ -17,6 +17,7 @@ import { formatKrw } from "../../../lib/currency";
 import { useGlobals } from "../../hooks/useGlobals";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import "../../../css/carDetail.css";
+import { formatDateTime, formatNumber } from "../../../lib/locale";
 
 export default function CarDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -215,10 +216,10 @@ export default function CarDetailPage() {
                 </div>
                 <h1 className="cd-title">{car.title}</h1>
                 <div style={{ display: "flex", flexWrap: "nowrap", gap: 16, fontSize: 12, opacity: 0.7, marginTop: 6, marginBottom: 12, fontFamily: "var(--mono-font)" }}>
-                  <span>👁 {(car.viewCount ?? 0).toLocaleString()}</span>
-                  <span>♥ {(car.likeCount ?? 0).toLocaleString()}</span>
-                  <span>💬 {(car.commentCount ?? 0).toLocaleString()}</span>
-                  <span>📞 {(car.consultationCount ?? 0).toLocaleString()}</span>
+                  <span>👁 {formatNumber(car.viewCount ?? 0)}</span>
+                  <span>♥ {formatNumber(car.likeCount ?? 0)}</span>
+                  <span>💬 {formatNumber(car.commentCount ?? 0)}</span>
+                  <span>📞 {formatNumber(car.consultationCount ?? 0)}</span>
                 </div>
               </div>
               <button
@@ -332,7 +333,7 @@ export default function CarDetailPage() {
             {car.comments.map((c, i) => {
               const avatar = imageUrl(c.memberImage);
               const date = c.createdAt
-                ? new Date(c.createdAt).toLocaleString("en-US", {
+                ? formatDateTime(c.createdAt, {
                     month: "short",
                     day: "numeric",
                     hour: "2-digit",
